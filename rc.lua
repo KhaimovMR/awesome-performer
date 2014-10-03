@@ -141,6 +141,7 @@ require('my_functions')
 require('my_vars')
 
 -- {{{ Wibox
+
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
 
@@ -258,11 +259,14 @@ for s = 1, screen.count() do
 
     mywibox[s]:set_widget(layout)
 end
+
 -- }}}
 
 -- {{{ Mouse bindings
+
 require('my_mouse_bindings')
 my_mouse_bindings(awful, mymainmenu)
+
 -- }}}
 
 -- {{{ Key bindings
@@ -588,12 +592,20 @@ client.connect_signal(
 
 
 do
+    -- apps contains pairs of app_start_cmd start and app_check_cmd
     local apps = my_startup_applications
 
-    for _, app_cmd in pairs(apps) do
-        if awful.util.pread('pidof -x ' .. app_cmd) == '' then
-            awful.util.spawn(app_cmd)
+    for _, app in pairs(apps) do
+	app_start_cmd = app[1]
+        app_check_cmd = app[2]
+
+        if app_check_cmd == true then
+	    app_check_cmd = app_start_cmd
         end
+
+	if app_check_cmd == false or awful.util.pread('pidof -x ' .. app_check_cmd) == '' then
+	    awful.util.spawn(app_start_cmd)
+	end
     end
 end
 
