@@ -332,7 +332,7 @@ globalkeys = awful.util.table.join(
         {altkey},
         "End",
         function ()
-            awful.tag.viewonly(skype_tag)
+            awful.tag.viewonly(my_tags['skype'])
             awful.util.spawn("skypedbusctl recent")
         end
     ),
@@ -340,7 +340,7 @@ globalkeys = awful.util.table.join(
         {altkey},
         "Home",
         function ()
-            awful.tag.viewonly(skype_tag)
+            awful.tag.viewonly(my_tags['skype'])
             awful.util.spawn("skypedbusctl missed")
         end
     ),
@@ -348,7 +348,7 @@ globalkeys = awful.util.table.join(
         {altkey},
         "PageDown",
         function ()
-            awful.tag.viewonly(skype_tag)
+            awful.tag.viewonly(my_tags['skype'])
             awful.util.spawn("skypedbusctl hang-up")
         end
     ),
@@ -356,7 +356,7 @@ globalkeys = awful.util.table.join(
         {altkey},
         "PageUp",
         function ()
-            awful.tag.viewonly(skype_tag)
+            awful.tag.viewonly(my_tags['skype'])
             awful.util.spawn("skypedbusctl pick-up")
         end
     ),
@@ -364,7 +364,7 @@ globalkeys = awful.util.table.join(
         {altkey},
         "Insert",
         function ()
-            awful.tag.viewonly(skype_tag)
+            awful.tag.viewonly(my_tags['skype'])
             awful.util.spawn("skypedbusctl contacts " .. my_skype_login)
         end
     )
@@ -401,8 +401,8 @@ for i = 1, tags_count do
             { modkey, "Control" },
 	    "#" .. i + 9,
 	    function ()
-	        awful.screen.focus(browsing_screen)
-	        awful.tag.viewonly(browsing_screen_tags[i])
+	        awful.screen.focus(surfing_screen)
+	        awful.tag.viewonly(surfing_screen_tags[i])
 	    end
         ),
 
@@ -480,19 +480,22 @@ awful.rules.rules = {
     { rule = { class = "MPlayer" }, properties = { floating = true } },
     { rule = { class = "pinentry" }, properties = { floating = true } }, 
     { rule = { class = "gimp" }, properties = { floating = true } },
-    { rule = { instance = "skype", class = "Skype" }, properties = { tag = skype_tag } },
-    { rule = { class = "jetbrains-pychar" }, properties = { tag = pycharm_tag } },
-    { rule = { instance = "sun-awt-X11-XFramePeer", class = "NetBeans IDE" }, properties = { tag = netbeans_tag } },
-    { rule = { instance = "sun-awt-X11-XFramePeer", class = "freemind-main-FreeMindStarte" }, properties = { tag = freemind_tag } },
-    { rule = { instance = "sun-awt-X11-XFramePeer", class = "NetBeans IDE" }, properties = { tag = netbeans_tag } },
-    { rule = { instance = 'mysql-workbench-bin'}, properties = { tag = mysql_workbench_tag } },
-    { rule = { instance = 'clementine'}, properties = { tag = music_tag } }
+    { rule = { instance = "skype", class = "Skype" }, properties = { tag = my_tags['skype'] } },
+    { rule = { class = "jetbrains-pychar" }, properties = { tag = my_tags['pycharm'] } },
+    { rule = { instance = "sun-awt-X11-XFramePeer", class = "NetBeans IDE" }, properties = { tag = my_tags['netbeans'] } },
+    { rule = { instance = "sun-awt-X11-XFramePeer", class = "freemind-main-FreeMindStarte" }, properties = { tag = my_tags['freemind'] } },
+    { rule = { instance = 'mysql-workbench-bin'}, properties = { tag = my_tags['mysql_workbench'] } },
+    { rule = { instance = 'clementine'}, properties = { tag = my_tags['music'] } }
 }
 -- }}}
 
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c, startup)
+    if c.instance == 'sun-awt-X11-XFramePeer' then
+	naughty.notify({ title = c.class })
+    end
+
     -- Enable sloppy focus
     c:connect_signal("mouse::enter", function(c)
         if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
@@ -563,28 +566,20 @@ client.connect_signal("focus", function(c) c.border_color = beautiful.border_foc
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 -- }}}
 
+
 client.connect_signal(
     'property::name',
     function(c)
-        if c.class == 'Firefox' and c.name:find('JIRA') ~= nil and c.tag ~= jira_tag then
-            awful.client.movetotag(jira_tag, c)
-        elseif c.class == 'Google-chrome' then
-	    if c.name:find('%' .. my_local_website_url .. '%]') ~= nil and value_exists_in_table(c.tags(c), browsing_rlc_tag) == false then
-	        naughty.notify({ title = 'MOVED TO R.LC BROWSING TAB' })
-	        awful.client.movetotag(browsing_rlc_tag, c)
-		awful.tag.viewonly(browsing_rlc_tag)
-	    elseif c.name:find('%[' .. my_dev_website_url .. '%]') ~= nil and value_exists_in_table(c.tags(c), browsing_dev_tag) == false then
-                naughty.notify({ title = 'MOVED TO DEV BROWSING TAB' })
-                awful.client.movetotag(browsing_dev_tag, c)
-		awful.tag.viewonly(browsing_dev_tag)
-	    elseif c.name:find('%[' .. my_test_website_url .. '%]') ~= nil and value_exists_in_table(c.tags(c), browsing_test_tag) == false then
-                naughty.notify({ title = 'MOVED TO TEST BROWSING TAB' })
-                awful.client.movetotag(browsing_test_tag, c)
-		awful.tag.viewonly(browsing_test_tag)
-	    elseif c.name:find('%[' .. my_prod_website_url .. '%]') ~= nil and value_exists_in_table(c.tags(c), browsing_prod_tag) == false then
-                naughty.notify({ title = 'MOVED TO PROD BROWSING TAB' })
-	        awful.client.movetotag(browsing_prod_tag, c)
-		awful.tag.viewonly(browsing_prod_tag)
+        if c.class == 'Firefox' and c.name:find('JIRA') ~= nil and c.tag ~= my_tags['jira'] then
+            awful.client.movetotag(my_tags['jira'], c)
+        elseif c.class == 'Google-chrome-stable' or c.class == 'Google-chrome' then
+            -- works with Chrome plugin "Url in title" or similar
+	    for tag_name, title_pattern in pairs(my_browser_titles_to_intercept) do
+		if c.name:find(title_pattern) ~= nil and value_exists_in_table(c.tags(c), my_tags[tag_name]) == false then
+		    naughty.notify({ title = 'Moved to the "' .. tag_name .. '" tag' })
+		    awful.client.movetotag(my_tags[tag_name], c)
+		    awful.tag.viewonly(my_tags[tag_name])
+		end
 	    end
         end
     end
@@ -603,7 +598,7 @@ do
 	    app_check_cmd = app_start_cmd
         end
 
-	if app_check_cmd == false or awful.util.pread('pidof -x ' .. app_check_cmd) == '' then
+	if app_check_cmd == false or get_pids_by_cmd(app_check_cmd) == '' then
 	    awful.util.spawn(app_start_cmd)
 	end
     end
