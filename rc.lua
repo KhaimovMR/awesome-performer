@@ -346,7 +346,7 @@ globalkeys = awful.util.table.join(
     ),
     awful.key(
         {altkey},
-        "PageDown",
+        "Next",
         function ()
             awful.tag.viewonly(my_tags['skype'])
             awful.util.spawn("skypedbusctl hang-up")
@@ -354,7 +354,7 @@ globalkeys = awful.util.table.join(
     ),
     awful.key(
         {altkey},
-        "PageUp",
+        "Prior",
         function ()
             awful.tag.viewonly(my_tags['skype'])
             awful.util.spawn("skypedbusctl pick-up")
