@@ -322,9 +322,9 @@ globalkeys = awful.util.table.join(
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end),
 
-    -- Lock screen (need to be installed through "apt-get install xtrlock")
+    -- Lock screen (need to be installed through "apt-get install suckless-tools")
     awful.key({ modkey }, "h", function ()
-        awful.util.spawn('xtrlock')
+        awful.util.spawn('slock')
     end),
 
     -- Skype shortcuts
@@ -482,6 +482,7 @@ awful.rules.rules = {
     { rule = { class = "gimp" }, properties = { floating = true } },
     { rule = { instance = "skype", class = "Skype" }, properties = { tag = my_tags['skype'] } },
     { rule = { class = "jetbrains-pychar" }, properties = { tag = my_tags['pycharm'] } },
+    { rule = { class = "jetbrains-pycharm" }, properties = { tag = my_tags['pycharm'] } },
     { rule = { instance = "sun-awt-X11-XFramePeer", class = "NetBeans IDE" }, properties = { tag = my_tags['netbeans'] } },
     { rule = { instance = "sun-awt-X11-XFramePeer", class = "freemind-main-FreeMindStarte" }, properties = { tag = my_tags['freemind'] } },
     { rule = { instance = 'mysql-workbench-bin'}, properties = { tag = my_tags['mysql_workbench'] } },
