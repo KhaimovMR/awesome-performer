@@ -485,9 +485,8 @@ awful.rules.rules = {
     { rule = { class = "jetbrains-pycharm" }, properties = { tag = my_tags['pycharm'] } },
     { rule = { instance = "sun-awt-X11-XFramePeer", class = "NetBeans IDE" }, properties = { tag = my_tags['netbeans'] } },
     { rule = { instance = "sun-awt-X11-XFramePeer", class = "freemind-main-FreeMindStarte" }, properties = { tag = my_tags['freemind'] } },
-    { rule = { instance = 'mysql-workbench-bin' }, properties = { tag = my_tags['mysql_workbench'] } },
+    { rule = { instance = 'mysql-workbench-bin' }, properties = { tag = my_tags['mysql'] } },
     { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
-    { rule = { instance = 'gnome-terminal' }, properties = { tag = my_tags['terminal'] } }
 }
 -- }}}
 
@@ -496,6 +495,14 @@ awful.rules.rules = {
 client.connect_signal("manage", function (c, startup)
     if c.instance == 'sun-awt-X11-XFramePeer' then
 	naughty.notify({ title = c.class })
+    elseif c.instance == 'gnome-terminal' then
+	for tag_name, title in pairs(my_terminal_titles_to_intercept) do
+	    if c.name == title and value_exists_in_table(c.tags(c), my_tags[tag_name]) == false then
+		naughty.notify({ title = 'Moved to the "' .. tag_name .. '" tag' })
+		awful.client.movetotag(my_tags[tag_name], c)
+		awful.tag.viewonly(my_tags[tag_name])
+	    end
+	end
     end
 
     -- Enable sloppy focus
@@ -582,7 +589,7 @@ client.connect_signal(
 		    awful.tag.viewonly(my_tags[tag_name])
 		end
 	    end
-        end
+	end
     end
 )
 
