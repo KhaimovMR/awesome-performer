@@ -8,11 +8,22 @@ Clone this repository into ~/.config/awesome directory.
 
 For script to execute properly, afterwards, place my_vars.lua into ~/.config/awesome directory.
 
-Example of my_vars.lua (all variables is required):
+Example of "my_vars.lua" (all variables is required):
 
 ```lua
 my_skype_login = 'my.skype.login'
 my_jira_url = 'http://jira.example.com'
+my_browser_window_class_1 = 'Google-chrome-stable'
+my_browser_window_class_2 = 'Google-chrome'
+
+my_browser_titles_to_intercept = {
+    -- <tag_name> = '<browser_title_search_pattern>'
+    work_mail = 'workuser@example',
+    personal_mail = 'personaluser@example.com',
+    jira = '%[jira.example.com%]',
+    wiki = '%[wiki.example.com%]'
+}
+
 my_startup_applications = {
     -- { "<command_to_start_an_app>" , <check_if_already_started> }
     -- <command_to_start_an_app> - shell command to start an application
