@@ -485,8 +485,9 @@ awful.rules.rules = {
     { rule = { class = "jetbrains-pycharm" }, properties = { tag = my_tags['pycharm'] } },
     { rule = { instance = "sun-awt-X11-XFramePeer", class = "NetBeans IDE" }, properties = { tag = my_tags['netbeans'] } },
     { rule = { instance = "sun-awt-X11-XFramePeer", class = "freemind-main-FreeMindStarte" }, properties = { tag = my_tags['freemind'] } },
-    { rule = { instance = 'mysql-workbench-bin'}, properties = { tag = my_tags['mysql_workbench'] } },
-    { rule = { instance = 'clementine'}, properties = { tag = my_tags['music'] } }
+    { rule = { instance = 'mysql-workbench-bin' }, properties = { tag = my_tags['mysql_workbench'] } },
+    { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
+    { rule = { instance = 'gnome-terminal' }, properties = { tag = my_tags['terminal'] } }
 }
 -- }}}
 

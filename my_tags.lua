@@ -27,6 +27,7 @@ my_tags = {
     mysql_workbench = work_screen_tags[3],
     skype = work_screen_tags[6],
     teamviewer = work_screen_tags[7],
+    terminal = work_screen_tags[12],
     freemind = planning_screen_tags[1],
     jira = planning_screen_tags[2],
     wiki = planning_screen_tags[3],
