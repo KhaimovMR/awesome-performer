@@ -11,6 +11,14 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 
+
+-- {{{ Changing default style of notifications
+naughty.config.presets['normal'] = {
+    bg = '#3b8e15',
+    fg = '#ffffff'
+}
+-- }}}
+
 -- Load Debian menu entries
 require("debian.menu")
 
