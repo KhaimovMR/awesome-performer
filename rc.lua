@@ -375,6 +375,13 @@ globalkeys = awful.util.table.join(
             awful.tag.viewonly(my_tags['skype'])
             awful.util.spawn("skypedbusctl contacts " .. my_skype_login)
         end
+    ),
+    awful.key(
+	{ 'Control', altkey },
+	'b',
+	function ()
+	    awful.util.spawn('unity-control-center bluetooth')
+	end
     )
 )
 

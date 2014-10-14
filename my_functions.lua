@@ -28,7 +28,7 @@ end
 
 function get_pids_by_cmd(cmd)
     return os.capture(
-	'ps ax | grep ' .. cmd .. ' | sed "s/^[ \t]//g" | grep -v grep | grep -E "^[0-9]+" -o'
+	'ps ax | grep -E "' .. cmd .. '" | sed "s/^[ \t]//g" | grep -v grep | grep -E "^[0-9]+" -o'
     )
 end
 
