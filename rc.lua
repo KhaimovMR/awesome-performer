@@ -382,6 +382,13 @@ globalkeys = awful.util.table.join(
 	function ()
 	    awful.util.spawn('unity-control-center bluetooth')
 	end
+    ),
+    awful.key(
+	{ 'Control', altkey },
+	's',
+	function ()
+	    awful.util.spawn('unity-control-center sound')
+	end
     )
 )
 
