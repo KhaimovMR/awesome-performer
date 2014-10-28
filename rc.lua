@@ -13,6 +13,7 @@ local menubar = require("menubar")
 
 
 -- {{{ Changing default style of notifications
+naughty.config.defaults['border_width'] = "0"
 naughty.config.presets['normal'] = {
     bg = '#3b8e15',
     fg = '#ffffff'
