@@ -1,3 +1,6 @@
+local awful = require("awful")
+local naughty = require("naughty")
+
 function value_exists_in_table(tbl, search_value)
    for _, value in pairs(tbl) do
     if value == search_value then
@@ -44,4 +47,19 @@ end
 
 function strip_new_lines(text)
     return text:gsub('\n', ' ')
+end
+
+function start_applications_section(applications_section)
+    for _, app in pairs(applications_section) do
+	app_start_cmd = app[1]
+	app_check_cmd = app[2]
+
+	if app_check_cmd == true then
+	    app_check_cmd = app_start_cmd
+	end
+
+	if app_check_cmd == false or get_pids_by_cmd(app_check_cmd) == '' then
+	    awful.util.spawn(app_start_cmd)
+	end
+    end
 end

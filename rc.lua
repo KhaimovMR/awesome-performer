@@ -389,6 +389,13 @@ globalkeys = awful.util.table.join(
 	function ()
 	    awful.util.spawn('unity-control-center sound')
 	end
+    ),
+    awful.key(
+	{ 'Control', modkey },
+	'w',
+	function ()
+	    start_applications_section(my_startup_applications['work_terminals'])
+	end
     )
 )
 
@@ -617,20 +624,8 @@ client.connect_signal(
 
 
 do
-    -- apps contains pairs of app_start_cmd start and app_check_cmd
-    local apps = my_startup_applications
-
-    for _, app in pairs(apps) do
-	app_start_cmd = app[1]
-        app_check_cmd = app[2]
-
-        if app_check_cmd == true then
-	    app_check_cmd = app_start_cmd
-        end
-
-	if app_check_cmd == false or get_pids_by_cmd(app_check_cmd) == '' then
-	    awful.util.spawn(app_start_cmd)
-	end
+    for apps_section_name, applications in pairs(my_startup_applications) do
+	start_applications_section(applications)
     end
 end
 
