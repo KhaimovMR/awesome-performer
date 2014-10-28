@@ -38,6 +38,6 @@ my_tags = {
     jira = planning_screen_tags[2],
     wiki = planning_screen_tags[3],
     pyrun = planning_screen_tags[5],
-    work_mail = planning_screen_tags[8],
-    personal_mail = planning_screen_tags[9]
+    work_mail = planning_screen_tags[9],
+    personal_mail = planning_screen_tags[10]
 }
