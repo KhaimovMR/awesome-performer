@@ -108,7 +108,8 @@ end
 -- Define a tag table which hold all screen tags.
 
 tags_template = {}
-tags_count = 12
+tags_count = 36 / screen.count()
+tags_per_virtual_screen_count = 12
 
 for i = 1, tags_count do
     table.insert(tags_template, i)
@@ -424,7 +425,7 @@ clientkeys = awful.util.table.join(
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it works on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, tags_count do
+for i = 1, tags_per_virtual_screen_count do
     globalkeys = awful.util.table.join(globalkeys,
         -- Screen 1 tags
         awful.key(
@@ -432,7 +433,7 @@ for i = 1, tags_count do
 	    "#" .. i + 9,
 	    function ()
 	        awful.screen.focus(surfing_screen)
-	        awful.tag.viewonly(surfing_screen_tags[i])
+	        awful.tag.viewonly(surfing_screen_tags[i + screen_1_offset])
 	    end
         ),
 
@@ -442,7 +443,7 @@ for i = 1, tags_count do
             "#" .. i + 9,
             function ()
                 awful.screen.focus(work_screen)
-                awful.tag.viewonly(work_screen_tags[i])
+                awful.tag.viewonly(work_screen_tags[i + screen_2_offset])
             end
         ),
 
@@ -452,7 +453,7 @@ for i = 1, tags_count do
             "#" .. i + 9,
             function ()
                 awful.screen.focus(planning_screen)
-                awful.tag.viewonly(planning_screen_tags[i])
+                awful.tag.viewonly(planning_screen_tags[i + screen_3_offset])
             end
         ),
 
