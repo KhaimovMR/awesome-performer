@@ -334,7 +334,7 @@ globalkeys = awful.util.table.join(
 
     -- Lock screen (need to be installed through "apt-get install suckless-tools")
     awful.key({ modkey }, "h", function ()
-        awful.util.spawn('slock')
+        awful.util.spawn('xscreensaver-command -lock')
     end),
 
     -- Skype shortcuts
@@ -537,12 +537,12 @@ client.connect_signal("manage", function (c, startup)
     end
 
     -- Enable sloppy focus
-    c:connect_signal("mouse::enter", function(c)
-        if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-            and awful.client.focus.filter(c) then
-            client.focus = c
-        end
-    end)
+    --c:connect_signal("mouse::enter", function(c)
+    --    if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+    --        and awful.client.focus.filter(c) then
+    --        client.focus = c
+    --    end
+    --end)
 
     if not startup then
         -- Set the windows at the slave,
