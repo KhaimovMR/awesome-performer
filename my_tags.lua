@@ -1,3 +1,5 @@
+local awful = require("awful")
+
 if screen.count() == 1 then
     surfing_screen = 1
     work_screen = 1
@@ -50,3 +52,5 @@ my_tags = {
     work_mail = planning_screen_tags[9 + screen_3_offset],
     personal_mail = planning_screen_tags[10 + screen_3_offset]
 }
+
+awful.layout.set(awful.layout.suit.tile, my_tags['skype'])

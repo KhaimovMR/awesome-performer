@@ -66,7 +66,7 @@ terminal = "x-terminal-emulator"
 editor = os.getenv("EDITOR") or "editor"
 
 -- my editor --
-editor = "emacs"
+editor = "vim"
 
 editor_cmd = terminal .. " -e " .. editor
 
@@ -83,13 +83,7 @@ local layouts =
 {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
-    awful.layout.suit.tile.left,
     awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
     awful.layout.suit.max,
     awful.layout.suit.max.fullscreen,
     awful.layout.suit.magnifier
@@ -118,7 +112,7 @@ end
 tags = {}
 for s = 1, screen.count() do
     -- Each screen has its own tag table.
-    tags[s] = awful.tag(tags_template, s, layouts[10])
+    tags[s] = awful.tag(tags_template, s, layouts[4])
 end
 
 -- }}}
