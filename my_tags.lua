@@ -35,6 +35,7 @@ my_tags = {
     music = surfing_screen_tags[11 + screen_1_offset],
     teamviewer = surfing_screen_tags[12 + screen_1_offset],
     pycharm = work_screen_tags[1 + screen_2_offset],
+    vim_coding = work_screen_tags[1 + screen_2_offset],
     netbeans = work_screen_tags[2 + screen_2_offset],
     mysql = work_screen_tags[3 + screen_2_offset],
 --    mysql = work_screen_tags[4],
