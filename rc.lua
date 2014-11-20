@@ -404,7 +404,7 @@ globalkeys = awful.util.table.join(
 	{ 'Control', modkey },
 	'f',
 	function ()
-	    start_applications_section(my_startup_applications['mail'])
+	    awful.util.spawn('cheat-sheet-vim')
 	end
     )
 )
