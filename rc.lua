@@ -328,7 +328,7 @@ globalkeys = awful.util.table.join(
 
     -- Lock screen (need to be installed through "apt-get install suckless-tools")
     awful.key({ modkey }, "h", function ()
-        awful.util.spawn('xscreensaver-command -lock')
+        awful.util.spawn('slock')
     end),
 
     -- Skype shortcuts
@@ -391,6 +391,20 @@ globalkeys = awful.util.table.join(
 	'w',
 	function ()
 	    start_applications_section(my_startup_applications['work_terminals'])
+	end
+    ),
+    awful.key(
+	{ 'Control', modkey },
+	'm',
+	function ()
+	    start_applications_section(my_startup_applications['mail'])
+	end
+    ),
+    awful.key(
+	{ 'Control', modkey },
+	'f',
+	function ()
+	    start_applications_section(my_startup_applications['mail'])
 	end
     )
 )
