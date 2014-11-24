@@ -406,6 +406,20 @@ globalkeys = awful.util.table.join(
 	function ()
 	    awful.util.spawn('cheat-sheet-vim')
 	end
+    ),
+    awful.key(
+	{ 'Control', modkey },
+	'j',
+	function ()
+	    start_applications_section(my_startup_applications['jira'])
+	end
+    ),
+    awful.key(
+	{ 'Control', modkey },
+	'n',
+	function ()
+	    awful.util.spawn('google-chrome')
+	end
     )
 )
 

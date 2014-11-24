@@ -49,6 +49,7 @@ my_tags = {
     freemind = planning_screen_tags[1 + screen_3_offset],
     jira = planning_screen_tags[2 + screen_3_offset],
     wiki = planning_screen_tags[3 + screen_3_offset],
+    wrike = planning_screen_tags[4 + screen_3_offset],
     pyrun = planning_screen_tags[5 + screen_3_offset],
     work_mail = planning_screen_tags[9 + screen_3_offset],
     personal_mail = planning_screen_tags[10 + screen_3_offset]
