@@ -359,7 +359,6 @@ globalkeys = awful.util.table.join(
         {altkey},
         "Next",
         function ()
-            awful.tag.viewonly(my_tags['skype'])
             awful.util.spawn("skypedbusctl hang-up")
         end
     ),
@@ -419,6 +418,13 @@ globalkeys = awful.util.table.join(
 	'j',
 	function ()
 	    start_applications_section(my_startup_applications['jira'])
+	end
+    ),
+    awful.key(
+	{ 'Control', modkey },
+	'i',
+	function ()
+	    start_applications_section(my_startup_applications['wiki'])
 	end
     ),
     awful.key(
