@@ -302,6 +302,13 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "Return", function () awful.util.spawn(terminal) end),
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, altkey, "Shift" }, "q", awesome.quit),
+    awful.key(
+    	{ modkey, altkey, "Shift" },
+	"s",
+	function ()
+            awful.util.spawn('dm-tool switch-to-greeter')
+	end
+    ),
 
     --awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
     --awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
@@ -635,7 +642,7 @@ client.connect_signal(
     function(c)
         if c.class == 'Firefox' and c.name:find('JIRA') ~= nil and c.tag ~= my_tags['jira'] then
             awful.client.movetotag(my_tags['jira'], c)
-        elseif c.class == my_browser_window_class_1 or c.class == my_browser_window_class_2 then
+        elseif c.class == my_browser_window_class_1 or c.class == my_browser_window_class_2 and c.name ~= nil then
 	    for tag_name, title_pattern in pairs(my_browser_titles_to_intercept) do
 		if c.name:find(title_pattern) ~= nil and value_exists_in_table(c.tags(c), my_tags[tag_name]) == false then
 		    naughty.notify({ title = 'Moved to the "' .. tag_name .. '" tag' })
