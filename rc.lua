@@ -366,7 +366,6 @@ globalkeys = awful.util.table.join(
         {altkey},
         "Prior",
         function ()
-            awful.tag.viewonly(my_tags['skype'])
             awful.util.spawn("skypedbusctl pick-up")
         end
     ),
