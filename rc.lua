@@ -553,6 +553,7 @@ awful.rules.rules = {
     { rule = { instance = "sun-awt-X11-XFramePeer", class = "freemind-main-FreeMindStarte" }, properties = { tag = my_tags['freemind'] } },
     { rule = { instance = 'mysql-workbench-bin' }, properties = { tag = my_tags['mysql'] } },
     { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
+    { rule = { instance = 'tilda' }, properties = { fullscreen = true } },
 }
 -- }}}
 
