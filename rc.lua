@@ -303,6 +303,9 @@ my_mouse_bindings(awful, mymainmenu)
 -- }}}
 
 -- {{{ Key bindings
+-- You can use keycode ("#keycode") instead of key name ("key_name") as the second parameter to the function awful.key.
+-- Keycode is the numeric code, that can be understood by "xmodmap" utility. It can be obtained from the "xev" utility
+-- output.
 globalkeys = awful.util.table.join(
     awful.key({ modkey }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey }, "Right",  awful.tag.viewnext       ),
@@ -364,7 +367,10 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end),
 
     -- Lock screen (need to be installed through "apt-get install suckless-tools")
-    awful.key({ modkey }, "h", function ()
+    -- #43 = h
+    awful.key({ modkey }, "#43", function ()
+	kbdcfg.current = 2
+	kbdcfg.switch()
         awful.util.spawn('slock')
     end),
 
