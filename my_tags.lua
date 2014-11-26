@@ -1,4 +1,4 @@
-local awful = require("awful")
+local awful = require('awful')
 
 if screen.count() == 1 then
     surfing_screen = 1

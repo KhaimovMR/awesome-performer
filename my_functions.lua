@@ -1,5 +1,5 @@
-local awful = require("awful")
-local naughty = require("naughty")
+local awful = require('awful')
+local naughty = require('naughty')
 
 function value_exists_in_table(tbl, search_value)
    for _, value in pairs(tbl) do
