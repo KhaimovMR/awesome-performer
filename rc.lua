@@ -221,6 +221,34 @@ mytasklist.buttons = awful.util.table.join(
     )
 )
 
+-- Keyboard map indicator and changer
+kbdcfg = {}
+kbdcfg.cmd = "setxkbmap -option 'ctrl:nocaps'"
+kbdcfg.layout = { { "us", "ru" }, { "ru", "us" } }
+kbdcfg.current = 1 -- us is our default layout
+kbdcfg.widget = wibox.widget.textbox()
+kbdcfg.widget:set_text(" " .. kbdcfg.layout[kbdcfg.current][1] .. " ")
+kbdcfg.switch = function ()
+    kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
+    local layout_pair = kbdcfg.layout[kbdcfg.current]
+    kbdcfg.widget:set_text(" " .. layout_pair[1] .. " ")
+    naughty.notify({ title = layout_pair[1] })
+    os.execute( kbdcfg.cmd .. " " .. layout_pair[1] .. "," .. layout_pair[2] )
+end
+
+-- Mouse bindings
+kbdcfg.widget:buttons(
+    awful.util.table.join(
+        awful.button(
+	    { },
+	    1,
+	    function ()
+		kbdcfg.switch()
+	    end
+	)
+    )
+)
+
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
@@ -254,6 +282,7 @@ for s = 1, screen.count() do
     end
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
+    right_layout:add(kbdcfg.widget)
 
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
@@ -319,6 +348,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
     awful.key({ modkey, "Control" }, "n", awful.client.restore),
+    awful.key({ }, "Pause", function () kbdcfg.switch() end),
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
@@ -659,7 +689,6 @@ client.connect_signal(
 	end
     end
 )
-
 
 do
     for apps_section_name, applications in pairs(my_startup_applications) do
