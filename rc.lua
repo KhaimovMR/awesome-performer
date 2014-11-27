@@ -320,34 +320,46 @@ globalkeys = awful.util.table.join(
             awful.client.focus.byidx(-1)
             if client.focus then client.focus:raise() end
         end),
-    awful.key({ modkey }, 'w', function () mymainmenu:show() end),
+    -- #25 - w
+    awful.key({ modkey }, '#25', function () mymainmenu:show() end),
 
     -- Layout manipulation
-    awful.key({ modkey, 'Shift'   }, 'j', function () awful.client.swap.byidx(-1)    end),
-    awful.key({ modkey, 'Shift'   }, 'k', function () awful.client.swap.byidx(1)    end),
-    awful.key({ modkey }, 'j', function () awful.screen.focus(1) end),
-    awful.key({ modkey }, 'k', function () awful.screen.focus(2) end),
-    awful.key({ modkey }, 'l', function () awful.screen.focus(3) end),
-    awful.key({ modkey }, 'u', awful.client.urgent.jumpto),
+    -- #44 - j
+    awful.key({ modkey, 'Shift'   }, '#44', function () awful.client.swap.byidx(-1)    end),
+    -- #45 - k
+    awful.key({ modkey, 'Shift'   }, '#45', function () awful.client.swap.byidx(1)    end),
+    -- #44 - j
+    awful.key({ modkey }, '#44', function () awful.screen.focus(1) end),
+    -- #45 - k
+    awful.key({ modkey }, '#45', function () awful.screen.focus(2) end),
+    -- #46 - l
+    awful.key({ modkey }, '#46', function () awful.screen.focus(3) end),
+    -- #30 - u
+    awful.key({ modkey }, '#30', awful.client.urgent.jumpto),
     
     -- Standard program
     awful.key({ modkey }, 'Return', function () awful.util.spawn(terminal) end),
-    awful.key({ modkey, 'Control' }, 'r', awesome.restart),
-    awful.key({ modkey, altkey, 'Shift' }, 'q', awesome.quit),
+    -- #27 - r
+    awful.key({ modkey, 'Control' }, '#27', awesome.restart),
+    -- #24 - q
+    awful.key({ modkey, altkey, 'Shift' }, '#24', awesome.quit),
+    -- #39 - s
     awful.key(
     	{ modkey, altkey, 'Shift' },
-	's',
+	'#39',
 	function ()
             awful.util.spawn('dm-tool switch-to-greeter')
 	end
     ),
 
-    --awful.key({ modkey,           }, 'l',     function () awful.tag.incmwfact( 0.05)    end),
-    --awful.key({ modkey,           }, 'h',     function () awful.tag.incmwfact(-0.05)    end),
-    awful.key({ modkey, 'Shift'   }, 'h',     function () awful.tag.incnmaster( 1)      end),
-    awful.key({ modkey, 'Shift'   }, 'l',     function () awful.tag.incnmaster(-1)      end),
-    awful.key({ modkey, 'Control' }, 'h',     function () awful.tag.incncol( 1)         end),
-    awful.key({ modkey, 'Control' }, 'l',     function () awful.tag.incncol(-1)         end),
+    -- #43 - h
+    awful.key({ modkey, 'Shift'   }, '#43',     function () awful.tag.incnmaster( 1)      end),
+    -- #46 - l
+    awful.key({ modkey, 'Shift'   }, '#46',     function () awful.tag.incnmaster(-1)      end),
+    -- #43 - h
+    awful.key({ modkey, 'Control' }, '#43',     function () awful.tag.incncol( 1)         end),
+    -- #46 - l
+    awful.key({ modkey, 'Control' }, '#46',     function () awful.tag.incncol(-1)         end),
     awful.key({ modkey,           }, 'space', function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, 'Shift'   }, 'space', function () awful.layout.inc(layouts, -1) end),
     awful.key({ modkey, 'Control' }, 'n', awful.client.restore),
@@ -365,10 +377,11 @@ globalkeys = awful.util.table.join(
               end),
     
     -- Menubar
-    awful.key({ modkey }, 'p', function() menubar.show() end),
+    -- #33 - p
+    awful.key({ modkey }, '#33', function() menubar.show() end),
 
     -- Lock screen (need to be installed through "apt-get install suckless-tools")
-    -- #43 = h
+    -- #43 - h
     awful.key({ modkey }, '#43', function ()
 	kbdcfg.current = 2
 	kbdcfg.switch()
