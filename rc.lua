@@ -49,7 +49,7 @@ do
 	    naughty.notify({ 
 		preset = naughty.config.presets.critical,
 		title = 'Oops, an error happened!',
-		text = err 
+		text = debug.traceback()
             })
 	    in_error = false
 	end
@@ -612,12 +612,13 @@ awful.rules.rules = {
     { rule = { instance = 'skype', class = 'Skype' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'jetbrains-pychar' }, properties = { tag = my_tags['pycharm'], fullscreen = true } },
     { rule = { class = 'jetbrains-pycharm' }, properties = { tag = my_tags['pycharm'], fullscreen = true } },
-    { rule = { name = 'VimCoding' }, properties = { tag = my_tags['pycharm'], fullscreen = true } },
+    { rule = { name = 'VimCoding-Python' }, properties = { tag = my_tags['pycharm'], fullscreen = true } },
+    { rule = { name = 'VimCoding-PHP' }, properties = { tag = my_tags['pycharm'], fullscreen = true } },
     { rule = { instance = 'sun-awt-X11-XFramePeer', class = 'NetBeans IDE' }, properties = { tag = my_tags['netbeans'], fullscreen = true } },
     { rule = { instance = 'sun-awt-X11-XFramePeer', class = 'freemind-main-FreeMindStarte' }, properties = { tag = my_tags['freemind'] } },
     { rule = { instance = 'mysql-workbench-bin' }, properties = { tag = my_tags['mysql'] } },
     { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
-    { rule = { instance = 'tilda' }, properties = { fullscreen = true } },
+    { rule = { instance = 'tilda' }, properties = { border_width = 0, fullscreen = true } },
 }
 -- }}}
 
