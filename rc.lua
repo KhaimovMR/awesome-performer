@@ -427,58 +427,66 @@ globalkeys = awful.util.table.join(
             awful.util.spawn('skypedbusctl contacts ' .. my_skype_login)
         end
     ),
+    -- #56 - b
     awful.key(
 	{ 'Control', modkey },
-	'b',
+	'#56',
 	function ()
 	    awful.util.spawn('unity-control-center bluetooth')
 	end
     ),
+    -- #39 - s
     awful.key(
 	{ 'Control', modkey },
-	's',
+	'#39',
 	function ()
 	    awful.util.spawn('unity-control-center sound')
 	end
     ),
+    -- #25 - w
     awful.key(
 	{ 'Control', modkey },
-	'w',
+	'#25',
 	function ()
 	    start_applications_section(my_startup_applications['work_terminals'])
 	end
     ),
+    -- #58 - m
     awful.key(
 	{ 'Control', modkey },
-	'm',
+	'#58',
 	function ()
 	    start_applications_section(my_startup_applications['mail'])
 	end
     ),
+    -- #41 - f
     awful.key(
 	{ 'Control', modkey },
-	'f',
+	'#41',
 	function ()
 	    awful.util.spawn('cheat-sheet-vim')
 	end
     ),
+    -- #44 - j
     awful.key(
 	{ 'Control', modkey },
-	'j',
+	'#44',
 	function ()
 	    start_applications_section(my_startup_applications['jira'])
 	end
     ),
+    -- #31 - i
     awful.key(
 	{ 'Control', modkey },
-	'i',
+	'#31',
 	function ()
 	    start_applications_section(my_startup_applications['wiki'])
 	end
     ),
+    -- #57 - n
     awful.key(
 	{ 'Control', modkey },
-	'n',
+	'#57',
 	function ()
 	    awful.util.spawn('google-chrome')
 	end
@@ -486,18 +494,24 @@ globalkeys = awful.util.table.join(
 )
 
 clientkeys = awful.util.table.join(
-    awful.key({ modkey }, 'f',      function (c) c.fullscreen = not c.fullscreen  end),
-    awful.key({ modkey, 'Shift'   }, 'c',      function (c) c:kill()                         end),
+    -- #41 - f
+    awful.key({ modkey }, '#41',      function (c) c.fullscreen = not c.fullscreen  end),
+    -- #54 - c
+    awful.key({ modkey, 'Shift'   }, '#54',      function (c) c:kill()                         end),
     awful.key({ modkey, 'Control' }, 'space',  awful.client.floating.toggle                     ),
     awful.key({ modkey, 'Control' }, 'Return', function (c) c:swap(awful.client.getmaster()) end),
+    -- #32 - o
     awful.key({ modkey,           }, 'o',      awful.client.movetoscreen                        ),
+    -- #28 - t
     awful.key({ modkey,           }, 't',      function (c) c.ontop = not c.ontop            end),
+    -- #57 - n
     awful.key({ modkey,           }, 'n',
         function (c)
             -- The client currently has the input focus, so it cannot be
             -- minimized, since minimized clients can't have the focus.
             c.minimized = true
         end),
+    -- #58 - m
     awful.key({ modkey,           }, 'm',
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
