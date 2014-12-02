@@ -364,7 +364,7 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, 'Shift'   }, 'space', function () awful.layout.inc(layouts, -1) end),
     awful.key({ modkey, 'Control' }, 'n', awful.client.restore),
     awful.key({ }, 'Pause', function () kbdcfg.switch() end),
-    awful.key({ 'Control' }, 'Shift_L', function () kbdcfg.switch() end),
+    -- awful.key({ 'Control' }, 'Shift_L', function () kbdcfg.switch() end),
 
     -- Prompt
     awful.key({ modkey },            'r',     function () mypromptbox[mouse.screen]:run() end),
