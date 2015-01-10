@@ -388,6 +388,16 @@ globalkeys = awful.util.table.join(
         awful.util.spawn('slock')
     end),
 
+    -- Anamnesis
+    -- #55 - v
+    awful.key(
+        { 'Control', altkey },
+        '#55',
+        function ()
+            awful.util.spawn('anamnesis --browse')    
+        end
+    ),
+
     -- Skype shortcuts
     awful.key(
         {altkey},
@@ -606,9 +616,6 @@ awful.rules.rules = {
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
-    { rule = { class = 'MPlayer' }, properties = { floating = true } },
-    { rule = { class = 'pinentry' }, properties = { floating = true } },
-    { rule = { class = 'gimp' }, properties = { floating = true } },
     { rule = { instance = 'skype', class = 'Skype' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'jetbrains-pychar' }, properties = { tag = my_tags['pycharm'], fullscreen = true } },
     { rule = { class = 'jetbrains-pycharm' }, properties = { tag = my_tags['pycharm'], fullscreen = true } },
@@ -619,6 +626,7 @@ awful.rules.rules = {
     { rule = { instance = 'mysql-workbench-bin' }, properties = { tag = my_tags['mysql'] } },
     { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
     { rule = { instance = 'tilda' }, properties = { border_width = 0, fullscreen = true } },
+    { rule = { class = 'Gimp'}, properties = { border_width = 0, tag = my_tags['gimp'] } }
 }
 -- }}}
 
