@@ -329,11 +329,11 @@ globalkeys = awful.util.table.join(
     -- #45 - k
     awful.key({ modkey, 'Shift'   }, '#45', function () awful.client.swap.byidx(1)    end),
     -- #44 - j
-    awful.key({ modkey }, '#44', function () awful.screen.focus(1) end),
+    awful.key({ 'Control', altkey }, '#44', function () awful.screen.focus(1) end),
     -- #45 - k
-    awful.key({ modkey }, '#45', function () awful.screen.focus(2) end),
+    awful.key({ 'Control', altkey }, '#45', function () awful.screen.focus(2) end),
     -- #46 - l
-    awful.key({ modkey }, '#46', function () awful.screen.focus(3) end),
+    awful.key({ 'Control', altkey }, '#46', function () awful.screen.focus(3) end),
     -- #30 - u
     awful.key({ modkey }, '#30', awful.client.urgent.jumpto),
     
