@@ -29,8 +29,8 @@ require('debian.menu')
 if awesome.startup_errors then
     naughty.notify({
         preset = naughty.config.presets.critical,
-	title = 'Oops, there were errors during startup!',
-	text = awesome.startup_errors 
+        title = 'Oops, there were errors during startup!',
+        text = awesome.startup_errors 
     })
 end
 
@@ -38,21 +38,21 @@ end
 do
     local in_error = false
     awesome.connect_signal(
-	'debug::error',
-	function (err)
-	    -- Make sure we don't go into an endless error loop
-	    if in_error then
-		return
-	    end
-	    
-	    in_error = true
-	    naughty.notify({ 
-		preset = naughty.config.presets.critical,
-		title = 'Oops, an error happened!',
-		text = debug.traceback()
+        'debug::error',
+        function (err)
+            -- Make sure we don't go into an endless error loop
+            if in_error then
+                return
+            end
+            
+            in_error = true
+            naughty.notify({ 
+                preset = naughty.config.presets.critical,
+                title = 'Oops, an error happened!',
+                text = debug.traceback()
             })
-	    in_error = false
-	end
+            in_error = false
+        end
     )
 end
 -- }}}
@@ -166,52 +166,56 @@ mytasklist = {}
 mytasklist.buttons = awful.util.table.join(
     awful.button(
         { },
-	1,
-	function (c)
-	    if c == client.focus then
-	        c.minimized = true
-	    else
+        1,
+        function (c)
+            if c == client.focus then
+                c.minimized = true
+            else
 
-		-- Without this, the following
-		-- :isvisible() makes no sense
-		c.minimized = false
+            -- Without this, the following
+            -- :isvisible() makes no sense
+            c.minimized = false
 
-		if not c:isvisible() then
-		    awful.tag.viewonly(c:tags()[1])
-		end
+            if not c:isvisible() then
+                awful.tag.viewonly(c:tags()[1])
+            end
 
-		-- This will also un-minimize
-		-- the client, if needed
-		client.focus = c
-		c:raise()
-	    end
-	end
+            -- This will also un-minimize
+            -- the client, if needed
+            client.focus = c
+            c:raise()
+            end
+        end
     ),
     awful.button(
-	{ },
-	3,
-	function ()
-	    if instance then
-		instance:hide()
-		instance = nil
-	    else
-		instance = awful.menu.clients(
-		    { theme = { width = 250 } }
-		)
-	    end
-                          end),
-            awful.button(
-                { },
-		4,
-                function ()
-                    awful.client.focus.byidx(-1)
+        { },
+        3,
+        function ()
+            if instance then
+            instance:hide()
+            instance = nil
+            else
+            instance = awful.menu.clients(
+                { theme = { width = 250 } }
+            )
+            end
+        end
+    ),
+    awful.button(
+        { },
+        4,
+        function ()
+            awful.client.focus.byidx(-1)
 
-                    if client.focus then
-                        client.focus:raise()
-                    end
-                end
-            ),
-            awful.button({ }, 5, function ()
+            if client.focus then
+                client.focus:raise()
+            end
+        end
+    ),
+    awful.button(
+        { },
+        5,
+        function ()
             awful.client.focus.byidx(1)
 
             if client.focus then
@@ -240,12 +244,12 @@ end
 kbdcfg.widget:buttons(
     awful.util.table.join(
         awful.button(
-	    { },
-	    1,
-	    function ()
-		kbdcfg.switch()
-	    end
-	)
+            { },
+            1,
+            function ()
+            kbdcfg.switch()
+            end
+        )
     )
 )
 
@@ -255,11 +259,14 @@ for s = 1, screen.count() do
     -- Create an imagebox widget which will contains an icon indicating which layout we're using.
     -- We need one layoutbox per screen.
     mylayoutbox[s] = awful.widget.layoutbox(s)
-    mylayoutbox[s]:buttons(awful.util.table.join(
-                           awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
-                           awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
-                           awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
-                           awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)))
+    mylayoutbox[s]:buttons(
+        awful.util.table.join(
+            awful.button({ }, 1, function () awful.layout.inc(layouts, 1) end),
+            awful.button({ }, 3, function () awful.layout.inc(layouts, -1) end),
+            awful.button({ }, 4, function () awful.layout.inc(layouts, 1) end),
+            awful.button({ }, 5, function () awful.layout.inc(layouts, -1) end)
+        )
+    )
     -- Create a taglist widget
     mytaglist[s] = awful.widget.taglist(s, awful.widget.taglist.filter.all, mytaglist.buttons)
 
@@ -278,7 +285,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the bottom
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then 
-	right_layout:add(wibox.widget.systray())
+        right_layout:add(wibox.widget.systray())
     end
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
@@ -345,11 +352,11 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, altkey, 'Shift' }, '#24', awesome.quit),
     -- #39 - s
     awful.key(
-    	{ modkey, altkey, 'Shift' },
-	'#39',
-	function ()
+        { modkey, altkey, 'Shift' },
+        '#39',
+        function ()
             awful.util.spawn('dm-tool switch-to-greeter')
-	end
+        end
     ),
 
     -- #43 - h
@@ -382,11 +389,15 @@ globalkeys = awful.util.table.join(
 
     -- Lock screen (need to be installed through "apt-get install suckless-tools")
     -- #43 - h
-    awful.key({ modkey }, '#43', function ()
-	kbdcfg.current = 2
-	kbdcfg.switch()
-        awful.util.spawn('slock')
-    end),
+    awful.key(
+        { modkey },
+        '#43',
+        function ()
+            kbdcfg.current = 2
+            kbdcfg.switch()
+            awful.util.spawn('slock')
+        end
+    ),
 
     -- Anamnesis
     -- #55 - v
@@ -439,67 +450,82 @@ globalkeys = awful.util.table.join(
     ),
     -- #56 - b
     awful.key(
-	{ 'Control', modkey },
-	'#56',
-	function ()
-	    awful.util.spawn('unity-control-center bluetooth')
-	end
+        { 'Control', modkey },
+        '#56',
+        function ()
+            awful.util.spawn('unity-control-center bluetooth')
+        end
     ),
     -- #39 - s
     awful.key(
-	{ 'Control', modkey },
-	'#39',
-	function ()
-	    awful.util.spawn('unity-control-center sound')
-	end
+        { 'Control', modkey },
+        '#39',
+        function ()
+            awful.util.spawn('unity-control-center sound')
+        end
     ),
     -- #25 - w
     awful.key(
-	{ 'Control', modkey },
-	'#25',
-	function ()
-	    start_applications_section(my_startup_applications['work_terminals'])
-	end
+        { 'Control', modkey },
+        '#25',
+        function ()
+            start_applications_section(my_startup_applications['work_terminals'])
+        end
     ),
     -- #58 - m
     awful.key(
-	{ 'Control', modkey },
-	'#58',
-	function ()
-	    start_applications_section(my_startup_applications['mail'])
-	end
+        { 'Control', modkey },
+        '#58',
+        function ()
+            start_applications_section(my_startup_applications['mail'])
+        end
     ),
     -- #41 - f
     awful.key(
-	{ 'Control', modkey },
-	'#41',
-	function ()
-	    awful.util.spawn('cheat-sheet-vim')
-	end
+        { 'Control', modkey },
+        '#41',
+        function ()
+            local vim_poster_pid = get_pids_by_cmd('vim-poster-a3.png')
+            local vim_navigation_pid = get_pids_by_cmd('vim-navigation.png')
+
+                if vim_poster_pid == '' then
+                awful.util.spawn('feh -FZNq /home/mhaimov/Dropbox/Pictures/CheatSheets/vim-poster-a3.png')
+            else
+                awful.util.spawn('feh -FZNq /home/mhaimov/Dropbox/Pictures/CheatSheets/vim-navigation.png')
+            end
+
+            if vim_poster_pid ~= '' then
+                awful.util.spawn('kill -15 ' .. vim_poster_pid)
+            end
+
+            if vim_navigation_pid ~= '' then
+                awful.util.spawn('kill -15  ' .. vim_navigation_pid)
+            end
+        end
     ),
     -- #44 - j
     awful.key(
-	{ 'Control', modkey },
-	'#44',
-	function ()
-	    start_applications_section(my_startup_applications['jira'])
-	end
+        { 'Control', modkey },
+        '#44',
+        function ()
+            start_applications_section(my_startup_applications['jira'])
+        end
     ),
     -- #31 - i
     awful.key(
-	{ 'Control', modkey },
-	'#31',
-	function ()
-	    start_applications_section(my_startup_applications['wiki'])
-	end
+        { 'Control', modkey },
+        '#31',
+        function ()
+            start_applications_section(my_startup_applications['wiki'])
+        end
     ),
     -- #57 - n
     awful.key(
-	{ 'Control', modkey },
-	'#57',
-	function ()
-	    awful.util.spawn('google-chrome')
-	end
+        { 'Control', modkey },
+        '#57',
+        function ()
+            awful.util.spawn('google-chrome')
+        end
     )
 )
 
@@ -538,11 +564,11 @@ for i = 1, tags_per_virtual_screen_count do
         -- Screen 1 tags
         awful.key(
             { modkey, 'Control' },
-	    '#' .. i + 9,
-	    function ()
-	        awful.screen.focus(surfing_screen)
-	        awful.tag.viewonly(surfing_screen_tags[i + screen_1_offset])
-	    end
+            '#' .. i + 9,
+            function ()
+                awful.screen.focus(surfing_screen)
+                awful.tag.viewonly(surfing_screen_tags[i + screen_1_offset])
+            end
         ),
 
         -- Screen 2 tags 
@@ -566,34 +592,46 @@ for i = 1, tags_per_virtual_screen_count do
         ),
 
         -- View tag only.
-        awful.key({ modkey }, '#' .. i + 9,
-                  function ()
-                        local screen = mouse.screen
-                        local tag = awful.tag.gettags(screen)[i]
-                        if tag then
-                           awful.tag.viewonly(tag)
-                        end
-                  end),
+        awful.key(
+            { modkey },
+            '#' .. i + 9,
+            function ()
+                local screen = mouse.screen
+                local tag = awful.tag.gettags(screen)[i]
+
+                if tag then
+                    awful.tag.viewonly(tag)
+                end
+            end),
         -- Move client to tag.
-        awful.key({ modkey, 'Shift' }, '#' .. i + 9,
-                  function ()
-                      if client.focus then
-                          local tag = awful.tag.gettags(client.focus.screen)[i]
-                          if tag then
-                              awful.client.movetotag(tag)
-                          end
-                     end
-                  end),
+        awful.key(
+            { modkey, 'Shift' },
+            '#' .. i + 9,
+            function ()
+                if client.focus then
+                    local tag = awful.tag.gettags(client.focus.screen)[i]
+
+                    if tag then
+                        awful.client.movetotag(tag)
+                    end
+                end
+            end
+        ),
         -- Toggle tag.
-        awful.key({ modkey, 'Control', 'Shift' }, '#' .. i + 9,
-                  function ()
-                      if client.focus then
-                          local tag = awful.tag.gettags(client.focus.screen)[i]
-                          if tag then
-                              awful.client.toggletag(tag)
-                          end
-                      end
-                  end))
+        awful.key(
+            { modkey, 'Control', 'Shift' },
+            '#' .. i + 9,
+            function ()
+                if client.focus then
+                    local tag = awful.tag.gettags(client.focus.screen)[i]
+
+                    if tag then
+                        awful.client.toggletag(tag)
+                    end
+                end
+            end
+        )
+    )
 end
 
 clientbuttons = awful.util.table.join(
@@ -634,15 +672,15 @@ awful.rules.rules = {
 -- Signal function to execute when a new client appears.
 client.connect_signal('manage', function (c, startup)
     if c.instance == 'sun-awt-X11-XFramePeer' then
-	naughty.notify({ title = c.class })
+        naughty.notify({ title = c.class })
     elseif c.instance == 'gnome-terminal' then
-	for tag_name, title in pairs(my_terminal_titles_to_intercept) do
-	    if c.name == title and value_exists_in_table(c.tags(c), my_tags[tag_name]) == false then
-		naughty.notify({ title = 'Moved to the "' .. tag_name .. '" tag' })
-		awful.client.movetotag(my_tags[tag_name], c)
-		awful.tag.viewonly(my_tags[tag_name])
-	    end
-	end
+        for tag_name, title in pairs(my_terminal_titles_to_intercept) do
+            if c.name == title and value_exists_in_table(c.tags(c), my_tags[tag_name]) == false then
+                naughty.notify({ title = 'Moved to the "' .. tag_name .. '" tag' })
+                awful.client.movetotag(my_tags[tag_name], c)
+                awful.tag.viewonly(my_tags[tag_name])
+            end
+        end
     end
 
     -- Enable sloppy focus
@@ -722,20 +760,20 @@ client.connect_signal(
         if c.class == 'Firefox' and c.name:find('JIRA') ~= nil and c.tag ~= my_tags['jira'] then
             awful.client.movetotag(my_tags['jira'], c)
         elseif c.class == my_browser_window_class_1 or c.class == my_browser_window_class_2 and c.name ~= nil then
-	    for tag_name, title_pattern in pairs(my_browser_titles_to_intercept) do
-		if c.name:find(title_pattern) ~= nil and value_exists_in_table(c.tags(c), my_tags[tag_name]) == false then
-		    naughty.notify({ title = 'Moved to the "' .. tag_name .. '" tag' })
-		    awful.client.movetotag(my_tags[tag_name], c)
-		    awful.tag.viewonly(my_tags[tag_name])
-		end
-	    end
-	end
+            for tag_name, title_pattern in pairs(my_browser_titles_to_intercept) do
+                if c.name:find(title_pattern) ~= nil and value_exists_in_table(c.tags(c), my_tags[tag_name]) == false then
+                    naughty.notify({ title = 'Moved to the "' .. tag_name .. '" tag' })
+                    awful.client.movetotag(my_tags[tag_name], c)
+                    awful.tag.viewonly(my_tags[tag_name])
+                end
+            end
+        end
     end
 )
 
 do
     for apps_section_name, applications in pairs(my_startup_applications) do
-	start_applications_section(applications)
+        start_applications_section(applications)
     end
 end
 

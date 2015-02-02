@@ -18,7 +18,7 @@ function os.capture(cmd, raw)
     f:close()
 
     if raw then
-	return s
+        return s
     end
 
     result_string = string.gsub(s, '^%s+', '')
