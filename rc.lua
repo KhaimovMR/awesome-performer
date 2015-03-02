@@ -10,6 +10,8 @@ local beautiful = require('beautiful')
 -- Notification library
 local naughty = require('naughty')
 local menubar = require('menubar')
+-- Cheatsheets
+local cheatsheets_directory = '/home/mhaimov/Dropbox/Pictures/CheatSheets'
 
 
 -- {{{ Changing default style of notifications
@@ -485,22 +487,7 @@ globalkeys = awful.util.table.join(
         { 'Control', modkey },
         '#41',
         function ()
-            local vim_poster_pid = get_pids_by_cmd('vim-poster-a3.png')
-            local vim_navigation_pid = get_pids_by_cmd('vim-navigation.png')
-
-                if vim_poster_pid == '' then
-                awful.util.spawn('feh -FZNq /home/mhaimov/Dropbox/Pictures/CheatSheets/vim-poster-a3.png')
-            else
-                awful.util.spawn('feh -FZNq /home/mhaimov/Dropbox/Pictures/CheatSheets/vim-navigation.png')
-            end
-
-            if vim_poster_pid ~= '' then
-                awful.util.spawn('kill -15 ' .. vim_poster_pid)
-            end
-
-            if vim_navigation_pid ~= '' then
-                awful.util.spawn('kill -15  ' .. vim_navigation_pid)
-            end
+            awful.util.spawn('feh -FZNq ' .. cheatsheets_directory)
         end
     ),
     -- #44 - j
