@@ -10,9 +10,6 @@ local beautiful = require('beautiful')
 -- Notification library
 local naughty = require('naughty')
 local menubar = require('menubar')
--- Cheatsheets
-local cheatsheets_directory = '/home/mhaimov/Dropbox/Pictures/CheatSheets'
-
 
 -- {{{ Changing default style of notifications
 naughty.config.defaults['border_width'] = '0'
@@ -145,6 +142,10 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 require('my_tags')
 require('my_functions')
 require('my_vars')
+
+-- Cheatsheets
+local cheatsheets_directory = my_home_path .. '/Dropbox/Pictures/CheatSheets'
+
 
 -- {{{ Wibox
 
