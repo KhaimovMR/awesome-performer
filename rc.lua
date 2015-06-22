@@ -401,6 +401,16 @@ globalkeys = awful.util.table.join(
         end
     ),
 
+    -- California (calendar)
+    -- #38 - a
+    awful.key(
+        { modkey, 'Control' },
+        '#38',
+        function ()
+            awful.util.spawn('california')
+        end
+    ),
+
     -- Anamnesis
     -- #55 - v
     awful.key(
@@ -524,18 +534,18 @@ clientkeys = awful.util.table.join(
     awful.key({ modkey, 'Control' }, 'space',  awful.client.floating.toggle                     ),
     awful.key({ modkey, 'Control' }, 'Return', function (c) c:swap(awful.client.getmaster()) end),
     -- #32 - o
-    awful.key({ modkey,           }, 'o',      awful.client.movetoscreen                        ),
+    awful.key({ modkey,           }, '#32',      awful.client.movetoscreen                        ),
     -- #28 - t
-    awful.key({ modkey,           }, 't',      function (c) c.ontop = not c.ontop            end),
+    awful.key({ modkey,           }, '#28',      function (c) c.ontop = not c.ontop            end),
     -- #57 - n
-    awful.key({ modkey,           }, 'n',
+    awful.key({ modkey,           }, '#57',
         function (c)
             -- The client currently has the input focus, so it cannot be
             -- minimized, since minimized clients can't have the focus.
             c.minimized = true
         end),
     -- #58 - m
-    awful.key({ modkey,           }, 'm',
+    awful.key({ modkey,           }, '#58',
         function (c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_verticalical

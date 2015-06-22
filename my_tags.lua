@@ -48,13 +48,17 @@ my_tags = {
     phw = work_screen_tags[11 + screen_2_offset],
     ipython = work_screen_tags[12 + screen_2_offset],
     mindmeister = planning_screen_tags[1 + screen_3_offset],
+    meistertask = planning_screen_tags[1 + screen_3_offset],
     jira = planning_screen_tags[2 + screen_3_offset],
     yt = planning_screen_tags[2 + screen_3_offset],
     wiki = planning_screen_tags[3 + screen_3_offset],
-    wrike = planning_screen_tags[4 + screen_3_offset],
-    pyrun = planning_screen_tags[5 + screen_3_offset],
+    stash = planning_screen_tags[4 + screen_3_offset],
+    bamboo = planning_screen_tags[5 + screen_3_offset],
+    pyrun = planning_screen_tags[6 + screen_3_offset],
     work_mail = planning_screen_tags[9 + screen_3_offset],
-    personal_mail = planning_screen_tags[10 + screen_3_offset]
+    work_google_services = planning_screen_tags[10 + screen_3_offset],
+    personal_mail = planning_screen_tags[11 + screen_3_offset],
+    personal_google_services = planning_screen_tags[12 + screen_3_offset]
 }
 
 awful.layout.set(awful.layout.suit.tile, my_tags['skype'])
