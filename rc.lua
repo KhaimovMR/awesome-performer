@@ -311,240 +311,61 @@ require('my_mouse_bindings')
 my_mouse_bindings(awful, mymainmenu)
 
 -- }}}
-
--- {{{ Key bindings
--- You can use keycode ('#keycode') instead of key name ('key_name') as the second parameter to the function awful.key.
--- Keycode is the numeric code, that can be understood by "xmodmap" utility. It can be obtained from the "xev" utility
--- output.
-globalkeys = awful.util.table.join(
-    awful.key({ modkey }, 'Left',   awful.tag.viewprev       ),
-    awful.key({ modkey }, 'Right',  awful.tag.viewnext       ),
-    awful.key({ modkey }, 'Escape', awful.tag.history.restore),
-    awful.key({ modkey }, 'Tab',
-        function ()
-            awful.client.focus.byidx( 1)
-            if client.focus then client.focus:raise() end
-        end),
-    awful.key({ modkey, 'Shift'   }, 'Tab',
-        function ()
-            awful.client.focus.byidx(-1)
-            if client.focus then client.focus:raise() end
-        end),
-    -- #25 - w
-    awful.key({ modkey }, '#25', function () mymainmenu:show() end),
-
-    -- Layout manipulation
-    -- #44 - j
-    awful.key({ modkey, 'Shift'   }, '#44', function () awful.client.swap.byidx(-1)    end),
-    -- #45 - k
-    awful.key({ modkey, 'Shift'   }, '#45', function () awful.client.swap.byidx(1)    end),
-    -- #44 - j
-    awful.key({ 'Control', altkey }, '#44', function () awful.screen.focus(1) end),
-    -- #45 - k
-    awful.key({ 'Control', altkey }, '#45', function () awful.screen.focus(2) end),
-    -- #46 - l
-    awful.key({ 'Control', altkey }, '#46', function () awful.screen.focus(3) end),
-    -- #30 - u
-    awful.key({ modkey }, '#30', awful.client.urgent.jumpto),
-    
-    -- Standard program
-    awful.key({ modkey }, 'Return', function () awful.util.spawn(terminal) end),
-    -- #27 - r
-    awful.key({ modkey, 'Control' }, '#27', awesome.restart),
-    -- #24 - q
-    awful.key({ modkey, altkey, 'Shift' }, '#24', awesome.quit),
-    -- #39 - s
-    awful.key(
-        { modkey, altkey, 'Shift' },
-        '#39',
-        function ()
-            awful.util.spawn('dm-tool switch-to-greeter')
-        end
-    ),
-
-    -- #43 - h
-    awful.key({ modkey, 'Shift'   }, '#43',     function () awful.tag.incnmaster( 1)      end),
-    -- #46 - l
-    awful.key({ modkey, 'Shift'   }, '#46',     function () awful.tag.incnmaster(-1)      end),
-    -- #43 - h
-    awful.key({ modkey, 'Control' }, '#43',     function () awful.tag.incncol( 1)         end),
-    -- #46 - l
-    awful.key({ modkey, 'Control' }, '#46',     function () awful.tag.incncol(-1)         end),
-    awful.key({ modkey,           }, 'space', function () awful.layout.inc(layouts,  1) end),
-    awful.key({ modkey, 'Shift'   }, 'space', function () awful.layout.inc(layouts, -1) end),
-    awful.key({ modkey, 'Control' }, 'n', awful.client.restore),
-    awful.key({ }, 'Pause', function () kbdcfg.switch() end),
-    -- awful.key({ 'Control' }, 'Shift_L', function () kbdcfg.switch() end),
-
-    -- Prompt
-    awful.key({ modkey },            'r',     function () mypromptbox[mouse.screen]:run() end),
-    awful.key({ modkey }, 'x',
-              function ()
-                  awful.prompt.run({ prompt = 'Run Lua code: ' },
-                  mypromptbox[mouse.screen].widget,
-                  awful.util.eval, nil,
-                  awful.util.getdir('cache') .. '/history_eval')
-              end),
-    
-    -- Menubar
-    -- #33 - p
-    awful.key({ modkey }, '#33', function() menubar.show() end),
-
-    -- Lock screen (need to be installed through "apt-get install suckless-tools")
-    -- #43 - h
-    awful.key(
-        { modkey },
-        '#43',
-        function ()
-            kbdcfg.current = 2
-            kbdcfg.switch()
-            awful.util.spawn('slock')
-        end
-    ),
-
-    -- California (calendar)
-    -- #38 - a
-    awful.key(
-        { modkey, 'Control' },
-        '#38',
-        function ()
-            awful.util.spawn('california')
-        end
-    ),
-
-    -- Anamnesis
-    -- #55 - v
-    awful.key(
-        { 'Control', altkey },
-        '#55',
-        function ()
-            awful.util.spawn('anamnesis --browse')    
-        end
-    ),
-
-    -- Skype shortcuts
-    awful.key(
-        {altkey},
-        'End',
-        function ()
-            awful.tag.viewonly(my_tags['skype'])
-            awful.util.spawn('skypedbusctl recent')
-        end
-    ),
-    awful.key(
-        {altkey},
-        'Home',
-        function ()
-            awful.tag.viewonly(my_tags['skype'])
-            awful.util.spawn('skypedbusctl missed')
-        end
-    ),
-    awful.key(
-        {altkey},
-        'Next',
-        function ()
-            awful.util.spawn('skypedbusctl hang-up')
-        end
-    ),
-    awful.key(
-        {altkey},
-        'Prior',
-        function ()
-            awful.util.spawn('skypedbusctl pick-up')
-        end
-    ),
-    awful.key(
-        {altkey},
-        'Insert',
-        function ()
-            awful.tag.viewonly(my_tags['skype'])
-            awful.util.spawn('skypedbusctl contacts ' .. my_skype_login)
-        end
-    ),
-    -- #56 - b
-    awful.key(
-        { 'Control', modkey },
-        '#56',
-        function ()
-            awful.util.spawn('unity-control-center bluetooth')
-        end
-    ),
-    -- #39 - s
-    awful.key(
-        { 'Control', modkey },
-        '#39',
-        function ()
-            awful.util.spawn('unity-control-center sound')
-        end
-    ),
-    -- #25 - w
-    awful.key(
-        { 'Control', modkey },
-        '#25',
-        function ()
-            start_applications_section(my_startup_applications['work_terminals'])
-        end
-    ),
-    -- #58 - m
-    awful.key(
-        { 'Control', modkey },
-        '#58',
-        function ()
-            start_applications_section(my_startup_applications['mail'])
-        end
-    ),
-    -- #41 - f
-    awful.key(
-        { 'Control', modkey },
-        '#41',
-        function ()
-            awful.util.spawn('feh -FZNq ' .. cheatsheets_directory)
-        end
-    ),
-    -- #44 - j
-    awful.key(
-        { 'Control', modkey },
-        '#44',
-        function ()
-            start_applications_section(my_startup_applications['jira'])
-        end
-    ),
-    -- #31 - i
-    awful.key(
-        { 'Control', modkey },
-        '#31',
-        function ()
-            start_applications_section(my_startup_applications['wiki'])
-        end
-    ),
-    -- #57 - n
-    awful.key(
-        { 'Control', modkey },
-        '#57',
-        function ()
-            awful.util.spawn('google-chrome')
-        end
-    )
-)
+--
 
 clientkeys = awful.util.table.join(
     -- #41 - f
-    awful.key({ modkey }, '#41',      function (c) c.fullscreen = not c.fullscreen  end),
+    awful.key(
+        { modkey },
+        '#41',
+        function (c)
+            c.fullscreen = not c.fullscreen
+        end
+    ),
     -- #54 - c
-    awful.key({ modkey, 'Shift'   }, '#54',      function (c) c:kill()                         end),
-    awful.key({ modkey, 'Control' }, 'space',  awful.client.floating.toggle                     ),
-    awful.key({ modkey, 'Control' }, 'Return', function (c) c:swap(awful.client.getmaster()) end),
+    awful.key(
+        { modkey, 'Shift'   },
+        '#54',
+        function (c)
+            c:kill()
+        end
+    ),
+    awful.key(
+        { modkey, 'Control' },
+        'space',
+        awful.client.floating.toggle
+    ),
+    awful.key(
+        { modkey, 'Control' },
+        'Return',
+        function (c)
+            c:swap(awful.client.getmaster())
+        end
+    ),
     -- #32 - o
-    awful.key({ modkey,           }, '#32',      awful.client.movetoscreen                        ),
+    awful.key(
+        { modkey },
+        '#32',
+        awful.client.movetoscreen
+    ),
     -- #28 - t
-    awful.key({ modkey,           }, '#28',      function (c) c.ontop = not c.ontop            end),
+    awful.key(
+        { modkey },
+        '#28',
+        function (c)
+            c.ontop = not c.ontop
+        end
+    ),
     -- #57 - n
-    awful.key({ modkey,           }, '#57',
+    awful.key(
+        { modkey },
+        '#57',
         function (c)
             -- The client currently has the input focus, so it cannot be
             -- minimized, since minimized clients can't have the focus.
             c.minimized = true
-        end),
+        end
+    ),
     -- #58 - m
     awful.key({ modkey,           }, '#58',
         function (c)
@@ -554,92 +375,346 @@ clientkeys = awful.util.table.join(
     )
 )
 
--- Bind all key numbers to tags.
--- Be careful: we use keycodes to make it works on any keyboard layout.
--- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, tags_per_virtual_screen_count do
-    globalkeys = awful.util.table.join(globalkeys,
-        -- Screen 1 tags
-        awful.key(
-            { modkey, 'Control' },
-            '#' .. i + 9,
+-- {{{ Key bindings
+-- You can use keycode ('#keycode') instead of key name ('key_name') as the second parameter to the function awful.key.
+-- Keycode is the numeric code, that can be understood by "xmodmap" utility. It can be obtained from the "xev" utility
+-- output.
+--
+function make_default_keys()
+    local globalkeys = awful.util.table.join(
+        awful.key({ modkey }, 'Left',   awful.tag.viewprev       ),
+        awful.key({ modkey }, 'Right',  awful.tag.viewnext       ),
+        awful.key({ modkey }, 'Escape', awful.tag.history.restore),
+        awful.key({ modkey }, 'Tab',
             function ()
-                awful.screen.focus(surfing_screen)
-                awful.tag.viewonly(surfing_screen_tags[i + screen_1_offset])
+                awful.client.focus.byidx( 1)
+                if client.focus then client.focus:raise() end
+            end),
+        awful.key({ modkey, 'Shift'   }, 'Tab',
+            function ()
+                awful.client.focus.byidx(-1)
+                if client.focus then client.focus:raise() end
+            end),
+        -- #25 - w
+        awful.key({ modkey }, '#25', function () mymainmenu:show() end),
+
+        -- Layout manipulation
+        -- #44 - j
+        awful.key({ modkey, 'Shift'   }, '#44', function () awful.client.swap.byidx(-1)    end),
+        -- #45 - k
+        awful.key({ modkey, 'Shift'   }, '#45', function () awful.client.swap.byidx(1)    end),
+        -- #44 - j
+        awful.key({ modkey, 'Control' }, '#44', function () awful.screen.focus(1) end),
+        -- #45 - k
+        awful.key({ modkey, 'Control' }, '#45', function () awful.screen.focus(2) end),
+        -- #46 - l
+        awful.key({ modkey, 'Control' }, '#46', function () awful.screen.focus(3) end),
+        -- #30 - u
+        awful.key({ modkey }, '#30', awful.client.urgent.jumpto),
+        
+        -- Standard program
+        awful.key({ modkey }, 'Return', function () awful.util.spawn(terminal) end),
+        -- #27 - r
+        awful.key({ modkey, 'Control' }, '#27', awesome.restart),
+        -- #24 - q
+        awful.key({ modkey, altkey, 'Shift' }, '#24', awesome.quit),
+        -- #39 - s
+        awful.key(
+            { modkey, altkey, 'Shift' },
+            '#39',
+            function ()
+                awful.util.spawn('dm-tool switch-to-greeter')
             end
         ),
 
-        -- Screen 2 tags 
-        awful.key(
-            { 'Control' },
-            '#' .. i + 9,
-            function ()
-                awful.screen.focus(work_screen)
-                awful.tag.viewonly(work_screen_tags[i + screen_2_offset])
-            end
-        ),
+        -- #43 - h
+        awful.key({ modkey, 'Shift'   }, '#43',     function () awful.tag.incnmaster( 1)      end),
+        -- #46 - l
+        awful.key({ modkey, 'Shift'   }, '#46',     function () awful.tag.incnmaster(-1)      end),
+        -- #43 - h
+        awful.key({ modkey, 'Control' }, '#43',     function () awful.tag.incncol( 1)         end),
+        -- #46 - l
+        awful.key({ modkey, 'Control' }, '#46',     function () awful.tag.incncol(-1)         end),
+        awful.key({ modkey,           }, 'space', function () awful.layout.inc(layouts,  1) end),
+        awful.key({ modkey, 'Shift'   }, 'space', function () awful.layout.inc(layouts, -1) end),
+        awful.key({ modkey, 'Control' }, 'n', awful.client.restore),
+        awful.key({ }, 'Pause', function () kbdcfg.switch() end),
+        -- awful.key({ 'Control' }, 'Shift_L', function () kbdcfg.switch() end),
 
-        -- Screen 3 tags 
-        awful.key(
-            { 'Control', altkey },
-            '#' .. i + 9,
-            function ()
-                awful.screen.focus(planning_screen)
-                awful.tag.viewonly(planning_screen_tags[i + screen_3_offset])
-            end
-        ),
+        -- Prompt
+        awful.key({ modkey },            'r',     function () mypromptbox[mouse.screen]:run() end),
+        awful.key({ modkey }, 'x',
+                  function ()
+                      awful.prompt.run({ prompt = 'Run Lua code: ' },
+                      mypromptbox[mouse.screen].widget,
+                      awful.util.eval, nil,
+                      awful.util.getdir('cache') .. '/history_eval')
+                  end),
+        
+        -- Menubar
+        -- #33 - p
+        awful.key({ modkey }, '#33', function() menubar.show() end),
 
-        -- View tag only.
+        -- Lock screen (need to be installed through "apt-get install suckless-tools")
+        -- #43 - h
         awful.key(
             { modkey },
-            '#' .. i + 9,
+            '#43',
             function ()
-                local screen = mouse.screen
-                local tag = awful.tag.gettags(screen)[i]
-
-                if tag then
-                    awful.tag.viewonly(tag)
-                end
-            end),
-        -- Move client to tag.
-        awful.key(
-            { modkey, 'Shift' },
-            '#' .. i + 9,
-            function ()
-                if client.focus then
-                    local tag = awful.tag.gettags(client.focus.screen)[i]
-
-                    if tag then
-                        awful.client.movetotag(tag)
-                    end
-                end
+                kbdcfg.current = 2
+                kbdcfg.switch()
+                awful.util.spawn('slock')
             end
         ),
-        -- Toggle tag.
-        awful.key(
-            { modkey, 'Control', 'Shift' },
-            '#' .. i + 9,
-            function ()
-                if client.focus then
-                    local tag = awful.tag.gettags(client.focus.screen)[i]
 
-                    if tag then
-                        awful.client.toggletag(tag)
-                    end
-                end
+        -- California (calendar)
+        -- #38 - a
+        awful.key(
+            { modkey, 'Control' },
+            '#38',
+            function ()
+                awful.util.spawn('california')
+            end
+        ),
+
+        -- Anamnesis
+        -- #55 - v
+        awful.key(
+            { 'Control', altkey },
+            '#55',
+            function ()
+                awful.util.spawn('anamnesis --browse')    
+            end
+        ),
+
+        -- Skype shortcuts
+        awful.key(
+            {altkey},
+            'End',
+            function ()
+                awful.tag.viewonly(my_tags['skype'])
+                awful.util.spawn('skypedbusctl recent')
+            end
+        ),
+        awful.key(
+            {altkey},
+            'Home',
+            function ()
+                awful.tag.viewonly(my_tags['skype'])
+                awful.util.spawn('skypedbusctl missed')
+            end
+        ),
+        awful.key(
+            {altkey},
+            'Next',
+            function ()
+                awful.util.spawn('skypedbusctl hang-up')
+            end
+        ),
+        awful.key(
+            {altkey},
+            'Prior',
+            function ()
+                awful.util.spawn('skypedbusctl pick-up')
+            end
+        ),
+        awful.key(
+            {altkey},
+            'Insert',
+            function ()
+                awful.tag.viewonly(my_tags['skype'])
+                awful.util.spawn('skypedbusctl contacts ' .. my_skype_login)
+            end
+        ),
+        -- #56 - b
+        awful.key(
+            { 'Control', modkey },
+            '#56',
+            function ()
+                awful.util.spawn('unity-control-center bluetooth')
+            end
+        ),
+        -- #39 - s
+        awful.key(
+            { 'Control', modkey },
+            '#39',
+            function ()
+                awful.util.spawn('unity-control-center sound')
+            end
+        ),
+        -- #25 - w
+        awful.key(
+            { 'Control', modkey },
+            '#25',
+            function ()
+                start_applications_section(my_startup_applications['work_terminals'])
+            end
+        ),
+        -- #58 - m
+        awful.key(
+            { 'Control', modkey },
+            '#58',
+            function ()
+                start_applications_section(my_startup_applications['mail'])
+            end
+        ),
+        -- #41 - f
+        awful.key(
+            { 'Control', modkey },
+            '#41',
+            function ()
+                awful.util.spawn('feh -FZNq ' .. cheatsheets_directory)
+            end
+        ),
+        -- #31 - i
+        awful.key(
+            { 'Control', modkey },
+            '#31',
+            function ()
+                start_applications_section(my_startup_applications['jira'])
+            end
+        ),
+        -- #30 - u
+        awful.key(
+            { 'Control', modkey },
+            '#30',
+            function ()
+                start_applications_section(my_startup_applications['wiki'])
+            end
+        ),
+        -- #57 - n
+        awful.key(
+            { 'Control', modkey },
+            '#57',
+            function ()
+                awful.util.spawn('google-chrome')
             end
         )
     )
+
+    -- Bind all key numbers to tags.
+    -- Be careful: we use keycodes to make it works on any keyboard layout.
+    -- This should map on the top row of your keyboard, usually 1 to 9.
+    for i = 1, tags_per_virtual_screen_count do
+        globalkeys = awful.util.table.join(globalkeys,
+            -- Screen 1 tags
+            awful.key(
+                { modkey, 'Control' },
+                '#' .. i + 9,
+                function ()
+                    awful.screen.focus(surfing_screen)
+                    awful.tag.viewonly(surfing_screen_tags[i + screen_1_offset])
+                end
+            ),
+
+            -- Screen 2 tags 
+            awful.key(
+                { 'Control' },
+                '#' .. i + 9,
+                function ()
+                    awful.screen.focus(work_screen)
+                    awful.tag.viewonly(work_screen_tags[i + screen_2_offset])
+                end
+            ),
+
+            -- Screen 3 tags 
+            awful.key(
+                { 'Control', altkey },
+                '#' .. i + 9,
+                function ()
+                    awful.screen.focus(planning_screen)
+                    awful.tag.viewonly(planning_screen_tags[i + screen_3_offset])
+                end
+            ),
+
+            -- View tag only.
+            awful.key(
+                { modkey },
+                '#' .. i + 9,
+                function ()
+                    local screen = mouse.screen
+                    local tag = awful.tag.gettags(screen)[i]
+
+                    if tag then
+                        awful.tag.viewonly(tag)
+                    end
+                end),
+            -- Move client to tag.
+            awful.key(
+                { modkey, 'Shift' },
+                '#' .. i + 9,
+                function ()
+                    if client.focus then
+                        local tag = awful.tag.gettags(client.focus.screen)[i]
+
+                        if tag then
+                            awful.client.movetotag(tag)
+                        end
+                    end
+                end
+            ),
+            -- Toggle compatibility keys mode
+            -- #58 - m
+            awful.key(
+                { modkey, 'Control', 'Shift' },
+                '#58',
+                function ()
+                    root.keys(make_compatible_keys())
+                end
+            )
+        )
+    end
+
+    return globalkeys
 end
+
+function make_compatible_keys()
+    local globalkeys = awful.util.table.join(
+        awful.key({ modkey }, 'Left',   awful.tag.viewprev       ),
+        awful.key({ modkey }, 'Right',  awful.tag.viewnext       ),
+        awful.key({ modkey }, 'Escape', awful.tag.history.restore),
+        awful.key({ modkey }, 'Tab',
+            function ()
+                awful.client.focus.byidx( 1)
+                if client.focus then client.focus:raise() end
+            end
+        ),
+        awful.key({ modkey, 'Shift'   }, 'Tab',
+            function ()
+                awful.client.focus.byidx(-1)
+                if client.focus then client.focus:raise() end
+            end
+        ),
+        awful.key({ modkey, 'Control', 'Shift' }, 'Tab',
+            function ()
+                awful.client.focus.byidx(-1)
+                if client.focus then client.focus:raise() end
+            end
+        ),
+        -- Toggle compatibility keys mode
+        -- #58 - m
+        awful.key(
+            { modkey, 'Control', 'Shift' },
+            '#58',
+            function ()
+                root.keys(make_default_keys())
+            end
+        )
+    )
+
+    return globalkeys
+end
+
+globalkeys = make_default_keys()
+-- Set keys
+root.keys(globalkeys)
+
 
 clientbuttons = awful.util.table.join(
     awful.button({ }, 1, function (c) client.focus = c; c:raise() end),
     awful.button({ modkey }, 1, awful.mouse.client.move),
-    awful.button({ modkey }, 3, awful.mouse.client.resize))
-
--- Set keys
-root.keys(globalkeys)
--- }}}
+    awful.button({ modkey }, 3, awful.mouse.client.resize)
+)
 
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
