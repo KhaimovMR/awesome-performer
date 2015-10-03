@@ -547,7 +547,7 @@ function make_default_keys()
             { 'Control', modkey },
             '#25',
             function ()
-                start_applications_section(my_startup_applications['work_terminals'])
+                start_applications_section(my_applications['work_terminals'])
             end
         ),
         -- #58 - m
@@ -555,7 +555,7 @@ function make_default_keys()
             { 'Control', modkey },
             '#58',
             function ()
-                start_applications_section(my_startup_applications['mail'])
+                start_applications_section(my_applications['mail'])
             end
         ),
         -- #41 - f
@@ -571,7 +571,7 @@ function make_default_keys()
             { 'Control', modkey },
             '#31',
             function ()
-                start_applications_section(my_startup_applications['jira'])
+                start_applications_section(my_applications['jira'])
             end
         ),
         -- #30 - u
@@ -579,7 +579,7 @@ function make_default_keys()
             { 'Control', modkey },
             '#30',
             function ()
-                start_applications_section(my_startup_applications['wiki'])
+                start_applications_section(my_applications['wiki'])
             end
         ),
         -- #57 - n
@@ -846,7 +846,8 @@ client.connect_signal(
 )
 
 do
-    for apps_section_name, applications in pairs(my_startup_applications) do
+    for _, apps_section_name in pairs(my_startup_sections) do
+        applications = my_applications[apps_section_name]
         start_applications_section(applications)
     end
 end

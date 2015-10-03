@@ -24,7 +24,7 @@ my_browser_titles_to_intercept = {
     wiki = '%[wiki.example.com%]'
 }
 
-my_startup_applications = {
+my_applications = {
     -- { <section_1_name> = { <section_applications> }, <section_2_name> = { <section_applications> } ... etc }
     --     <section_name> - any syntax compatible name of the applications section
     --     <section_applications> - table, containing elements with structure described below
@@ -50,4 +50,5 @@ my_dev_website_url = 'some-dev-website.com'
 my_test_website_url = 'some-test-website.com'
 my_prod_website_url = 'some-website.com'
 ```
-
+-- sections from my_applications that should be run at the start of the awesome
+my_startup_sections = {"general", "mail"}
