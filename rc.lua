@@ -619,7 +619,7 @@ function make_default_keys()
 
             -- Screen 3 tags 
             awful.key(
-                { 'Control', altkey },
+                { modkey },
                 '#' .. i + 9,
                 function ()
                     awful.screen.focus(planning_screen)
@@ -627,18 +627,6 @@ function make_default_keys()
                 end
             ),
 
-            -- View tag only.
-            awful.key(
-                { modkey },
-                '#' .. i + 9,
-                function ()
-                    local screen = mouse.screen
-                    local tag = awful.tag.gettags(screen)[i]
-
-                    if tag then
-                        awful.tag.viewonly(tag)
-                    end
-                end),
             -- Move client to tag.
             awful.key(
                 { modkey, 'Shift' },
