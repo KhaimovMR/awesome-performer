@@ -1,7 +1,10 @@
 -- Standard awesome library
 local gears = require('gears')
 local awful = require('awful')
+
 awful.rules = require('awful.rules')
+awful.util.spawn_with_shell("xcompmgr &")
+
 require('awful.autofocus')
 -- Widget and layout library
 local wibox = require('wibox')
@@ -235,15 +238,22 @@ kbdcfg.layout = { { 'us', 'ru' }, { 'ru', 'us' } }
 kbdcfg.current = 1 -- us is our default layout
 kbdcfg.widget = wibox.widget.textbox()
 kbdcfg.widget:set_text(' ' .. kbdcfg.layout[kbdcfg.current][1] .. ' ')
-kbdcfg.switch = function ()
-    kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
-    local layout_pair = kbdcfg.layout[kbdcfg.current]
-    kbdcfg.widget:set_text(' ' .. layout_pair[1] .. ' ')
-    naughty.notify({ text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", position = "top_right", bg="#cc0000", replaces_id = 0 })
-    naughty.notify({ text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", position = "top_left", bg="#cc0000", replaces_id = 1 })
-    naughty.notify({ text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", position = "bottom_right", bg="#cc0000", replaces_id = 2 })
-    naughty.notify({ text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", position = "bottom_left", bg="#cc0000", replaces_id = 3 })
-    os.execute( kbdcfg.cmd .. ' ' .. layout_pair[1] .. ',' .. layout_pair[2] )
+kbdcfg.switch = function (do_switch)
+    local layout_pair
+
+    if do_switch == true then
+        kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
+        layout_pair = kbdcfg.layout[kbdcfg.current]
+        kbdcfg.widget:set_text(' ' .. layout_pair[1] .. ' ')
+        os.execute( kbdcfg.cmd .. ' ' .. layout_pair[1] .. ',' .. layout_pair[2] )
+    else
+        layout_pair = kbdcfg.layout[kbdcfg.current]
+    end
+
+    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", border_width=300, border_color="transparent", position = "top_right", bg="#cc0000", replaces_id = 0 })
+    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", border_width=300, border_color="transparent", position = "top_left", bg="#cc0000", replaces_id = 1 })
+    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", border_width=300, border_color="transparent", position = "bottom_right", bg="#cc0000", replaces_id = 2 })
+    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", border_width=300, border_color="transparent", position = "bottom_left", bg="#cc0000", replaces_id = 3 })
 end
 
 -- Mouse bindings
@@ -253,7 +263,7 @@ kbdcfg.widget:buttons(
             { },
             1,
             function ()
-            kbdcfg.switch()
+            kbdcfg.switch(true)
             end
         )
     )
@@ -441,7 +451,8 @@ function make_default_keys()
         awful.key({ modkey,           }, 'space', function () awful.layout.inc(layouts,  1) end),
         awful.key({ modkey, 'Shift'   }, 'space', function () awful.layout.inc(layouts, -1) end),
         awful.key({ modkey, 'Control' }, 'n', awful.client.restore),
-        awful.key({ }, 'Pause', function () kbdcfg.switch() end),
+        awful.key({ }, 'Pause', function () kbdcfg.switch(true) end),
+        awful.key({ 'Control' }, 'Pause', function () kbdcfg.switch(false) end),
         -- awful.key({ 'Control' }, 'Shift_L', function () kbdcfg.switch() end),
 
         -- Prompt
