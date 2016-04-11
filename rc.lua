@@ -239,7 +239,10 @@ kbdcfg.switch = function ()
     kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
     local layout_pair = kbdcfg.layout[kbdcfg.current]
     kbdcfg.widget:set_text(' ' .. layout_pair[1] .. ' ')
-    naughty.notify({ title = layout_pair[1] })
+    naughty.notify({ text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", position = "top_right", bg="#cc0000", replaces_id = 0 })
+    naughty.notify({ text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", position = "top_left", bg="#cc0000", replaces_id = 1 })
+    naughty.notify({ text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", position = "bottom_right", bg="#cc0000", replaces_id = 2 })
+    naughty.notify({ text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", position = "bottom_left", bg="#cc0000", replaces_id = 3 })
     os.execute( kbdcfg.cmd .. ' ' .. layout_pair[1] .. ',' .. layout_pair[2] )
 end
 
@@ -717,11 +720,11 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
     { rule = { instance = 'TeamViewer.exe' }, properties = { tag = my_tags['teamviewer'] } },
     { rule = { instance = 'skype', class = 'Skype' }, properties = { tag = my_tags['skype'] } },
-    { rule = { class = 'jetbrains-pychar' }, properties = { tag = my_tags['pycharm'], fullscreen = true } },
-    { rule = { class = 'jetbrains-pycharm' }, properties = { tag = my_tags['pycharm'], fullscreen = true } },
-    { rule = { name = 'VimCoding-Python' }, properties = { tag = my_tags['pycharm'], fullscreen = true } },
-    { rule = { name = 'VimCoding-PHP' }, properties = { tag = my_tags['pycharm'], fullscreen = true } },
-    { rule = { instance = 'sun-awt-X11-XFramePeer', class = 'NetBeans IDE' }, properties = { tag = my_tags['netbeans'], fullscreen = true } },
+    { rule = { class = 'jetbrains-pychar' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
+    { rule = { class = 'jetbrains-pycharm' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
+    { rule = { name = 'VimCoding-Python' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
+    { rule = { name = 'VimCoding-PHP' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
+    { rule = { instance = 'sun-awt-X11-XFramePeer', class = 'NetBeans IDE' }, properties = { tag = my_tags['netbeans'], fullscreen = false } },
     { rule = { instance = 'sun-awt-X11-XFramePeer', class = 'freemind-main-FreeMindStarte' }, properties = { tag = my_tags['freemind'] } },
     { rule = { instance = 'mysql-workbench-bin' }, properties = { tag = my_tags['mysql'] } },
     { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
