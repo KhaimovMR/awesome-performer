@@ -240,6 +240,7 @@ kbdcfg.widget = wibox.widget.textbox()
 kbdcfg.widget:set_text(' ' .. kbdcfg.layout[kbdcfg.current][1] .. ' ')
 kbdcfg.switch = function (do_switch)
     local layout_pair
+    local bg_color
 
     if do_switch == true then
         kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
@@ -250,10 +251,16 @@ kbdcfg.switch = function (do_switch)
         layout_pair = kbdcfg.layout[kbdcfg.current]
     end
 
-    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", border_width=300, border_color="transparent", position = "top_right", bg="#cc0000", replaces_id = 0 })
-    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", border_width=300, border_color="transparent", position = "top_left", bg="#cc0000", replaces_id = 1 })
-    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", border_width=300, border_color="transparent", position = "bottom_right", bg="#cc0000", replaces_id = 2 })
-    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 20'>" .. layout_pair[1] .. "</span>", border_width=300, border_color="transparent", position = "bottom_left", bg="#cc0000", replaces_id = 3 })
+    if layout_pair[1] == "ru" then
+        bg_color = "#cc0000"
+    else
+        bg_color = "#0000cc"
+    end
+
+    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>" .. layout_pair[1] .. "</span>", border_width=300, border_color="transparent", position = "top_right", bg=bg_color, replaces_id = 0 })
+    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>" .. layout_pair[1] .. "</span>", border_width=300, border_color="transparent", position = "top_left", bg=bg_color, replaces_id = 1 })
+    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>" .. layout_pair[1] .. "</span>", border_width=300, border_color="transparent", position = "bottom_right", bg=bg_color, replaces_id = 2 })
+    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>" .. layout_pair[1] .. "</span>", border_width=300, border_color="transparent", position = "bottom_left", bg=bg_color, replaces_id = 3 })
 end
 
 -- Mouse bindings
@@ -700,10 +707,18 @@ function make_compatible_keys()
             '#58',
             function ()
                 root.keys(make_default_keys())
+                naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>COMPATIBILITY MODE IS OFF</span>", border_width=300, border_color="transparent", position = "top_right", bg="#227722", replaces_id = 0 })
+                naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>COMPATIBILITY MODE IS OFF</span>", border_width=300, border_color="transparent", position = "top_left", bg="#227722", replaces_id = 1 })
+                naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>COMPATIBILITY MODE IS OFF</span>", border_width=300, border_color="transparent", position = "bottom_right", bg="#227722", replaces_id = 2 })
+                naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>COMPATIBILITY MODE IS OFF</span>", border_width=300, border_color="transparent", position = "bottom_left", bg="#227722", replaces_id = 3 })
             end
         )
     )
 
+    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>COMPATIBILITY MODE IS ON</span>", border_width=300, border_color="transparent", position = "top_right", bg="#cc0000", replaces_id = 0 })
+    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>COMPATIBILITY MODE IS ON</span>", border_width=300, border_color="transparent", position = "top_left", bg="#cc0000", replaces_id = 1 })
+    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>COMPATIBILITY MODE IS ON</span>", border_width=300, border_color="transparent", position = "bottom_right", bg="#cc0000", replaces_id = 2 })
+    naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>COMPATIBILITY MODE IS ON</span>", border_width=300, border_color="transparent", position = "bottom_left", bg="#cc0000", replaces_id = 3 })
     return globalkeys
 end
 
