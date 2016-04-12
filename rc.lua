@@ -476,7 +476,7 @@ function make_default_keys()
             '#43',
             function ()
                 kbdcfg.current = 2
-                kbdcfg.switch()
+                kbdcfg.switch(true)
                 awful.util.spawn('slock')
             end
         ),
