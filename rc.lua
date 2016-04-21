@@ -383,7 +383,11 @@ clientkeys = awful.util.table.join(
         function (c)
             -- The client currently has the input focus, so it cannot be
             -- minimized, since minimized clients can't have the focus.
-            c.minimized = true
+            if c.minimized == true then
+                c.minimized = false
+            else
+                c.minimized = true
+            end
         end
     ),
     -- #58 - m
@@ -712,7 +716,8 @@ function make_compatible_keys()
                 naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>COMPATIBILITY MODE IS OFF</span>", border_width=300, border_color="transparent", position = "bottom_right", bg="#227722", replaces_id = 2 })
                 naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>COMPATIBILITY MODE IS OFF</span>", border_width=300, border_color="transparent", position = "bottom_left", bg="#227722", replaces_id = 3 })
             end
-        )
+        ),
+        awful.key({ }, 'Pause', function () kbdcfg.switch(true) end)
     )
 
     naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>COMPATIBILITY MODE IS ON</span>", border_width=300, border_color="transparent", position = "top_right", bg="#cc0000", replaces_id = 0 })
