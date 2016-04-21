@@ -3,7 +3,7 @@ local gears = require('gears')
 local awful = require('awful')
 
 awful.rules = require('awful.rules')
-awful.util.spawn_with_shell("xcompmgr &")
+awful.util.spawn_with_shell("killall unagi; sleep 5; unagi &")
 
 require('awful.autofocus')
 -- Widget and layout library
