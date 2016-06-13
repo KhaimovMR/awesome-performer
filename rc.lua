@@ -614,6 +614,26 @@ function make_default_keys()
             function ()
                 awful.util.spawn('google-chrome')
             end
+        ),
+
+        -- Get full screen screenshot
+        -- #107 - PrintScreen
+        awful.key(
+            { },
+            '#107',
+            function ()
+                awful.util.spawn('shutter -f')
+            end
+        ),
+
+        -- Get screenshot with selection
+        -- #107 - PrintScreen
+        awful.key(
+            { 'Control' },
+            '#107',
+            function ()
+                awful.util.spawn('shutter -s')
+            end
         )
     )
 
@@ -666,6 +686,7 @@ function make_default_keys()
                     end
                 end
             ),
+
             -- Toggle compatibility keys mode
             -- #58 - m
             awful.key(

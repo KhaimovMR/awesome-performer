@@ -43,6 +43,7 @@ my_tags = {
     gimp = work_screen_tags[4 + screen_2_offset],
     ssh_test = work_screen_tags[5 + screen_2_offset],
     skype = work_screen_tags[6 + screen_2_offset],
+    hangouts = work_screen_tags[6 + screen_2_offset],
     pyr = work_screen_tags[8 + screen_2_offset],
     phr = work_screen_tags[9 + screen_2_offset],
     pyw = work_screen_tags[10 + screen_2_offset],
