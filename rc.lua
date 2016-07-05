@@ -575,6 +575,14 @@ function make_default_keys()
                 start_applications_section(my_applications['work_terminals'])
             end
         ),
+        -- #26 - e
+        awful.key(
+            { 'Control', modkey },
+            '#26',
+            function ()
+                awful.util.spawn('togglable-window chromium-browser "chromium-browser --app=https://mindmeister.com"')
+            end
+        ),
         -- #58 - m
         awful.key(
             { 'Control', modkey },
@@ -781,7 +789,8 @@ awful.rules.rules = {
     { rule = { instance = 'mysql-workbench-bin' }, properties = { tag = my_tags['mysql'] } },
     { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
     { rule = { instance = 'tilda' }, properties = { border_width = 0, fullscreen = true } },
-    { rule = { class = 'Gimp'}, properties = { border_width = 0, tag = my_tags['gimp'] } }
+    { rule = { class = 'Gimp'}, properties = { border_width = 0, tag = my_tags['gimp'] } },
+    { rule = { class = 'toggleAppchromium-browser'}, properties = { border_width = 0, sticky = true } }
 }
 -- }}}
 

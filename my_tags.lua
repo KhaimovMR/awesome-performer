@@ -58,9 +58,11 @@ my_tags = {
     bamboo = planning_screen_tags[5 + screen_3_offset],
     pyrun = planning_screen_tags[6 + screen_3_offset],
     work_mail = planning_screen_tags[9 + screen_3_offset],
-    work_google_services = planning_screen_tags[10 + screen_3_offset],
+    work_google_docs = planning_screen_tags[10 + screen_3_offset],
+    work_google_calendar = planning_screen_tags[10 + screen_3_offset],
     personal_mail = planning_screen_tags[11 + screen_3_offset],
-    personal_google_services = planning_screen_tags[12 + screen_3_offset]
+    personal_google_docs = planning_screen_tags[12 + screen_3_offset],
+    personal_google_calendar = planning_screen_tags[12 + screen_3_offset]
 }
 
 awful.layout.set(awful.layout.suit.tile, my_tags['skype'])
