@@ -80,6 +80,14 @@ editor_cmd = terminal .. ' -e ' .. editor
 altkey = 'Mod1'
 modkey = 'Mod4'
 
+-- togglable_browser
+--local togglable_browser_tag = tags[1]
+
+function togglable_browser()
+    --togglable_browser_tag = tag
+    awful.util.spawn('togglable-window chromium-browser "chromium-browser --app=https://mindmeister.com"')
+end
+
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
 {
@@ -579,8 +587,8 @@ function make_default_keys()
         awful.key(
             { 'Control', modkey },
             '#26',
-            function ()
-                awful.util.spawn('togglable-window chromium-browser "chromium-browser --app=https://mindmeister.com"')
+            function (c)
+                togglable_browser()
             end
         ),
         -- #58 - m
@@ -788,9 +796,9 @@ awful.rules.rules = {
     { rule = { instance = 'sun-awt-X11-XFramePeer', class = 'freemind-main-FreeMindStarte' }, properties = { tag = my_tags['freemind'] } },
     { rule = { instance = 'mysql-workbench-bin' }, properties = { tag = my_tags['mysql'] } },
     { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
-    { rule = { instance = 'tilda' }, properties = { border_width = 0, fullscreen = true } },
-    { rule = { class = 'Gimp'}, properties = { border_width = 0, tag = my_tags['gimp'] } },
-    { rule = { class = 'toggleAppchromium-browser'}, properties = { border_width = 0, sticky = true } }
+    { rule = { instance = 'tilda' }, properties = { fullscreen = true } },
+    { rule = { class = 'Gimp'}, properties = { tag = my_tags['gimp'] } },
+    { rule = { instance = 'toggleAppchromium-browser'}, properties = { fullscreen = true, sticky = true } }
 }
 -- }}}
 
