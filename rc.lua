@@ -83,9 +83,12 @@ modkey = 'Mod4'
 -- togglable_browser
 --local togglable_browser_tag = tags[1]
 
-function togglable_browser()
-    --togglable_browser_tag = tag
-    awful.util.spawn('togglable-window chromium-browser "chromium-browser --app=https://mindmeister.com"')
+function chromium_mindmeister ()
+    awful.util.spawn('togglable-window chromium-browser ChromiumMindmeister "chromium-browser --app=https://mindmeister.com --user-data-dir=~/.config/chromium-mindmeister"')
+end
+
+function chromium_stuff ()
+    awful.util.spawn('togglable-window chromium-browser ChromiumStuff "chromium-browser --user-data-dir=~/.config/chromium-stuff"')
 end
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -428,7 +431,7 @@ function make_default_keys()
                 if client.focus then client.focus:raise() end
             end),
         -- #25 - w
-        awful.key({ modkey }, '#25', function () mymainmenu:show() end),
+        -- awful.key({ modkey }, '#25', function () mymainmenu:show() end),
 
         -- Layout manipulation
         -- #44 - j
@@ -585,10 +588,18 @@ function make_default_keys()
         ),
         -- #26 - e
         awful.key(
-            { 'Control', modkey },
+            { modkey },
             '#26',
             function (c)
-                togglable_browser()
+                chromium_mindmeister()
+            end
+        ),
+        -- #25 - w
+        awful.key(
+            { modkey },
+            '#25',
+            function (c)
+                chromium_stuff()
             end
         ),
         -- #58 - m
@@ -798,7 +809,8 @@ awful.rules.rules = {
     { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
     { rule = { instance = 'tilda' }, properties = { fullscreen = true } },
     { rule = { class = 'Gimp'}, properties = { tag = my_tags['gimp'] } },
-    { rule = { instance = 'toggleAppchromium-browser'}, properties = { fullscreen = true, sticky = true } }
+    { rule = { instance = 'ToggleAppChromiumMindmeister'}, properties = { fullscreen = true, sticky = true } },
+    { rule = { instance = 'ToggleAppChromiumStuff'}, properties = { fullscreen = true, sticky = true } }
 }
 -- }}}
 
