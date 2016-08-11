@@ -13,6 +13,7 @@ local beautiful = require('beautiful')
 -- Notification library
 local naughty = require('naughty')
 local menubar = require('menubar')
+local my_home_path = os.getenv('HOME')
 
 -- {{{ Changing default style of notifications
 naughty.config.defaults['border_width'] = '0'
@@ -84,11 +85,11 @@ modkey = 'Mod4'
 --local togglable_browser_tag = tags[1]
 
 function chromium_mindmeister ()
-    awful.util.spawn('togglable-window chromium-browser ChromiumMindmeister "chromium-browser --app=https://mindmeister.com --user-data-dir=~/.config/chromium-mindmeister"')
+    awful.util.spawn('togglable-window google-chrome ChromiumMindmeister "google-chrome --app=https://mindmeister.com --user-data-dir=' .. my_home_path .. '/.config/chromium-mindmeister"')
 end
 
 function chromium_stuff ()
-    awful.util.spawn('togglable-window chromium-browser ChromiumStuff "chromium-browser --user-data-dir=~/.config/chromium-stuff"')
+    awful.util.spawn('togglable-window google-chrome ChromiumStuff "google-chrome --user-data-dir=' .. my_home_path .. '/.config/chromium-stuff"')
 end
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -308,7 +309,7 @@ for s = 1, screen.count() do
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = 'top', screen = s })
+    mywibox[s] = awful.wibox({ position = 'bottom', screen = s })
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
