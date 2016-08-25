@@ -84,12 +84,28 @@ modkey = 'Mod4'
 -- togglable_browser
 --local togglable_browser_tag = tags[1]
 
-function chromium_mindmeister ()
-    awful.util.spawn('togglable-window google-chrome ChromiumMindmeister "google-chrome --app=https://mindmeister.com --user-data-dir=' .. my_home_path .. '/.config/chromium-mindmeister"')
+function chrome_mindmeister (state)
+    local set_state
+
+    if state == nil then
+        set_state = ""
+    else
+        set_state = " " .. state
+    end
+
+    awful.util.spawn('togglable-window google-chrome ChromiumMindmeister "google-chrome --app=https://mindmeister.com --user-data-dir=' .. my_home_path .. '/.config/chromium-mindmeister"' .. set_state)
 end
 
-function chromium_stuff ()
-    awful.util.spawn('togglable-window google-chrome ChromiumStuff "google-chrome --user-data-dir=' .. my_home_path .. '/.config/chromium-stuff"')
+function chrome_stuff (state)
+    local set_state
+
+    if state == nil then
+        set_state = ""
+    else
+        set_state = " " .. state
+    end
+
+    awful.util.spawn('togglable-window google-chrome ChromiumStuff "google-chrome --user-data-dir=' .. my_home_path .. '/.config/chromium-stuff"' .. set_state)
 end
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -592,7 +608,7 @@ function make_default_keys()
             { modkey },
             '#26',
             function (c)
-                chromium_mindmeister()
+                chrome_mindmeister()
             end
         ),
         -- #25 - w
@@ -600,7 +616,7 @@ function make_default_keys()
             { modkey },
             '#25',
             function (c)
-                chromium_stuff()
+                chrome_stuff()
             end
         ),
         -- #58 - m
@@ -675,6 +691,8 @@ function make_default_keys()
                 { modkey, 'Control' },
                 '#' .. i + 9,
                 function ()
+                    chrome_stuff("hide")
+                    chrome_mindmeister("hide")
                     awful.screen.focus(surfing_screen)
                     awful.tag.viewonly(surfing_screen_tags[i + screen_1_offset])
                 end
@@ -685,6 +703,8 @@ function make_default_keys()
                 { 'Control' },
                 '#' .. i + 9,
                 function ()
+                    chrome_stuff("hide")
+                    chrome_mindmeister("hide")
                     awful.screen.focus(work_screen)
                     awful.tag.viewonly(work_screen_tags[i + screen_2_offset])
                 end
@@ -695,6 +715,8 @@ function make_default_keys()
                 { modkey },
                 '#' .. i + 9,
                 function ()
+                    chrome_stuff("hide")
+                    chrome_mindmeister("hide")
                     awful.screen.focus(planning_screen)
                     awful.tag.viewonly(planning_screen_tags[i + screen_3_offset])
                 end
