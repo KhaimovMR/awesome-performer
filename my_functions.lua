@@ -1,5 +1,6 @@
 local awful = require('awful')
 local naughty = require('naughty')
+local my_home_path = os.getenv('HOME')
 
 function value_exists_in_table(tbl, search_value)
    for _, value in pairs(tbl) do
@@ -72,4 +73,45 @@ function start_applications_section(applications_section)
             awful.util.spawn(app_start_cmd)
         end
     end
+end
+
+-- dropdown applications 
+function dropdown_app_toggle (app_name, action)
+    local set_action = "toggle"
+
+    if state ~= nil then
+        set_action = action
+    end
+
+    if app_name == "mindmeister" then
+        dropdown_stuff("hide")
+        dropdown_terminal("hide")
+        dropdown_mindmeister(set_action)
+    elseif app_name == "stuff" then
+        dropdown_mindmeister("hide")
+        dropdown_terminal("hide")
+        dropdown_stuff(set_action)
+    elseif app_name == "terminal" then
+        dropdown_mindmeister("hide")
+        dropdown_stuff("hide")
+        dropdown_terminal(set_action)
+    end
+end
+
+function dropdown_hide_all ()
+    dropdown_mindmeister("hide")
+    dropdown_stuff("hide")
+    dropdown_terminal("hide")
+end
+
+function dropdown_mindmeister (action)
+    awful.util.spawn('dropdown-window ChromeMindmeister ' .. action .. ' "google-chrome --app=https://mindmeister.com --user-data-dir=' .. my_home_path .. '/.config/chrome-mindmeister" ')
+end
+
+function dropdown_stuff (action)
+    awful.util.spawn('dropdown-window ChromeStuff ' .. action .. ' "google-chrome --user-data-dir=' .. my_home_path .. '/.config/chrome-stuff" ')
+end
+
+function dropdown_terminal (action)
+    awful.util.spawn('dropdown-window Terminal ' .. action .. ' "gnome-terminal --disable-factory --title=DropdownTerminal --profile=DropdownTerminal"')
 end

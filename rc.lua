@@ -81,33 +81,6 @@ editor_cmd = terminal .. ' -e ' .. editor
 altkey = 'Mod1'
 modkey = 'Mod4'
 
--- togglable_browser
---local togglable_browser_tag = tags[1]
-
-function chrome_mindmeister (state)
-    local set_state
-
-    if state == nil then
-        set_state = ""
-    else
-        set_state = " " .. state
-    end
-
-    awful.util.spawn('togglable-window google-chrome ChromiumMindmeister "google-chrome --app=https://mindmeister.com --user-data-dir=' .. my_home_path .. '/.config/chromium-mindmeister"' .. set_state)
-end
-
-function chrome_stuff (state)
-    local set_state
-
-    if state == nil then
-        set_state = ""
-    else
-        set_state = " " .. state
-    end
-
-    awful.util.spawn('togglable-window google-chrome ChromiumStuff "google-chrome --user-data-dir=' .. my_home_path .. '/.config/chromium-stuff"' .. set_state)
-end
-
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
 {
@@ -607,16 +580,24 @@ function make_default_keys()
         awful.key(
             { modkey },
             '#26',
-            function (c)
-                chrome_mindmeister()
+            function ()
+                dropdown_app_toggle("mindmeister")
             end
         ),
         -- #25 - w
         awful.key(
             { modkey },
             '#25',
-            function (c)
-                chrome_stuff()
+            function ()
+                dropdown_app_toggle("stuff")
+            end
+        ),
+        -- #24 - q
+        awful.key(
+            { modkey },
+            '#24',
+            function ()
+                dropdown_app_toggle("terminal")
             end
         ),
         -- #58 - m
@@ -691,8 +672,7 @@ function make_default_keys()
                 { modkey, 'Control' },
                 '#' .. i + 9,
                 function ()
-                    chrome_stuff("hide")
-                    chrome_mindmeister("hide")
+                    dropdown_hide_all()
                     awful.screen.focus(surfing_screen)
                     awful.tag.viewonly(surfing_screen_tags[i + screen_1_offset])
                 end
@@ -703,8 +683,7 @@ function make_default_keys()
                 { 'Control' },
                 '#' .. i + 9,
                 function ()
-                    chrome_stuff("hide")
-                    chrome_mindmeister("hide")
+                    dropdown_hide_all()
                     awful.screen.focus(work_screen)
                     awful.tag.viewonly(work_screen_tags[i + screen_2_offset])
                 end
@@ -715,8 +694,7 @@ function make_default_keys()
                 { modkey },
                 '#' .. i + 9,
                 function ()
-                    chrome_stuff("hide")
-                    chrome_mindmeister("hide")
+                    dropdown_hide_all()
                     awful.screen.focus(planning_screen)
                     awful.tag.viewonly(planning_screen_tags[i + screen_3_offset])
                 end
@@ -824,6 +802,7 @@ awful.rules.rules = {
     { rule = { instance = 'skype', class = 'Skype' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'jetbrains-pychar' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { class = 'jetbrains-pycharm' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
+    { rule = { instance = 'gnome-terminal' }, properties = { size_hints_honor = false } },
     { rule = { name = 'VimCoding-Python' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { name = 'VimCoding-PHP' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { instance = 'sun-awt-X11-XFramePeer', class = 'NetBeans IDE' }, properties = { tag = my_tags['netbeans'], fullscreen = false } },
@@ -832,8 +811,9 @@ awful.rules.rules = {
     { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
     { rule = { instance = 'tilda' }, properties = { fullscreen = true } },
     { rule = { class = 'Gimp'}, properties = { tag = my_tags['gimp'] } },
-    { rule = { instance = 'ToggleAppChromiumMindmeister'}, properties = { fullscreen = true, sticky = true } },
-    { rule = { instance = 'ToggleAppChromiumStuff'}, properties = { fullscreen = true, sticky = true } }
+    { rule = { instance = 'DropdownAppTerminal'}, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
+    { rule = { instance = 'DropdownAppChromeMindmeister'}, properties = { fullscreen = true, sticky = true } },
+    { rule = { instance = 'DropdownAppChromeStuff'}, properties = { fullscreen = true, sticky = true } }
 }
 -- }}}
 
