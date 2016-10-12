@@ -65,4 +65,4 @@ my_tags = {
     personal_google_calendar = planning_screen_tags[12 + screen_3_offset]
 }
 
-awful.layout.set(awful.layout.suit.tile, my_tags['skype'])
+--awful.layout.set(awful.layout.suit.tile, my_tags['skype'])

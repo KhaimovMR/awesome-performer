@@ -334,6 +334,11 @@ my_mouse_bindings(awful, mymainmenu)
 -- }}}
 --
 
+--- {{{ Calendar widget
+cal = require("cal")
+cal.register(mytextclock, "<span background='#ff9999'><b>%s</b></span>") -- now the current day is bold instead of underline
+-- }}}
+
 clientkeys = awful.util.table.join(
     -- #41 - f
     awful.key(
