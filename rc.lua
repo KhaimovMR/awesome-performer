@@ -107,9 +107,16 @@ end
 tags_template = {}
 tags_count = 36 / screen.count()
 tags_per_virtual_screen_count = 12
+local j = 1
 
 for i = 1, tags_count do
-    table.insert(tags_template, i)
+    if j > 12 then
+        j = 1
+    end
+
+    table.insert(tags_template, j)
+
+    j = j + 1
 end
 
 tags = {}
