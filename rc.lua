@@ -796,6 +796,7 @@ clientbuttons = awful.util.table.join(
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
     -- All clients will match this rule.
+    -- windows classes are acquired by the 'xprop | grep "WM_CLASS"' command
     { rule = { },
       properties = { border_width = beautiful.border_width,
                      border_color = beautiful.border_normal,
@@ -805,6 +806,7 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
     { rule = { instance = 'TeamViewer.exe' }, properties = { tag = my_tags['teamviewer'] } },
     { rule = { instance = 'skype', class = 'Skype' }, properties = { tag = my_tags['skype'] } },
+    { rule = { instance = 'skypeforlinux', class = 'skypeforlinux' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'jetbrains-pychar' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { class = 'jetbrains-pycharm' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { instance = 'gnome-terminal' }, properties = { size_hints_honor = false } },
