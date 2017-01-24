@@ -812,6 +812,7 @@ awful.rules.rules = {
                      keys = clientkeys,
                      buttons = clientbuttons } },
     { rule = { instance = 'TeamViewer.exe' }, properties = { tag = my_tags['teamviewer'] } },
+    { rule = { class = 'TeamViewer' }, properties = { tag = my_tags['teamviewer'] } },
     { rule = { instance = 'skype', class = 'Skype' }, properties = { tag = my_tags['skype'] } },
     { rule = { instance = 'skypeforlinux', class = 'skypeforlinux' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'jetbrains-pychar' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },

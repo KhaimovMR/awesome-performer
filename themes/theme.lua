@@ -4,7 +4,7 @@
 
 theme = {}
 
-theme.font          = "ubuntu mono 10"
+theme.font          = "ubuntu mono 11"
 
 theme.bg_normal     = "#000000"
 theme.bg_focus      = "#93dc96"
@@ -14,7 +14,7 @@ theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = "#ffffff"
 theme.fg_focus      = "#000000"
-theme.fg_urgent     = "#ff5500"
+theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#555555"
 
 theme.border_width  = 1
