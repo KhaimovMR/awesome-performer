@@ -818,8 +818,8 @@ awful.rules.rules = {
     { rule = { class = 'jetbrains-pychar' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { class = 'jetbrains-pycharm' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { instance = 'gnome-terminal' }, properties = { size_hints_honor = false } },
-    { rule = { name = 'VimCoding-Python' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
-    { rule = { name = 'VimCoding-PHP' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
+    { rule = { name = 'VimCoding-Python' }, properties = { tag = my_tags['vim_coding_python'], fullscreen = false } },
+    { rule = { name = 'VimCoding-PHP' }, properties = { tag = my_tags['vim_coding_php'], fullscreen = false } },
     { rule = { instance = 'sun-awt-X11-XFramePeer', class = 'NetBeans IDE' }, properties = { tag = my_tags['netbeans'], fullscreen = false } },
     { rule = { instance = 'sun-awt-X11-XFramePeer', class = 'freemind-main-FreeMindStarte' }, properties = { tag = my_tags['freemind'] } },
     { rule = { instance = 'mysql-workbench-bin' }, properties = { tag = my_tags['mysql'] } },
@@ -837,7 +837,7 @@ awful.rules.rules = {
 client.connect_signal('manage', function (c, startup)
     if c.instance == 'sun-awt-X11-XFramePeer' then
         naughty.notify({ title = c.class })
-    elseif c.instance == 'gnome-terminal' then
+    elseif c.instance == 'terminator' then
         for tag_name, title in pairs(my_terminal_titles_to_intercept) do
             if c.name == title and value_exists_in_table(c.tags(c), my_tags[tag_name]) == false then
                 naughty.notify({ title = 'Moved to the "' .. tag_name .. '" tag' })
