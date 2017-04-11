@@ -612,6 +612,14 @@ function make_default_keys()
                 dropdown_app_toggle("terminal")
             end
         ),
+        -- #45 - k
+        awful.key(
+            { modkey },
+            '#45',
+            function ()
+                dropdown_app_toggle("android-keyboard")
+            end
+        ),
         -- #58 - m
         awful.key(
             { 'Control', modkey },
@@ -826,7 +834,8 @@ awful.rules.rules = {
     { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
     { rule = { instance = 'tilda' }, properties = { fullscreen = true } },
     { rule = { class = 'Gimp'}, properties = { tag = my_tags['gimp'] } },
-    { rule = { instance = 'DropdownAppTerminal'}, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
+    { rule = { instance = 'DropdownAppAndroidKeyboard'}, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
+    { rule = { instance = 'DropdownAppTerminal'}, properties = { fullscreen = true, sticky = true, size_hints_honor = false } },
     { rule = { instance = 'DropdownAppChromeMindmeister'}, properties = { fullscreen = true, sticky = true } },
     { rule = { instance = 'DropdownAppChromeStuff'}, properties = { fullscreen = true, sticky = true } }
 }

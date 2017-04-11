@@ -84,21 +84,30 @@ function dropdown_app_toggle (app_name, action)
     end
 
     if app_name == "mindmeister" then
+        dropdown_android_keyboard("hide")
+        dropdown_mindmeister(set_action)
         dropdown_stuff("hide")
         dropdown_terminal("hide")
-        dropdown_mindmeister(set_action)
     elseif app_name == "stuff" then
+        dropdown_android_keyboard("hide")
         dropdown_mindmeister("hide")
-        dropdown_terminal("hide")
         dropdown_stuff(set_action)
+        dropdown_terminal("hide")
     elseif app_name == "terminal" then
+        dropdown_android_keyboard("hide")
         dropdown_mindmeister("hide")
         dropdown_stuff("hide")
         dropdown_terminal(set_action)
+    elseif app_name == "android-keyboard" then
+        dropdown_android_keyboard(set_action)
+        dropdown_mindmeister("hide")
+        dropdown_stuff("hide")
+        dropdown_terminal("hide")
     end
 end
 
 function dropdown_hide_all ()
+    dropdown_android_keyboard("hide")
     dropdown_mindmeister("hide")
     dropdown_stuff("hide")
     dropdown_terminal("hide")
@@ -113,5 +122,9 @@ function dropdown_stuff (action)
 end
 
 function dropdown_terminal (action)
-    awful.util.spawn('dropdown-window Terminal ' .. action .. ' "gnome-terminal --disable-factory --title=DropdownTerminal --profile=DropdownTerminal"')
+    awful.util.spawn('dropdown-window Terminal ' .. action .. ' "terminator --title=dropdown-terminal --profile=dropdown-terminal"')
+end
+
+function dropdown_android_keyboard (action)
+    awful.util.spawn('dropdown-window AndroidKeyboard ' .. action .. ' "terminator --title=android-keyboard --profile=android-keyboard"')
 end
