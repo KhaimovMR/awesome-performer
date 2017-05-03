@@ -305,7 +305,7 @@ for s = 1, screen.count() do
     mytasklist[s] = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, mytasklist.buttons)
 
     -- Create the wibox
-    mywibox[s] = awful.wibox({ position = 'bottom', screen = s })
+    mywibox[s] = awful.wibox({ position = 'top', screen = s })
 
     -- Widgets that are aligned to the left
     local left_layout = wibox.layout.fixed.horizontal()
@@ -835,7 +835,7 @@ awful.rules.rules = {
     { rule = { instance = 'tilda' }, properties = { fullscreen = true } },
     { rule = { class = 'Gimp'}, properties = { tag = my_tags['gimp'] } },
     { rule = { instance = 'DropdownAppAndroidKeyboard'}, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
-    { rule = { name = 'dropdown-terminal'}, properties = { fullscreen = true, sticky = true, size_hints_honor = false } },
+    -- { rule = { name = 'dropdown-terminal'}, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
     { rule = { instance = 'DropdownAppTerminal'}, properties = { fullscreen = true, sticky = true, size_hints_honor = false } },
     { rule = { instance = 'DropdownAppChromeMindmeister'}, properties = { fullscreen = true, sticky = true } },
     { rule = { instance = 'DropdownAppChromeStuff'}, properties = { fullscreen = true, sticky = true } }
