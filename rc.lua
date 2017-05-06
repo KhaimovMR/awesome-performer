@@ -835,8 +835,7 @@ awful.rules.rules = {
     { rule = { instance = 'tilda' }, properties = { fullscreen = true } },
     { rule = { class = 'Gimp'}, properties = { tag = my_tags['gimp'] } },
     { rule = { instance = 'DropdownAppAndroidKeyboard'}, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
-    -- { rule = { name = 'dropdown-terminal'}, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
-    { rule = { instance = 'DropdownAppTerminal'}, properties = { fullscreen = true, sticky = true, size_hints_honor = false } },
+    { rule = { instance = 'DropdownAppTerminal'}, properties = { border_width=0, fullscreen=true, above=true, sticky=true, x=0, y=0, width=1920, height=1080, size_hints_honor = false } },
     { rule = { instance = 'DropdownAppChromeMindmeister'}, properties = { fullscreen = true, sticky = true } },
     { rule = { instance = 'DropdownAppChromeStuff'}, properties = { fullscreen = true, sticky = true } }
 }
