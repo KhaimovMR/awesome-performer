@@ -122,7 +122,7 @@ function dropdown_stuff (action)
 end
 
 function dropdown_terminal (action)
-    awful.util.spawn('dropdown-window Terminal ' .. action .. ' "terminator --title=dropdown-terminal --profile=dropdown-terminal"')
+    awful.util.spawn('dropdown-window Terminal ' .. action .. ' "urxvt -pixmap /opt/user-settings/Dropbox/Pictures/Wallpapers/vintage_ornament-wallpaper-1920x1080-dark.png"')
 end
 
 function dropdown_android_keyboard (action)
