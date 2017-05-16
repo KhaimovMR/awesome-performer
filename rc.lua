@@ -922,15 +922,28 @@ client.connect_signal('manage', function (c, startup)
     end
 end)
 
-client.connect_signal('focus', function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal('unfocus', function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal(
+    'focus',
+    function(c)
+        c.border_color = beautiful.border_focus
+    end
+)
+
+client.connect_signal(
+    'unfocus',
+    function(c)
+        c.border_color = beautiful.border_normal
+    end
+)
 -- }}}
 
 
 client.connect_signal(
     'property::name',
     function(c)
-        if c.class == 'Firefox' and c.name:find('JIRA') ~= nil and c.tag ~= my_tags['jira'] then
+        if c.name:find('DropdownApp') ~= nil  then
+            c.fullscreen = true
+        elseif c.class == 'Firefox' and c.name:find('JIRA') ~= nil and c.tag ~= my_tags['jira'] then
             awful.client.movetotag(my_tags['jira'], c)
         elseif c.class == my_browser_window_class_1 or c.class == my_browser_window_class_2 and c.name ~= nil then
             for tag_name, title_pattern in pairs(my_browser_titles_to_intercept) do
