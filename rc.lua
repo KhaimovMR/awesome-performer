@@ -947,6 +947,7 @@ client.connect_signal(
     'property::name',
     function(c)
         if c.name:find('DropdownApp') ~= nil  then
+            c.border_width = 0
             c.fullscreen = true
         elseif c.class == 'Firefox' and c.name:find('JIRA') ~= nil and c.tag ~= my_tags['jira'] then
             awful.client.movetotag(my_tags['jira'], c)
