@@ -593,7 +593,7 @@ function make_default_keys()
             { modkey },
             '#26',
             function ()
-                dropdown_app_toggle("mindmeister")
+                dropdown_app_toggle("ChromeMindmeister")
             end
         ),
         -- #25 - w
@@ -601,7 +601,7 @@ function make_default_keys()
             { modkey },
             '#25',
             function ()
-                dropdown_app_toggle("stuff")
+                dropdown_app_toggle("ChromeStuff")
             end
         ),
         -- #24 - q
@@ -609,7 +609,7 @@ function make_default_keys()
             { modkey },
             '#24',
             function ()
-                dropdown_app_toggle("terminal")
+                dropdown_app_toggle("Terminal")
             end
         ),
         -- #45 - k
@@ -617,7 +617,7 @@ function make_default_keys()
             { modkey },
             '#45',
             function ()
-                dropdown_app_toggle("android-keyboard")
+                dropdown_app_toggle("AndroidKeyboard")
             end
         ),
         -- #58 - m
@@ -692,7 +692,7 @@ function make_default_keys()
                 { modkey, 'Control' },
                 '#' .. i + 9,
                 function ()
-                    dropdown_hide_all()
+                    dropdown_app_toggle('all', 'hide')
                     awful.screen.focus(surfing_screen)
                     awful.tag.viewonly(surfing_screen_tags[i + screen_1_offset])
                 end
@@ -703,7 +703,7 @@ function make_default_keys()
                 { 'Control' },
                 '#' .. i + 9,
                 function ()
-                    dropdown_hide_all()
+                    dropdown_app_toggle('all', 'hide')
                     awful.screen.focus(work_screen)
                     awful.tag.viewonly(work_screen_tags[i + screen_2_offset])
                 end
@@ -714,7 +714,7 @@ function make_default_keys()
                 { modkey },
                 '#' .. i + 9,
                 function ()
-                    dropdown_hide_all()
+                    dropdown_app_toggle('all', 'hide')
                     awful.screen.focus(planning_screen)
                     awful.tag.viewonly(planning_screen_tags[i + screen_3_offset])
                 end
@@ -834,10 +834,10 @@ awful.rules.rules = {
     { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
     { rule = { instance = 'tilda' }, properties = { fullscreen = true } },
     { rule = { class = 'Gimp'}, properties = { tag = my_tags['gimp'] } },
-    { rule = { instance = 'DropdownAppAndroidKeyboard'}, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
-    { rule = { instance = 'DropdownAppTerminal'}, properties = { fullscreen=true, sticky=true, size_hints_honor = false } },
-    { rule = { instance = 'DropdownAppChromeMindmeister'}, properties = { fullscreen = true, sticky = true } },
-    { rule = { instance = 'DropdownAppChromeStuff'}, properties = { fullscreen = true, sticky = true } }
+    { rule = { instance='DropdownAppAndroidKeyboard' }, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
+    { rule = { instance='DropdownAppTerminal' }, properties = { fullscreen=true, sticky=true, size_hints_honor = false } },
+    { rule = { instance='DropdownAppChromeMindmeister' }, properties = { fullscreen = true, sticky = true } },
+    { rule = { instance='DropdownAppChromeStuff' }, properties = { fullscreen = true, sticky = true } }
 }
 -- }}}
 
@@ -932,6 +932,11 @@ client.connect_signal(
 client.connect_signal(
     'unfocus',
     function(c)
+        if c.instance:find('DropdownApp') ~= nil  then
+            local app_name = string.sub(c.instance, 12, string.len(c.instance))
+            dropdown_app_toggle(app_name, 'hide')
+        end
+
         c.border_color = beautiful.border_normal
     end
 )

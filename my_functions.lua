@@ -79,52 +79,22 @@ end
 function dropdown_app_toggle (app_name, action)
     local set_action = "toggle"
 
-    if state ~= nil then
+    if action ~= nil then
         set_action = action
     end
 
-    if app_name == "mindmeister" then
-        dropdown_android_keyboard("hide")
-        dropdown_mindmeister(set_action)
-        dropdown_stuff("hide")
-        dropdown_terminal("hide")
-    elseif app_name == "stuff" then
-        dropdown_android_keyboard("hide")
-        dropdown_mindmeister("hide")
-        dropdown_stuff(set_action)
-        dropdown_terminal("hide")
-    elseif app_name == "terminal" then
-        dropdown_android_keyboard("hide")
-        dropdown_mindmeister("hide")
-        dropdown_stuff("hide")
-        dropdown_terminal(set_action)
-    elseif app_name == "android-keyboard" then
-        dropdown_android_keyboard(set_action)
-        dropdown_mindmeister("hide")
-        dropdown_stuff("hide")
-        dropdown_terminal("hide")
+    if app_name == "ChromeMindmeister" then
+        awful.util.spawn('dropdown-window ChromeMindmeister ' .. set_action .. ' "google-chrome --app=https://mindmeister.com --user-data-dir=' .. my_home_path .. '/.config/chrome-mindmeister" ')
+    elseif app_name == "ChromeStuff" then
+        awful.util.spawn('dropdown-window ChromeStuff ' .. set_action .. ' "google-chrome --user-data-dir=' .. my_home_path .. '/.config/chrome-stuff" ')
+    elseif app_name == "Terminal" then
+        awful.util.spawn('dropdown-window Terminal ' .. set_action .. ' "urxvt -pixmap /opt/user-settings/Dropbox/Pictures/Wallpapers/vintage_ornament-wallpaper-1920x1080-dark.png"')
+    elseif app_name == "AndroidKeyboard" then
+        awful.util.spawn('dropdown-window AndroidKeyboard ' .. set_action .. ' "terminator --title=android-keyboard --profile=android-keyboard"')
+    else
+        awful.util.spawn('dropdown-window ChromeMindmeister hide')
+        awful.util.spawn('dropdown-window ChromeStuff hide')
+        awful.util.spawn('dropdown-window Terminal hide')
+        awful.util.spawn('dropdown-window AndroidKeyboard hide')
     end
-end
-
-function dropdown_hide_all ()
-    dropdown_android_keyboard("hide")
-    dropdown_mindmeister("hide")
-    dropdown_stuff("hide")
-    dropdown_terminal("hide")
-end
-
-function dropdown_mindmeister (action)
-    awful.util.spawn('dropdown-window ChromeMindmeister ' .. action .. ' "google-chrome --app=https://mindmeister.com --user-data-dir=' .. my_home_path .. '/.config/chrome-mindmeister" ')
-end
-
-function dropdown_stuff (action)
-    awful.util.spawn('dropdown-window ChromeStuff ' .. action .. ' "google-chrome --user-data-dir=' .. my_home_path .. '/.config/chrome-stuff" ')
-end
-
-function dropdown_terminal (action)
-    awful.util.spawn('dropdown-window Terminal ' .. action .. ' "urxvt -pixmap /opt/user-settings/Dropbox/Pictures/Wallpapers/vintage_ornament-wallpaper-1920x1080-dark.png"')
-end
-
-function dropdown_android_keyboard (action)
-    awful.util.spawn('dropdown-window AndroidKeyboard ' .. action .. ' "terminator --title=android-keyboard --profile=android-keyboard"')
 end
