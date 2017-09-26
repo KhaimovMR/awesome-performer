@@ -715,7 +715,7 @@ function make_default_keys()
             globalkeys,
             -- Screen 1 tags
             awful.key(
-                { modkey, 'Control' },
+                { modkey },
                 '#' .. i + 9,
                 function ()
                     dropdown_app_toggle('all', 'hide')
@@ -737,7 +737,7 @@ function make_default_keys()
 
             -- Screen 3 tags 
             awful.key(
-                { modkey },
+                { altkey },
                 '#' .. i + 9,
                 function ()
                     dropdown_app_toggle('all', 'hide')
