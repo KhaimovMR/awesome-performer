@@ -104,25 +104,50 @@ end
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
 
-tags_template = {}
-tags_count = 36 / screen.count()
-tags_per_virtual_screen_count = 12
+tags = {}
+local tags_count = 36 / screen.count()
+local tags_per_virtual_screen_count = 12
+local screen_count = screen.count()
 local j = 1
 
-for i = 1, tags_count do
-    if j > 12 then
-        j = 1
+if screen_count == 2 then
+    local tags_template_1 = {}
+
+    for i = 1, 12 do
+        table.insert(tags_template_1, j)
+        j = j + 1
     end
 
-    table.insert(tags_template, j)
+    -- second screen tags_template
+    local tags_template_2 = {}
 
-    j = j + 1
-end
+    for i = 1, 24 do
+        if j > 12 then
+            j = 1
+        end
 
-tags = {}
-for s = 1, screen.count() do
-    -- Each screen has its own tag table.
-    tags[s] = awful.tag(tags_template, s, layouts[4])
+        table.insert(tags_template_2, j)
+        j = j + 1
+    end
+
+    tags[1] = awful.tag(tags_template_1, 1, layouts[4])
+    tags[2] = awful.tag(tags_template_2, 2, layouts[4])
+else
+    local tags_template = {}
+
+    for i = 1, tags_count do
+        if j > 12 then
+            j = 1
+        end
+
+        table.insert(tags_template, j)
+        j = j + 1
+    end
+
+    for s = 1, screen_count do
+        -- Each screen has its own tag table.
+        tags[s] = awful.tag(tags_template, s, layouts[4])
+    end
 end
 
 -- }}}
@@ -686,7 +711,8 @@ function make_default_keys()
     -- Be careful: we use keycodes to make it works on any keyboard layout.
     -- This should map on the top row of your keyboard, usually 1 to 9.
     for i = 1, tags_per_virtual_screen_count do
-        globalkeys = awful.util.table.join(globalkeys,
+        globalkeys = awful.util.table.join(
+            globalkeys,
             -- Screen 1 tags
             awful.key(
                 { modkey, 'Control' },
