@@ -30,25 +30,25 @@ function os.capture(cmd, raw)
 end
 
 
-function get_pids_by_cmd(cmd)
-    local pids = os.capture(
-        'ps ax | grep -E "' .. cmd .. '" | sed "s/^[ \t]//g" | grep -v grep | grep -E "^[0-9]+" -o'
-    )
+function get_pids_by_cmd(cmd, xdotool_search)
+    local pids
 
-    --if pids ~= '' then
-    --    naughty.notify({
-    --        preset = naughty.config.presets.critical,
-    --        title = 'Program is already launched!',
-    --        text = pids .. " for app - " .. cmd
-    --    })
-    --end
+    if xdotool_search then
+        pids = os.capture(
+            'xdotool search --name "' .. cmd .. '"'
+        )
+    else
+        pids = os.capture(
+            'ps ax | grep -E "' .. cmd .. '" | sed "s/^[ \t]//g" | grep -v grep | grep -E "^[0-9]+" -o'
+        )
+    end
 
     return pids
 end
 
 
 function kill_processes_by_cmd(cmd)
-    local pids = get_pids_by_cmd(cmd)
+    local pids = get_pids_by_cmd(cmd, false)
 
     if pids ~= '' then
 	os.execute('kill ' .. pids)
@@ -69,7 +69,7 @@ function start_applications_section(applications_section)
             app_check_cmd = app_start_cmd
         end
 
-        if app_check_cmd == false or get_pids_by_cmd(app_check_cmd) == '' then
+        if app_check_cmd == false or get_pids_by_cmd(app_check_cmd, true) == '' then
             awful.util.spawn(app_start_cmd)
         end
     end
