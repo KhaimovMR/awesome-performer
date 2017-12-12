@@ -64,12 +64,13 @@ function start_applications_section(applications_section)
     for _, app in pairs(applications_section) do
         app_start_cmd = app[1]
         app_check_cmd = app[2]
+        do_xdo_check = app[3]
 
         if app_check_cmd == true then
             app_check_cmd = app_start_cmd
         end
 
-        if app_check_cmd == false or get_pids_by_cmd(app_check_cmd, true) == '' then
+        if app_check_cmd == false or get_pids_by_cmd(app_check_cmd, do_xdo_check) == '' then
             awful.util.spawn(app_start_cmd)
         end
     end
@@ -88,7 +89,7 @@ function dropdown_app_toggle (app_name, action)
     elseif app_name == "ChromeStuff" then
         awful.util.spawn('dropdown-window ChromeStuff ' .. set_action .. ' "google-chrome --user-data-dir=' .. my_home_path .. '/.config/chrome-stuff" ')
     elseif app_name == "Terminal" then
-        awful.util.spawn('dropdown-window Terminal ' .. set_action .. ' "urxvt -pixmap /opt/user-settings/Dropbox/Pictures/Wallpapers/vintage_ornament-wallpaper-1920x1080-dark.png -e tmux new-session -A -s urxvt"')
+        awful.util.spawn('dropdown-window Terminal ' .. set_action .. ' "urxvt -pixmap /home/khaimovmr/Dropbox/Pictures/Wallpapers/vintage_ornament-wallpaper-1920x1080-dark.png -e tmux new-session -A -s urxvt"')
     elseif app_name == "AndroidKeyboard" then
         awful.util.spawn('dropdown-window AndroidKeyboard ' .. set_action .. ' "terminator --title=android-keyboard --profile=android-keyboard"')
     else

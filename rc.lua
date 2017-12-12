@@ -853,6 +853,7 @@ awful.rules.rules = {
     { rule = { instance = 'skypeforlinux', class = 'skypeforlinux' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'TeamSpeak 3' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'TelegramDesktop' }, properties = { tag = my_tags['skype'] } },
+    { rule = { class = 'Slack' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'discord' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'jetbrains-pychar' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { class = 'jetbrains-pycharm' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
@@ -877,7 +878,7 @@ awful.rules.rules = {
 client.connect_signal('manage', function (c, startup)
     if c.instance == 'sun-awt-X11-XFramePeer' then
         naughty.notify({ title = c.class })
-    elseif c.instance == 'terminator' then
+    elseif c.instance == 'terminator' or c.instance == 'x-terminal-emulator' then
         for tag_name, title in pairs(my_terminal_titles_to_intercept) do
             if c.name == title and value_exists_in_table(c.tags(c), my_tags[tag_name]) == false then
                 naughty.notify({ title = 'Moved to the "' .. tag_name .. '" tag' })
