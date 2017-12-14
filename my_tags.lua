@@ -60,11 +60,11 @@ my_tags = {
     wiki = planning_screen_tags[3 + screen_3_offset],
     stash = planning_screen_tags[4 + screen_3_offset],
     bamboo = planning_screen_tags[5 + screen_3_offset],
+    work_google_docs = planning_screen_tags[8 + screen_3_offset],
+    personal_google_docs = planning_screen_tags[8 + screen_3_offset],
     work_mail = planning_screen_tags[9 + screen_3_offset],
-    work_google_docs = planning_screen_tags[10 + screen_3_offset],
     work_google_calendar = planning_screen_tags[10 + screen_3_offset],
     personal_mail = planning_screen_tags[11 + screen_3_offset],
-    personal_google_docs = planning_screen_tags[12 + screen_3_offset],
     personal_google_calendar = planning_screen_tags[12 + screen_3_offset]
 }
 
