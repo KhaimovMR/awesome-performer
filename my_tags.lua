@@ -62,6 +62,7 @@ my_tags = {
     bamboo = planning_screen_tags[5 + screen_3_offset],
     work_google_docs = planning_screen_tags[8 + screen_3_offset],
     personal_google_docs = planning_screen_tags[8 + screen_3_offset],
+    draw_io = planning_screen_tags[8 + screen_3_offset],
     work_mail = planning_screen_tags[9 + screen_3_offset],
     work_google_calendar = planning_screen_tags[10 + screen_3_offset],
     personal_mail = planning_screen_tags[11 + screen_3_offset],
