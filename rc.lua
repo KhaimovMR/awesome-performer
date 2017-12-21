@@ -682,6 +682,8 @@ function make_default_keys()
             { 'Control', modkey },
             '#57',
             function ()
+                awful.screen.focus(surfing_screen)
+                awful.tag.viewonly(surfing_screen_tags[1 + screen_1_offset])
                 awful.util.spawn('google-chrome')
             end
         ),
