@@ -36,6 +36,7 @@ my_tags = {
     teamviewer = surfing_screen_tags[10 + screen_1_offset],
     games = surfing_screen_tags[11 + screen_1_offset],
     music = surfing_screen_tags[12 + screen_1_offset],
+    google_music = surfing_screen_tags[12 + screen_1_offset],
     youtube = surfing_screen_tags[12 + screen_1_offset],
     pycharm = work_screen_tags[1 + screen_2_offset],
     vim_coding_python = work_screen_tags[1 + screen_2_offset],

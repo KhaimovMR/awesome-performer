@@ -2,6 +2,13 @@
 local gears = require('gears')
 local awful = require('awful')
 
+require('my_functions')
+require('my_vars')
+
+if is_work_pc then
+    awful.util.spawn('ws-screens-layout.sh')
+end
+
 awful.rules = require('awful.rules')
 awful.util.spawn_with_shell("killall unagi; sleep 5; unagi &")
 
@@ -176,8 +183,6 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- }}}
 
 require('my_tags')
-require('my_functions')
-require('my_vars')
 
 -- Cheatsheets
 local cheatsheets_directory = my_home_path .. '/Dropbox/Pictures/CheatSheets'
@@ -594,7 +599,8 @@ function make_default_keys()
             { 'Control', modkey },
             '#56',
             function ()
-                awful.util.spawn('unity-control-center bluetooth')
+                awful.util.spawn('btc')
+                naughty.notify({ text = 'Trying to connect/disconnect bluetooth A2DB device...' })
             end
         ),
         -- #39 - s
