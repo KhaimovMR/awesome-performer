@@ -545,6 +545,17 @@ function make_default_keys()
             end
         ),
 
+        -- Kill dev django server
+        -- #38 - a
+        awful.key(
+            { modkey },
+            '#38',
+            function ()
+                awful.tag.viewonly(my_tags['pyr'])
+                awful.util.spawn('pkill -fe runserver')
+            end
+        ),
+
         -- Anamnesis
         -- #55 - v
         awful.key(
