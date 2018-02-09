@@ -986,6 +986,10 @@ client.connect_signal(
 client.connect_signal(
     'property::name',
     function(c)
+        if not c.name then
+            return
+        end
+
         if c.name:find('DropdownApp') ~= nil  then
             c.border_width = 0
             c.fullscreen = true
