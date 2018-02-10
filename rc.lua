@@ -670,6 +670,14 @@ function make_default_keys()
                 start_applications_section(my_applications['mail'])
             end
         ),
+        -- #25 - w
+        awful.key(
+            { 'Control', modkey },
+            '#25',
+            function ()
+                start_applications_section(my_applications['current_work_links'])
+            end
+        ),
         -- #41 - f
         awful.key(
             { 'Control', modkey },
@@ -888,7 +896,7 @@ awful.rules.rules = {
     { rule = { instance='DropdownAppAndroidKeyboard' }, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
     { rule = { instance='DropdownAppTerminal' }, properties = { fullscreen=true, sticky=true, size_hints_honor = false } },
     { rule = { instance='DropdownAppChromeMindmeister' }, properties = { fullscreen = true, sticky = true } },
-    { rule = { instance='DropdownAppChromeStuff' }, properties = { fullscreen = true, sticky = true } }
+    { rule = { instance='DropdownAppChromeStuff' }, properties = { fullscreen = true, sticky = true, tag = my_tags['vim_coding_php'] } }
 }
 -- }}}
 
@@ -983,16 +991,15 @@ client.connect_signal(
 client.connect_signal(
     'unfocus',
     function(c)
-        if c.instance:find('DropdownApp') ~= nil  then
-            local app_name = string.sub(c.instance, 12, string.len(c.instance))
-            dropdown_app_toggle(app_name, 'hide')
-        end
+        -- if c.instance:find('DropdownApp') ~= nil  then
+            -- local app_name = string.sub(c.instance, 12, string.len(c.instance))
+            -- dropdown_app_toggle(app_name, 'hide')
+        -- end
 
         c.border_color = beautiful.border_normal
     end
 )
 -- }}}
-
 
 client.connect_signal(
     'property::name',
