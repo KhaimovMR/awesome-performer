@@ -510,7 +510,14 @@ function make_default_keys()
         -- awful.key({ 'Control' }, 'Shift_L', function () kbdcfg.switch() end),
 
         -- Prompt
-        awful.key({ modkey },            'r',     function () mypromptbox[mouse.screen]:run() end),
+        -- #27 - r
+        awful.key(
+            { modkey },
+            '#27',
+            function (evt)
+                mypromptbox[mouse.screen]:run()
+            end
+        ),
         awful.key({ modkey }, 'x',
                   function ()
                       awful.prompt.run({ prompt = 'Run Lua code: ' },
@@ -552,7 +559,7 @@ function make_default_keys()
             '#38',
             function ()
                 awful.tag.viewonly(my_tags['pyr'])
-                awful.util.spawn('pkill -fe runserver')
+                awful.util.spawn('sudo pkill -fe runserver')
             end
         ),
 
@@ -607,7 +614,7 @@ function make_default_keys()
         ),
         -- #56 - b
         awful.key(
-            { 'Control', modkey },
+            {  modkey },
             '#56',
             function ()
                 awful.util.spawn('btc')
