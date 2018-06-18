@@ -631,7 +631,7 @@ function make_default_keys()
         ),
         -- #25 - w
         awful.key(
-            { 'Control', modkey },
+            { 'Control', altkey },
             '#25',
             function ()
                 start_applications_section(my_applications['work_terminals'])
@@ -682,6 +682,7 @@ function make_default_keys()
             { 'Control', modkey },
             '#25',
             function ()
+                dropdown_app_toggle("ChromeStuff")
                 start_applications_section(my_applications['current_work_links'])
             end
         ),
@@ -889,6 +890,7 @@ awful.rules.rules = {
     { rule = { class = 'TelegramDesktop' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'Slack' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'discord' }, properties = { tag = my_tags['skype'] } },
+    { rule = { class = 'ViberPC' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'jetbrains-pychar' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { class = 'jetbrains-pycharm' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { instance = 'gnome-terminal' }, properties = { size_hints_honor = false } },
@@ -1035,6 +1037,11 @@ client.connect_signal(
 do
     for _, apps_section_name in pairs(my_startup_sections) do
         applications = my_applications[apps_section_name]
+
+        if apps_section_name == "current_work_links" then
+            dropdown_app_toggle("ChromeStuff")
+        end
+
         start_applications_section(applications)
     end
 end
