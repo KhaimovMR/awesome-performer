@@ -59,7 +59,7 @@ do
             naughty.notify({ 
                 preset = naughty.config.presets.critical,
                 title = 'Oops, an error happened!',
-                text = debug.traceback()
+                text = tostring(err) .. '\n\n' .. debug.traceback()
             })
             in_error = false
         end
@@ -279,6 +279,7 @@ kbdcfg.widget:set_text(' ' .. kbdcfg.layout[kbdcfg.current][1] .. ' ')
 kbdcfg.switch = function (do_switch)
     local layout_pair
     local bg_color
+    naughty.destroy_all_notifications(nil, -1)
 
     if do_switch == true then
         kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
