@@ -40,7 +40,7 @@ if awesome.startup_errors then
     naughty.notify({
         preset = naughty.config.presets.critical,
         title = 'Oops, there were errors during startup!',
-        text = awesome.startup_errors 
+        text = awesome.startup_errors
     })
 end
 
@@ -54,9 +54,9 @@ do
             if in_error then
                 return
             end
-            
+
             in_error = true
-            naughty.notify({ 
+            naughty.notify({
                 preset = naughty.config.presets.critical,
                 title = 'Oops, an error happened!',
                 text = tostring(err) .. '\n\n' .. debug.traceback()
@@ -169,7 +169,7 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({
-    items = { 
+    items = {
         { 'awesome', myawesomemenu, beautiful.awesome_icon },
         { 'Debian', debian.menu.Debian_menu.Debian },
         { 'open terminal', terminal }
@@ -276,16 +276,25 @@ kbdcfg.layout = { { 'us', 'ru' }, { 'ru', 'us' } }
 kbdcfg.current = 1 -- us is our default layout
 kbdcfg.widget = wibox.widget.textbox()
 kbdcfg.widget:set_text(' ' .. kbdcfg.layout[kbdcfg.current][1] .. ' ')
-kbdcfg.switch = function (do_switch)
+kbdcfg.switch = function (do_switch, specific_layout)
     local layout_pair
     local bg_color
     naughty.destroy_all_notifications(nil, -1)
 
     if do_switch == true then
-        kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
+        if specific_layout then
+            if kbdcfg.layout[1][1] == specific_layout then
+                kbdcfg.current = 1
+            else
+                kbdcfg.current = 2
+            end
+        else
+            kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
+        end
+
         layout_pair = kbdcfg.layout[kbdcfg.current]
         kbdcfg.widget:set_text(' ' .. layout_pair[1] .. ' ')
-        os.execute( kbdcfg.cmd .. ' ' .. layout_pair[1] .. ',' .. layout_pair[2] )
+        os.execute(kbdcfg.cmd .. ' ' .. layout_pair[1] .. ',' .. layout_pair[2])
     else
         layout_pair = kbdcfg.layout[kbdcfg.current]
     end
@@ -309,7 +318,7 @@ kbdcfg.widget:buttons(
             { },
             1,
             function ()
-            kbdcfg.switch(true)
+                kbdcfg.switch(true, false)
             end
         )
     )
@@ -506,9 +515,8 @@ function make_default_keys()
         awful.key({ modkey,           }, 'space', function () awful.layout.inc(layouts,  1) end),
         awful.key({ modkey, 'Shift'   }, 'space', function () awful.layout.inc(layouts, -1) end),
         awful.key({ modkey, 'Control' }, 'n', awful.client.restore),
-        awful.key({ }, 'Pause', function () kbdcfg.switch(true) end),
-        awful.key({ 'Control' }, 'Pause', function () kbdcfg.switch(false) end),
-        -- awful.key({ 'Control' }, 'Shift_L', function () kbdcfg.switch() end),
+        awful.key({ }, 'Pause', function () kbdcfg.switch(true, false) end),
+        awful.key({ 'Control' }, 'Pause', function () kbdcfg.switch(false, false) end),
 
         -- Prompt
         -- #27 - r
@@ -526,10 +534,17 @@ function make_default_keys()
                       awful.util.eval, nil,
                       awful.util.getdir('cache') .. '/history_eval')
                   end),
-        
+
         -- Menubar
         -- #33 - p
-        awful.key({ modkey }, '#33', function() menubar.show() end),
+        awful.key(
+            { modkey },
+            '#33',
+            function()
+                kbdcfg.switch(true, 'us')
+                menubar.show()
+            end
+        ),
 
         -- Lock screen (need to be installed through "apt-get install suckless-tools")
         -- #43 - h
@@ -537,8 +552,7 @@ function make_default_keys()
             { modkey },
             '#43',
             function ()
-                kbdcfg.current = 2
-                kbdcfg.switch(true)
+                kbdcfg.switch(true, 'us')
                 awful.util.spawn('slock')
             end
         ),
@@ -570,7 +584,7 @@ function make_default_keys()
             { 'Control', altkey },
             '#55',
             function ()
-                awful.util.spawn('anamnesis --browse')    
+                awful.util.spawn('anamnesis --browse')
             end
         ),
 
@@ -760,7 +774,7 @@ function make_default_keys()
                 end
             ),
 
-            -- Screen 2 tags 
+            -- Screen 2 tags
             awful.key(
                 { 'Control' },
                 '#' .. i + 9,
@@ -771,7 +785,7 @@ function make_default_keys()
                 end
             ),
 
-            -- Screen 3 tags 
+            -- Screen 3 tags
             awful.key(
                 { altkey },
                 '#' .. i + 9,
@@ -848,7 +862,7 @@ function make_compatible_keys()
                 naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>COMPATIBILITY MODE IS OFF</span>", border_width=300, border_color="transparent", position = "bottom_left", bg="#227722", replaces_id = 3 })
             end
         ),
-        awful.key({ }, 'Pause', function () kbdcfg.switch(true) end)
+        awful.key({ }, 'Pause', function () kbdcfg.switch(true, false) end)
     )
 
     naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>COMPATIBILITY MODE IS ON</span>", border_width=300, border_color="transparent", position = "top_right", bg="#cc0000", replaces_id = 0 })
