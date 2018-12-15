@@ -919,7 +919,7 @@ awful.rules.rules = {
     { rule = { instance='DropdownAppAndroidKeyboard' }, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
     { rule = { instance='DropdownAppTerminal' }, properties = { fullscreen=true, sticky=true, size_hints_honor = false } },
     { rule = { instance='DropdownAppChromeMindmeister' }, properties = { fullscreen = true, sticky = true } },
-    { rule = { instance='DropdownAppChromeStuff' }, properties = { fullscreen = true, sticky = true, tag = my_tags['vim_coding_php'] } }
+    { rule = { instance='DropdownAppChromeStuff' }, properties = { fullscreen = true, sticky = true } }
 }
 -- }}}
 
