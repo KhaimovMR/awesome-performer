@@ -45,6 +45,7 @@ my_tags = {
     netbeans = work_screen_tags[2 + screen_2_offset],
     mysql = work_screen_tags[3 + screen_2_offset],
     gimp = work_screen_tags[4 + screen_2_offset],
+    inkscape = work_screen_tags[4 + screen_2_offset],
     ssh_test = work_screen_tags[5 + screen_2_offset],
     skype = planning_screen_tags[6 + screen_3_offset],
     discord = work_screen_tags[6 + screen_2_offset],

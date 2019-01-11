@@ -675,6 +675,10 @@ function make_default_keys()
             { 'Control', modkey },
             '#58',
             function ()
+                awful.util.spawn('pkill -15 -fe personal_mail')
+                awful.util.spawn('pkill -15 -fe personal_mail')
+                awful.util.spawn('pkill -15 -fe work_mail')
+                awful.util.spawn('pkill -15 -fe work_mail')
                 start_applications_section(my_applications['mail'])
             end
         ),
@@ -902,6 +906,7 @@ awful.rules.rules = {
     { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
     { rule = { instance = 'tilda' }, properties = { fullscreen = true } },
     { rule = { class = 'Gimp'}, properties = { tag = my_tags['gimp'] } },
+    { rule = { class = 'Inkscape'}, properties = { tag = my_tags['inkscape'] } },
     { rule = { instance='DropdownAppAndroidKeyboard' }, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
     { rule = { instance='DropdownAppTerminal' }, properties = { fullscreen=true, sticky=true, size_hints_honor = false } },
     { rule = { instance='DropdownAppChromeMindmeister' }, properties = { fullscreen = true, sticky = true } },
