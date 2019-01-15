@@ -689,10 +689,6 @@ function make_default_keys()
             { 'Control', modkey },
             '#58',
             function ()
-                awful.util.spawn('pkill -15 -fe personal_mail')
-                awful.util.spawn('pkill -15 -fe personal_mail')
-                awful.util.spawn('pkill -15 -fe work_mail')
-                awful.util.spawn('pkill -15 -fe work_mail')
                 start_applications_section(my_applications['mail'])
             end
         ),
