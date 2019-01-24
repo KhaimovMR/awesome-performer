@@ -62,15 +62,30 @@ end
 
 function start_applications_section(applications_section)
     for _, app in pairs(applications_section) do
-        app_start_cmd = app[1]
-        app_check_cmd = app[2]
-        do_xdo_check = app[3]
+        local check_result
+        app_name = app[1]
+        app_start_cmd = app[2]
+        app_check_cmd = app[3]
+        do_xdo_check = app[4]
 
         if app_check_cmd == true then
             app_check_cmd = app_start_cmd
         end
 
-        if app_check_cmd == false or get_pids_by_cmd(app_check_cmd, do_xdo_check) == '' then
+        if app_check_cmd ~= false then
+            check_result = get_pids_by_cmd(app_check_cmd, do_xdo_check)
+
+            if check_result == "" then
+                naughty.notify({
+                    preset = naughty.config.presets.normal,
+                    title = 'Starting up the:',
+                    text = app_name
+                })
+            end
+        end
+
+
+        if app_check_cmd == false or check_result == '' then
             awful.util.spawn(app_start_cmd)
         end
     end
