@@ -221,7 +221,7 @@ mytasklist.buttons = awful.util.table.join(
             c.minimized = false
 
             if not c:isvisible() then
-                awful.tag.viewonly(c:tags()[1])
+                c:tags()[1]:view_only()
             end
 
             -- This will also un-minimize
@@ -573,7 +573,7 @@ function make_default_keys()
             { modkey },
             '#38',
             function ()
-                awful.tag.viewonly(my_tags['pyr'])
+                my_tags['pyr']:view_only()
                 awful.util.spawn('sudo pkill -fe runserver')
             end
         ),
@@ -593,7 +593,7 @@ function make_default_keys()
             {altkey},
             'End',
             function ()
-                awful.tag.viewonly(my_tags['skype'])
+                my_tags['skype']:view_only()
                 awful.util.spawn('skypedbusctl recent')
             end
         ),
@@ -601,7 +601,7 @@ function make_default_keys()
             {altkey},
             'Home',
             function ()
-                awful.tag.viewonly(my_tags['skype'])
+                my_tags['skype']:view_only()
                 awful.util.spawn('skypedbusctl missed')
             end
         ),
@@ -623,7 +623,7 @@ function make_default_keys()
             {altkey},
             'Insert',
             function ()
-                awful.tag.viewonly(my_tags['skype'])
+                my_tags['skype']:view_only()
                 awful.util.spawn('skypedbusctl contacts ' .. my_skype_login)
             end
         ),
@@ -731,7 +731,7 @@ function make_default_keys()
             '#57',
             function ()
                 awful.screen.focus(surfing_screen)
-                awful.tag.viewonly(surfing_screen_tags[1 + screen_1_offset])
+                surfing_screen_tags[1 + screen_1_offset]:view_only()
                 awful.util.spawn('google-chrome')
             end
         ),
@@ -770,7 +770,7 @@ function make_default_keys()
                 function ()
                     dropdown_app_toggle('all', 'hide')
                     awful.screen.focus(surfing_screen)
-                    awful.tag.viewonly(surfing_screen_tags[i + screen_1_offset])
+                    surfing_screen_tags[i + screen_1_offset]:view_only()
                 end
             ),
 
@@ -781,7 +781,7 @@ function make_default_keys()
                 function ()
                     dropdown_app_toggle('all', 'hide')
                     awful.screen.focus(work_screen)
-                    awful.tag.viewonly(work_screen_tags[i + screen_2_offset])
+                    work_screen_tags[i + screen_2_offset]:view_only()
                 end
             ),
 
@@ -792,7 +792,7 @@ function make_default_keys()
                 function ()
                     dropdown_app_toggle('all', 'hide')
                     awful.screen.focus(planning_screen)
-                    awful.tag.viewonly(planning_screen_tags[i + screen_3_offset])
+                    planning_screen_tags[i + screen_3_offset]:view_only()
                 end
             ),
 
@@ -934,7 +934,7 @@ client.connect_signal('manage', function (c, startup)
             if c.name == title and value_exists_in_table(c.tags(c), my_tags[tag_name]) == false then
                 naughty.notify({ title = 'Moved to the "' .. tag_name .. '" tag' })
                 awful.client.movetotag(my_tags[tag_name], c)
-                awful.tag.viewonly(my_tags[tag_name])
+                my_tags[tag_name]:view_only()
             end
         end
     end
@@ -1025,28 +1025,42 @@ client.connect_signal(
 )
 -- }}}
 
-client.connect_signal(
-    'property::name',
-    function(c)
-        if not c.name then
-            return
-        end
 
-        if c.name:find('DropdownApp') ~= nil  then
-            c.border_width = 0
-            c.fullscreen = true
-        elseif c.class == 'Firefox' and c.name:find('JIRA') ~= nil and c.tag ~= my_tags['jira'] then
-            awful.client.movetotag(my_tags['jira'], c)
-        elseif c.class == my_browser_window_class_1 or c.class == my_browser_window_class_2 and c.name ~= nil then
-            for tag_name, title_pattern in pairs(my_browser_titles_to_intercept) do
-                if c.name:find(title_pattern) ~= nil and value_exists_in_table(c.tags(c), my_tags[tag_name]) == false then
-                    naughty.notify({ title = 'Moved to the "' .. tag_name .. '" tag' })
-                    awful.client.movetotag(my_tags[tag_name], c)
-                    awful.tag.viewonly(my_tags[tag_name])
-                end
+function client_signals(c)
+    if not c.name then
+        return
+    end
+
+    if c.name:find('DropdownApp') ~= nil  then
+        c.border_width = 0
+        c.fullscreen = true
+    elseif c.class == 'Firefox' and c.name:find('JIRA') ~= nil and c.tag ~= my_tags['jira'] then
+        awful.client.movetotag(my_tags['jira'], c)
+    elseif c.class == my_browser_window_class_1 or c.class == my_browser_window_class_2
+        and c.name ~= nil then
+
+        for tag_name, title_pattern in pairs(my_browser_titles_to_intercept) do
+            if c.name:find(title_pattern) ~= nil then
+                --and value_exists_in_table(c.tags(c), my_tags[tag_name]) == false then
+                c:move_to_tag(my_tags[tag_name])
+                my_tags[tag_name]:view_only()
+                return
             end
         end
+
+        c:move_to_tag(my_tags['surfing_localhost'])
+        my_tags['surfing_localhost']:view_only()
     end
+end
+
+client.connect_signal(
+    'property::name',
+    client_signals
+)
+
+client.connect_signal(
+    'request::activate',
+    client_signals
 )
 
 do
