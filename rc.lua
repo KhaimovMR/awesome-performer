@@ -551,9 +551,17 @@ function make_default_keys()
         awful.key(
             { modkey },
             '#43',
+            lock_screen
+        ),
+
+        -- Put PC into the sleep mode
+        -- #44 - j
+        awful.key(
+            { modkey },
+            '#44',
             function ()
-                kbdcfg.switch(true, 'us')
-                awful.util.spawn('slock')
+                lock_screen()
+                awful.util.spawn('systemctl suspend')
             end
         ),
 
@@ -824,6 +832,11 @@ function make_default_keys()
     end
 
     return globalkeys
+end
+
+function lock_screen()
+    kbdcfg.switch(true, 'us')
+    awful.util.spawn('slock')
 end
 
 function make_compatible_keys()
