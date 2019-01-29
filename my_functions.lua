@@ -2,6 +2,19 @@ local awful = require('awful')
 local naughty = require('naughty')
 local my_home_path = os.getenv('HOME')
 
+function get_keys(tbl)
+    local keyset={}
+    local n=0
+
+    for k,v in pairs(tbl) do
+      n=n+1
+      keyset[n]=k
+    end
+
+    return keyset
+end
+
+
 function value_exists_in_table(tbl, search_value)
    for _, value in pairs(tbl) do
     if value == search_value then

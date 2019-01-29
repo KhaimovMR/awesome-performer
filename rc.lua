@@ -1038,18 +1038,30 @@ function client_signals(c)
         awful.client.movetotag(my_tags['jira'], c)
     elseif c.class == my_browser_window_class_1 or c.class == my_browser_window_class_2
         and c.name ~= nil then
+        local focused_screen = awful.screen.focused()
+        local focused_tag = focused_screen.selected_tag
+        local was_focused_before = value_exists_in_table(c.tags(c), focused_tag)
+        local new_client_tags = {}
 
         for tag_name, title_pattern in pairs(my_browser_titles_to_intercept) do
             if c.name:find(title_pattern) ~= nil then
-                --and value_exists_in_table(c.tags(c), my_tags[tag_name]) == false then
                 c:move_to_tag(my_tags[tag_name])
-                my_tags[tag_name]:view_only()
+
+                if was_focused_before then
+                    my_tags[tag_name]:view_only()
+                    client.focus = c
+                    return
+                end
+
                 return
             end
         end
 
         c:move_to_tag(my_tags['surfing_localhost'])
-        my_tags['surfing_localhost']:view_only()
+
+        if was_focused_before then
+            my_tags['surfing_localhost']:view_only()
+        end
     end
 end
 
@@ -1074,4 +1086,3 @@ do
         start_applications_section(applications)
     end
 end
-
