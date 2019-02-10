@@ -516,6 +516,7 @@ function make_default_keys()
         awful.key({ modkey, 'Shift'   }, 'space', function () awful.layout.inc(layouts, -1) end),
         awful.key({ modkey, 'Control' }, 'n', awful.client.restore),
         awful.key({ }, 'Pause', function () kbdcfg.switch(true, false) end),
+        awful.key({ 'Control' }, 'space', function () kbdcfg.switch(true, false) end),
         awful.key({ 'Control' }, 'Pause', function () kbdcfg.switch(false, false) end),
 
         -- Prompt
@@ -1083,10 +1084,10 @@ client.connect_signal(
     client_signals
 )
 
-client.connect_signal(
-    'request::activate',
-    client_signals
-)
+--client.connect_signal(
+ --   'request::activate',
+  --  client_signals
+--)
 
 do
     for _, apps_section_name in pairs(my_startup_sections) do
