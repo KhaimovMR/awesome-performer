@@ -48,6 +48,7 @@ my_tags = {
     gimp = work_screen_tags[4 + screen_2_offset],
     inkscape = work_screen_tags[4 + screen_2_offset],
     ssh_test = work_screen_tags[5 + screen_2_offset],
+    viber = planning_screen_tags[6 + screen_3_offset],
     skype = planning_screen_tags[6 + screen_3_offset],
     discord = work_screen_tags[6 + screen_3_offset],
     hangouts = work_screen_tags[6 + screen_3_offset],

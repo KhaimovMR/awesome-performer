@@ -838,6 +838,7 @@ end
 function lock_screen()
     kbdcfg.switch(true, 'us')
     awful.util.spawn('slock')
+    awful.util.spawn('sh -c "sleep 1 && xset dpms force off"')
 end
 
 function make_compatible_keys()
@@ -916,6 +917,7 @@ awful.rules.rules = {
     { rule = { instance = 'skypeforlinux', class = 'skypeforlinux' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'TeamSpeak 3' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'TelegramDesktop' }, properties = { tag = my_tags['skype'] } },
+    { rule = { class = 'Viber' }, properties = { tag = my_tags['viber'] } },
     { rule = { class = 'Slack' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'discord' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'ViberPC' }, properties = { tag = my_tags['skype'] } },
