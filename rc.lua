@@ -492,7 +492,14 @@ function make_default_keys()
         -- Standard program
         awful.key({ modkey }, 'Return', function () awful.util.spawn(terminal) end),
         -- #27 - r
-        awful.key({ modkey, 'Control' }, '#27', awesome.restart),
+        awful.key(
+            { modkey, 'Control' },
+            '#27',
+            function ()
+                os.execute("ws-screens-layout.sh; sleep 5")
+                awesome.restart()
+            end
+        ),
         -- #24 - q
         awful.key({ modkey, altkey, 'Shift' }, '#24', awesome.quit),
         -- #39 - s
