@@ -452,6 +452,11 @@ clientkeys = awful.util.table.join(
     )
 )
 
+function eval_prompt(input)
+    --local require("gears")\nrequire("awful")\nrequire("my_functions")\nrequire("my_vars")\nrequire("awful.rules")\nrequire("awful.autofocus")\nrequire("wibox")\nrequire("beautiful")\nrequire("naughty")\nrequire("menubar")\n'..input
+    awful.util.eval(input)
+end
+
 -- {{{ Key bindings
 -- You can use keycode ('#keycode') instead of key name ('key_name') as the second parameter to the function awful.key.
 -- Keycode is the numeric code, that can be understood by "xmodmap" utility. It can be obtained from the "xev" utility
@@ -532,16 +537,39 @@ function make_default_keys()
             { modkey },
             '#27',
             function (evt)
-                mypromptbox[mouse.screen]:run()
+                mypromptbox[1]:run()
             end
         ),
-        awful.key({ modkey }, 'x',
-                  function ()
-                      awful.prompt.run({ prompt = 'Run Lua code: ' },
-                      mypromptbox[mouse.screen].widget,
-                      awful.util.eval, nil,
-                      awful.util.getdir('cache') .. '/history_eval')
-                  end),
+        -- # - x
+        awful.key(
+            { modkey },
+            'x',
+            function ()
+                awful.prompt.run(
+                    { prompt = 'Run Lua code: ' },
+                    mypromptbox[1].widget,
+                    eval_prompt,
+                    nil,
+                    awful.util.getdir('cache') .. '/history_eval'
+                )
+--                local atextbox = wibox.widget.textbox()
+--                awful.prompt.run(
+--                    { 
+--                        prompt = 'Run Lua code: ',
+--                        text = 'default command',
+--                        bg_color = '#336644',
+--                        textbox = atextbox,
+--                        exe_callback = function(input)
+--                            if not input or #input == 0 then
+--                                return
+--                            end
+--                            
+--                            naughty.notify({text = 'The input was: ' .. input})
+--                        end
+--                    }
+--                )
+            end
+        ),
 
         -- Menubar
         -- #33 - p
