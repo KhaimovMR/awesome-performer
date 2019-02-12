@@ -5,9 +5,7 @@ local awful = require('awful')
 require('my_functions')
 require('my_vars')
 
-if is_work_pc then
-    awful.util.spawn('ws-screens-layout.sh')
-end
+os.execute('ws-screens-layout.sh; sleep 5')
 
 awful.rules = require('awful.rules')
 awful.util.spawn_with_shell("killall unagi; sleep 5; unagi &")
@@ -110,52 +108,58 @@ end
 
 -- {{{ Tags
 -- Define a tag table which hold all screen tags.
-
-tags = {}
-local tags_count = 36 / screen.count()
 local tags_per_virtual_screen_count = 12
-local screen_count = screen.count()
-local j = 1
 
-if screen_count == 2 then
-    local tags_template_1 = {}
+function initialize_tags()
+    local result_tags = {}
+    local tags_count = 36 / screen.count()
+    local screen_count = screen.count()
+    local j = 1
 
-    for i = 1, 12 do
-        table.insert(tags_template_1, j)
-        j = j + 1
-    end
+    if screen_count == 2 then
+        local tags_template_1 = {}
+        local tags_template_2 = {}
 
-    -- second screen tags_template
-    local tags_template_2 = {}
+        for i = 1, 24 do
+            if j > 12 then
+                j = 1
+            end
 
-    for i = 1, 24 do
-        if j > 12 then
-            j = 1
+            table.insert(tags_template_1, j)
+            j = j + 1
         end
 
-        table.insert(tags_template_2, j)
-        j = j + 1
-    end
+        j = 1
 
-    tags[1] = awful.tag(tags_template_1, 1, layouts[4])
-    tags[2] = awful.tag(tags_template_2, 2, layouts[4])
-else
-    local tags_template = {}
-
-    for i = 1, tags_count do
-        if j > 12 then
-            j = 1
+        for i = 1, 12 do
+            table.insert(tags_template_2, j)
+            j = j + 1
         end
 
-        table.insert(tags_template, j)
-        j = j + 1
+        result_tags[1] = awful.tag(tags_template_1, 1, layouts[4])
+        result_tags[2] = awful.tag(tags_template_2, 2, layouts[4])
+    else
+        local tags_template = {}
+
+        for i = 1, tags_count do
+            if j > 12 then
+                j = 1
+            end
+
+            table.insert(tags_template, j)
+            j = j + 1
+        end
+
+        for s = 1, screen_count do
+            -- Each screen has its own tag table.
+            result_tags[s] = awful.tag(tags_template, s, layouts[4])
+        end
     end
 
-    for s = 1, screen_count do
-        -- Each screen has its own tag table.
-        tags[s] = awful.tag(tags_template, s, layouts[4])
-    end
+    return result_tags
 end
+
+tags = initialize_tags()
 
 -- }}}
 
@@ -422,13 +426,13 @@ clientkeys = awful.util.table.join(
         awful.client.movetoscreen
     ),
     -- #28 - t
-    awful.key(
-        { modkey },
-        '#28',
-        function (c)
-            c.ontop = not c.ontop
-        end
-    ),
+    --awful.key(
+        --{ modkey },
+        --'#28',
+        --function (c)
+            --c.ontop = not c.ontop
+        --end
+    --),
     -- #57 - n
     awful.key(
         { modkey },
@@ -498,10 +502,18 @@ function make_default_keys()
         awful.key({ modkey }, 'Return', function () awful.util.spawn(terminal) end),
         -- #27 - r
         awful.key(
+            { altkey, 'Control' },
+            '#27',
+            function ()
+                os.execute("ws-screens-layout.sh")
+            end
+        ),
+        -- #27 - r
+        awful.key(
             { modkey, 'Control' },
             '#27',
             function ()
-                os.execute("ws-screens-layout.sh; sleep 5")
+                --os.execute("ws-screens-layout.sh; sleep 5")
                 awesome.restart()
             end
         ),
@@ -552,22 +564,6 @@ function make_default_keys()
                     nil,
                     awful.util.getdir('cache') .. '/history_eval'
                 )
---                local atextbox = wibox.widget.textbox()
---                awful.prompt.run(
---                    { 
---                        prompt = 'Run Lua code: ',
---                        text = 'default command',
---                        bg_color = '#336644',
---                        textbox = atextbox,
---                        exe_callback = function(input)
---                            if not input or #input == 0 then
---                                return
---                            end
---                            
---                            naughty.notify({text = 'The input was: ' .. input})
---                        end
---                    }
---                )
             end
         ),
 
@@ -1119,6 +1115,19 @@ end
 client.connect_signal(
     'property::name',
     client_signals
+)
+
+tag.connect_signal(
+    'request::screen',
+    function (t)
+        naughty.notify({title = tostring(t)})
+
+        if screen.count() == 2 then
+            t.screen = screen[2]
+        elseif screen.count() == 1 then
+            t.screen = screen[1]
+        end
+    end
 )
 
 --client.connect_signal(

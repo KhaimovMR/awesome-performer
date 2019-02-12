@@ -9,15 +9,15 @@ if screen_count == 1 then
     screen_2_offset = 0
     screen_3_offset = 24
 elseif screen_count == 2 then
-    surfing_screen = 2
-    work_screen = 1
-    planning_screen = 2
+    surfing_screen = 1
+    work_screen = 2
+    planning_screen = 1
     screen_1_offset = 0
     screen_2_offset = 0 
     screen_3_offset = 12
 else
-    surfing_screen = 2
-    work_screen = 1
+    surfing_screen = 1
+    work_screen = 2
     planning_screen = 3
     screen_1_offset = 0
     screen_2_offset = 0
