@@ -1,11 +1,11 @@
--- Standard awesome library
+-- standard awesome library
 local gears = require('gears')
 local awful = require('awful')
 
 require('my_functions')
 require('my_vars')
 
-os.execute('ws-screens-layout.sh; sleep 5')
+--os.execute('ws-screens-layout.sh; sleep 5')
 
 awful.rules = require('awful.rules')
 awful.util.spawn_with_shell("killall unagi; sleep 5; unagi &")
@@ -85,6 +85,29 @@ editor_cmd = terminal .. ' -e ' .. editor
 -- However, you can use another modifier like Mod1, but it may interact with others.
 altkey = 'Mod1'
 modkey = 'Mod4'
+
+-- Output names table filled to use later in tags management
+output_names = {}
+
+function get_output_names()
+    local names = {
+        --['eDP-1'] = nil,
+        --['DP-1'] = nil,
+        --['DP-2'] = nil,
+        --['HDMI-1'] = nil,
+        --['HDMI-2'] = nil,
+    }
+
+    for scr_idx = 1, screen.count() do
+        name = get_keys(screen[scr_idx].outputs)[1]
+        names[name] = scr_idx
+        naughty.notify({text="Monitor connected: " .. name})
+    end
+
+    return names
+end
+
+output_names = get_output_names()
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 local layouts =
@@ -505,7 +528,9 @@ function make_default_keys()
             { altkey, 'Control' },
             '#27',
             function ()
-                os.execute("ws-screens-layout.sh")
+                --os.execute("ws-screens-layout.sh")
+                my_tags['surfing_localhost'].screen = nil
+                my_tags['surfing_localhost'].screen = screen[1]
             end
         ),
         -- #27 - r
@@ -1123,7 +1148,7 @@ tag.connect_signal(
         naughty.notify({title = tostring(t)})
 
         if screen.count() == 2 then
-            t.screen = screen[2]
+            t.screen = screen[1]
         elseif screen.count() == 1 then
             t.screen = screen[1]
         end
