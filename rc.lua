@@ -5,8 +5,6 @@ local awful = require('awful')
 require('my_functions')
 require('my_vars')
 
---os.execute('ws-screens-layout.sh; sleep 5')
-
 awful.rules = require('awful.rules')
 awful.util.spawn_with_shell("killall unagi; sleep 5; unagi &")
 
@@ -525,20 +523,9 @@ function make_default_keys()
         awful.key({ modkey }, 'Return', function () awful.util.spawn(terminal) end),
         -- #27 - r
         awful.key(
-            { altkey, 'Control' },
-            '#27',
-            function ()
-                --os.execute("ws-screens-layout.sh")
-                my_tags['surfing_localhost'].screen = nil
-                my_tags['surfing_localhost'].screen = screen[1]
-            end
-        ),
-        -- #27 - r
-        awful.key(
             { modkey, 'Control' },
             '#27',
             function ()
-                --os.execute("ws-screens-layout.sh; sleep 5")
                 awesome.restart()
             end
         ),
@@ -1142,18 +1129,28 @@ client.connect_signal(
     client_signals
 )
 
-tag.connect_signal(
-    'request::screen',
-    function (t)
-        naughty.notify({title = tostring(t)})
-
-        if screen.count() == 2 then
-            t.screen = screen[1]
-        elseif screen.count() == 1 then
-            t.screen = screen[1]
-        end
-    end
+screen.connect_signal(
+    'added',
+    awesome.restart
 )
+
+screen.connect_signal(
+    'removed',
+    awesome.restart
+)
+
+--tag.connect_signal(
+--    'request::screen',
+--    function (t)
+--        naughty.notify({title = tostring(t)})
+--
+--        if screen.count() == 2 then
+--            t.screen = screen[1]
+--        elseif screen.count() == 1 then
+--            t.screen = screen[1]
+--        end
+--    end
+--)
 
 --client.connect_signal(
  --   'request::activate',
