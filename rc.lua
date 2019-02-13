@@ -84,6 +84,9 @@ editor_cmd = terminal .. ' -e ' .. editor
 altkey = 'Mod1'
 modkey = 'Mod4'
 
+-- Mutext for the restart on the screens changes
+restart_by_screen_mutex = true
+
 -- Output names table filled to use later in tags management
 output_names = {}
 
@@ -1131,12 +1134,26 @@ client.connect_signal(
 
 screen.connect_signal(
     'added',
-    awesome.restart
+    function(args)
+        if restart_by_screen_mutex == true then
+            restart_by_screen_mutex = false
+            os.execute('sleep 7')
+            awesome.restart()
+            restart_by_screen_mutex = true
+        end
+    end
 )
 
 screen.connect_signal(
     'removed',
-    awesome.restart
+    function(args)
+        if restart_by_screen_mutex == true then
+            restart_by_screen_mutex = false
+            os.execute('sleep 7')
+            awesome.restart()
+            restart_by_screen_mutex = true
+        end
+    end
 )
 
 --tag.connect_signal(
