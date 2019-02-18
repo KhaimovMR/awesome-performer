@@ -555,7 +555,7 @@ function make_default_keys()
         awful.key({ modkey, 'Shift'   }, 'space', function () awful.layout.inc(layouts, -1) end),
         awful.key({ modkey, 'Control' }, 'n', awful.client.restore),
         awful.key({ }, 'Pause', function () kbdcfg.switch(true, false) end),
-        awful.key({ 'Control' }, 'space', function () kbdcfg.switch(true, false) end),
+        awful.key({ altkey }, 'space', function () kbdcfg.switch(true, false) end),
         awful.key({ 'Control' }, 'Pause', function () kbdcfg.switch(false, false) end),
 
         -- Prompt
