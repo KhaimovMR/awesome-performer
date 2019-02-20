@@ -68,6 +68,7 @@ my_tags = {
     wiki = planning_screen_tags[3 + screen_3_offset],
     stash = planning_screen_tags[4 + screen_3_offset],
     github = planning_screen_tags[4 + screen_3_offset],
+    codecov = planning_screen_tags[4 + screen_3_offset],
     bamboo = planning_screen_tags[4 + screen_3_offset],
     work_google_docs = planning_screen_tags[4 + screen_3_offset],
     personal_google_docs = planning_screen_tags[4 + screen_3_offset],
