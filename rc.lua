@@ -1,6 +1,7 @@
 -- standard awesome library
 local gears = require('gears')
 local awful = require('awful')
+local math = require('math')
 
 require('my_functions')
 require('my_vars')
@@ -352,6 +353,30 @@ kbdcfg.widget:buttons(
     )
 )
 
+local volume_slider = wibox.widget {
+    forced_width        = 100,
+    bar_shape           = gears.shape.rounded_rect,
+    bar_height          = 1,
+    bar_color           = beautiful.border_color,
+    --handle_color        = beautiful.bg_normal,
+    handle_color        = "#FFFFFF",
+    handle_shape        = gears.shape.circle,
+    handle_border_color = beautiful.border_color,
+    handle_border_width = 1,
+    minimum             = 0,
+    maximum             = 100,
+    value               = 100,
+    widget              = wibox.widget.slider,
+}
+
+volume_slider:connect_signal(
+	"property::value",
+	function()
+		volume_slider.opacity = math.sqrt(volume_slider.value / 100 + 0.2)
+		awful.util.spawn('dvol -s ' .. volume_slider.value)
+	end
+)
+
 for s = 1, screen.count() do
     -- Create a promptbox for each screen
     mypromptbox[s] = awful.widget.prompt()
@@ -383,12 +408,15 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the bottom
     local right_layout = wibox.layout.fixed.horizontal()
+
     if s == 1 then 
         right_layout:add(wibox.widget.systray())
     end
+
     right_layout:add(mytextclock)
-    right_layout:add(mylayoutbox[s])
+    right_layout:add(volume_slider)
     right_layout:add(kbdcfg.widget)
+    right_layout:add(mylayoutbox[s])
 
     -- Now bring it all together (with the tasklist in the middle)
     local layout = wibox.layout.align.horizontal()
@@ -599,6 +627,30 @@ function make_default_keys()
             { modkey },
             '#43',
             lock_screen
+        ),
+
+        -- Volume buttons
+        -- #121 - mute/unmute
+        awful.key(
+            {},
+            '#121',
+            function ()
+                awful.util.spawn('dvol -t')
+            end
+        ),
+        awful.key(
+            {},
+            '#122',
+            function ()
+				volume_slider.value = volume_slider.value - 5
+            end
+        ),
+        awful.key(
+            {},
+            '#123',
+            function ()
+				volume_slider.value = volume_slider.value + 5
+            end
         ),
 
         -- Put PC into the sleep mode
