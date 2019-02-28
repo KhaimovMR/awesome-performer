@@ -849,7 +849,7 @@ function make_default_keys()
             { },
             '#107',
             function ()
-                awful.util.spawn('shutter -f')
+                awful.util.spawn('flameshot gui')
             end
         ),
 
@@ -859,7 +859,7 @@ function make_default_keys()
             { 'Control' },
             '#107',
             function ()
-                awful.util.spawn('shutter -s')
+                awful.util.spawn('flameshot full')
             end
         )
     )
