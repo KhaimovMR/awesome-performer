@@ -560,6 +560,14 @@ function make_default_keys()
                 awesome.restart()
             end
         ),
+        -- #27 - r
+        awful.key(
+            { altkey, 'Control' },
+            '#27',
+            function ()
+                awful.util.spawn('ws-screens-layout.sh')
+            end
+        ),
         -- #24 - q
         awful.key({ modkey, altkey, 'Shift' }, '#24', awesome.quit),
         -- #39 - s
