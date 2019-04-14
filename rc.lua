@@ -537,16 +537,6 @@ function make_default_keys()
         -- awful.key({ modkey }, '#25', function () mymainmenu:show() end),
 
         -- Layout manipulation
-        -- #44 - j
-        awful.key({ modkey, 'Shift'   }, '#44', function () awful.client.swap.byidx(-1)    end),
-        -- #45 - k
-        awful.key({ modkey, 'Shift'   }, '#45', function () awful.client.swap.byidx(1)    end),
-        -- #44 - j
-        awful.key({ modkey, 'Control' }, '#44', function () awful.screen.focus(1) end),
-        -- #45 - k
-        awful.key({ modkey, 'Control' }, '#45', function () awful.screen.focus(2) end),
-        -- #46 - l
-        awful.key({ modkey, 'Control' }, '#46', function () awful.screen.focus(3) end),
         -- #30 - u
         awful.key({ modkey }, '#30', awful.client.urgent.jumpto),
         
@@ -667,8 +657,15 @@ function make_default_keys()
             { modkey },
             '#44',
             function ()
-                lock_screen()
-                awful.util.spawn('systemctl suspend')
+                awful.util.spawn('sudo pm-suspend')
+            end
+        ),
+        -- #45 - k
+        awful.key(
+            { modkey },
+            '#45',
+            function ()
+                awful.util.spawn('sudo pm-hibernate')
             end
         ),
 
@@ -793,7 +790,7 @@ function make_default_keys()
         ),
         -- #45 - k
         awful.key(
-            { modkey },
+            { modkey, 'Control' },
             '#45',
             function ()
                 dropdown_app_toggle("AndroidKeyboard")
@@ -1190,6 +1187,20 @@ end
 client.connect_signal(
     'property::name',
     client_signals
+)
+
+awesome.connect_signal(
+    'startup',
+    function(args)
+        awful.util.spawn('bash -c "rm ~/.awesome-restart || ws-screens-layout.sh"')
+    end
+)
+
+awesome.connect_signal(
+    'exit',
+    function(args)
+        awful.util.spawn('touch ~/.awesome-restart')
+    end
 )
 
 screen.connect_signal(
