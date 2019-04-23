@@ -1193,6 +1193,7 @@ awesome.connect_signal(
     'startup',
     function(args)
         awful.util.spawn('bash -c "rm ~/.awesome-restart || ws-screens-layout.sh"')
+        initial_tags_assignation()
     end
 )
 
@@ -1254,5 +1255,11 @@ do
         end
 
         start_applications_section(applications)
+    end
+end
+
+function initial_tags_assignation()
+    for _, c in ipairs(client.get()) do
+        client_signals(c)
     end
 end
