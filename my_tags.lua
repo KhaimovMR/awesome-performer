@@ -5,23 +5,23 @@ if screen_count == 1 then
     surfing_screen = 1
     work_screen = 1
     planning_screen = 1
-    screen_1_offset = 12
-    screen_2_offset = 0
-    screen_3_offset = 24
+    screen_1_offset = 0 -- modkey
+    screen_2_offset = 24 -- control
+    screen_3_offset = 12 -- altkey
 elseif screen_count == 2 then
     surfing_screen = 1
     work_screen = 2
     planning_screen = 1
-    screen_1_offset = 0
-    screen_2_offset = 0 
-    screen_3_offset = 12
+    screen_1_offset = 0 -- modkey
+    screen_2_offset = 0  -- control
+    screen_3_offset = 12 -- altkey
 else
     surfing_screen = 1
     work_screen = 2
     planning_screen = 3
-    screen_1_offset = 0
-    screen_2_offset = 0
-    screen_3_offset = 0
+    screen_1_offset = 0 -- modkey
+    screen_2_offset = 0  -- control
+    screen_3_offset = 0 -- altkey
 end
 
 surfing_screen_tags = tags[surfing_screen]
