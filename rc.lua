@@ -500,10 +500,27 @@ clientkeys = awful.util.table.join(
         end
     ),
     -- #58 - m
-    awful.key({ modkey,           }, '#58',
+    awful.key(
+        { modkey },
+        '#58',
         function (c)
-            c.maximized_horizontal = not c.maximized_horizontal
-            c.maximized_vertical   = not c.maximized_verticalical
+            awful.util.spawn('dvol -t')
+        end
+    ),
+    -- #59 - <
+    awful.key(
+        { modkey },
+        '#59',
+        function (c)
+            volume_slider.value = volume_slider.value - 5
+        end
+    ),
+    -- #60 - >
+    awful.key(
+        { modkey },
+        '#60',
+        function (c)
+            volume_slider.value = volume_slider.value + 5
         end
     )
 )
@@ -641,14 +658,14 @@ function make_default_keys()
             {},
             '#122',
             function ()
-				volume_slider.value = volume_slider.value - 5
+                volume_slider.value = volume_slider.value - 5
             end
         ),
         awful.key(
             {},
             '#123',
             function ()
-				volume_slider.value = volume_slider.value + 5
+                volume_slider.value = volume_slider.value + 5
             end
         ),
 
