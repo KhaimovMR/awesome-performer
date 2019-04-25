@@ -15,7 +15,7 @@ local wibox = require('wibox')
 -- Theme handling library
 local beautiful = require('beautiful')
 -- Notification library
-local naughty = require('naughty')
+naughty = require('naughty')
 local menubar = require('menubar')
 local my_home_path = os.getenv('HOME')
 
@@ -303,8 +303,22 @@ kbdcfg = {}
 kbdcfg.cmd = 'setxkbmap -option "ctrl:nocaps"'
 kbdcfg.layout = { { 'us', 'ru' }, { 'ru', 'us' } }
 kbdcfg.current = 1 -- us is our default layout
+
+kbdcfg.set_text = function(lang)
+    local fg_color
+
+    if lang == 'us' then -- if english
+        fg_color = "#77AAFF"
+    else -- if russian
+        fg_color = "#FF9999"
+    end
+
+    kbdcfg.widget:set_markup_silently('<span fgcolor = "' .. fg_color..'"><tt> ' .. lang .. ' </tt></span>')
+end
+
 kbdcfg.widget = wibox.widget.textbox()
-kbdcfg.widget:set_text(' ' .. kbdcfg.layout[kbdcfg.current][1] .. ' ')
+kbdcfg.set_text(kbdcfg.layout[kbdcfg.current][1])
+
 kbdcfg.switch = function (do_switch, specific_layout)
     local layout_pair
     local bg_color
@@ -321,17 +335,18 @@ kbdcfg.switch = function (do_switch, specific_layout)
             kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
         end
 
+
         layout_pair = kbdcfg.layout[kbdcfg.current]
-        kbdcfg.widget:set_text(' ' .. layout_pair[1] .. ' ')
+        kbdcfg.set_text(layout_pair[1])
         os.execute(kbdcfg.cmd .. ' ' .. layout_pair[1] .. ',' .. layout_pair[2])
     else
         layout_pair = kbdcfg.layout[kbdcfg.current]
     end
 
-    if layout_pair[1] == "ru" then
-        bg_color = "#cc0000"
-    else
-        bg_color = "#0000cc"
+    if kbdcfg.current == 1 then -- if english
+        bg_color = "#3355cc"
+    else -- if russian
+        bg_color = "#cc4444"
     end
 
     naughty.notify({ timeout = 1, text = "<span font_desc='Ubuntu bold 24'>" .. layout_pair[1] .. "</span>", border_width=300, border_color="transparent", position = "top_right", bg=bg_color, replaces_id = 0 })
