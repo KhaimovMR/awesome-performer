@@ -2,6 +2,18 @@ local awful = require('awful')
 local naughty = require('naughty')
 local my_home_path = os.getenv('HOME')
 
+
+function nt(text)
+    for s in screen do
+        naughty.notify({
+            screen = s,
+            preset = naughty.config.presets.normal,
+            title = text,
+        })
+    end
+end
+
+
 function get_keys(tbl)
     local keyset={}
     local n=0

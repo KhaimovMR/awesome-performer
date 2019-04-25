@@ -181,6 +181,11 @@ function initialize_tags()
         end
     end
 
+    --for s, scr in pairs(result_tags) do
+        --for _, tag in pairs(scr) do
+            --tag.layout = layouts[4]
+        --end
+    --end
     return result_tags
 end
 
