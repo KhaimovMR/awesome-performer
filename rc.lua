@@ -353,7 +353,7 @@ kbdcfg.widget:buttons(
     )
 )
 
-local volume_slider = wibox.widget {
+volume_slider = wibox.widget {
     forced_width        = 100,
     bar_shape           = gears.shape.rounded_rect,
     bar_height          = 1,

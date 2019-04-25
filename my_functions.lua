@@ -36,8 +36,8 @@ function os.capture(cmd, raw)
     end
 
     result_string = string.gsub(s, '^%s+', '')
-    result_string = string.gsub(s, '%s+$', '')
-    result_string = string.gsub(s, '[\n\r]+', ' ')
+    result_string = string.gsub(result_string, '%s+$', '')
+    result_string = string.gsub(result_string, '[\n\r]+', ' ')
 
     return result_string
 end
