@@ -312,9 +312,9 @@ kbdcfg.switch = function (do_switch, specific_layout)
 
     if do_switch == true then
         if specific_layout then
-            if kbdcfg.layout[1][1] == specific_layout then
+            if kbdcfg.layout[1][1] == specific_layout then -- if english
                 kbdcfg.current = 1
-            else
+            else -- if russian
                 kbdcfg.current = 2
             end
         else
@@ -590,6 +590,7 @@ function make_default_keys()
             { modkey },
             '#27',
             function (evt)
+                kbdcfg.switch(true, 'us')
                 mypromptbox[1]:run()
             end
         ),
