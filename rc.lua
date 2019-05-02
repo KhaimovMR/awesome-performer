@@ -1075,7 +1075,7 @@ awful.rules.rules = {
     { rule = { class = 'Gimp'}, properties = { tag = my_tags['gimp'] } },
     { rule = { class = 'Inkscape'}, properties = { tag = my_tags['inkscape'] } },
     { rule = { instance='DropdownAppAndroidKeyboard' }, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
-    { rule = { instance='DropdownAppTerminal' }, properties = { fullscreen=true, sticky=true, size_hints_honor = false } },
+    { rule = { instance='DropdownAppTerminal' }, properties = { fullscreen=true, sticky=true, size_hints_honor=false } },
     { rule = { instance='DropdownAppChromeMindmeister' }, properties = { fullscreen = true, sticky = true } },
     { rule = { instance='DropdownAppChromeStuff' }, properties = { fullscreen = true, sticky = true } }
 }
@@ -1190,7 +1190,6 @@ function client_signals(c)
 
     if c.name:find('DropdownApp') ~= nil  then
         c.border_width = 0
-        c.fullscreen = true
     elseif c.class == 'Firefox' and c.name:find('JIRA') ~= nil and c.tag ~= my_tags['jira'] then
         awful.client.movetotag(my_tags['jira'], c)
     elseif c.class == my_browser_window_class_1 or c.class == my_browser_window_class_2
