@@ -64,6 +64,7 @@ my_tags = {
     jira = planning_screen_tags[5 + screen_3_offset],
     yt = planning_screen_tags[5 + screen_3_offset],
     yt_rg = planning_screen_tags[5 + screen_3_offset],
+    hub_rg = planning_screen_tags[5 + screen_3_offset],
     trello = planning_screen_tags[5 + screen_3_offset],
     report_plus = planning_screen_tags[8 + screen_3_offset],
     wiki = planning_screen_tags[3 + screen_3_offset],
