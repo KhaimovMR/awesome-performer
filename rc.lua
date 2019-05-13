@@ -19,6 +19,9 @@ naughty = require('naughty')
 local menubar = require('menubar')
 local my_home_path = os.getenv('HOME')
 
+-- slow first time run fix
+menubar.menu_gen.lookup_category_icons = function() end
+
 -- {{{ Changing default style of notifications
 naughty.config.defaults['border_width'] = '0'
 naughty.config.presets['normal'] = {
