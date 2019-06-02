@@ -634,10 +634,10 @@ function make_default_keys()
                 mypromptbox[1]:run()
             end
         ),
-        -- # - x
+        -- #28 - t
         awful.key(
             { modkey },
-            'x',
+            '#28',
             function ()
                 awful.prompt.run(
                     { prompt = 'Run Lua code: ' },
@@ -720,17 +720,6 @@ function make_default_keys()
             end
         ),
 
-        -- Kill dev django server
-        -- #38 - a
-        awful.key(
-            { modkey },
-            '#38',
-            function ()
-                my_tags['pyr']:view_only()
-                awful.util.spawn('sudo pkill -fe runserver')
-            end
-        ),
-
         -- Anamnesis
         -- #55 - v
         awful.key(
@@ -794,7 +783,7 @@ function make_default_keys()
             { 'Control', modkey },
             '#39',
             function ()
-                awful.util.spawn('unity-control-center sound')
+                awful.util.spawn('pavucontrol')
             end
         ),
         -- #25 - w
@@ -827,6 +816,30 @@ function make_default_keys()
             '#24',
             function ()
                 dropdown_app_toggle("Terminal")
+            end
+        ),
+        -- #38 - a
+        awful.key(
+            { modkey },
+            '#38',
+            function ()
+                dropdown_app_toggle('marks_work')
+            end
+        ),
+        -- #39 - s
+        awful.key(
+            { modkey },
+            '#39',
+            function ()
+                dropdown_app_toggle("marks_alightbit")
+            end
+        ),
+        -- #40 - d
+        awful.key(
+            { modkey },
+            '#40',
+            function ()
+                dropdown_app_toggle("marks_private")
             end
         ),
         -- #45 - k
@@ -1079,6 +1092,9 @@ awful.rules.rules = {
     { rule = { class = 'Inkscape'}, properties = { tag = my_tags['inkscape'] } },
     { rule = { instance='DropdownAppAndroidKeyboard' }, properties = { fullscreen = false, sticky = true, size_hints_honor = false } },
     { rule = { instance='DropdownAppTerminal' }, properties = { fullscreen=true, sticky=true, size_hints_honor=false } },
+    { rule = { instance='DropdownAppmarks_work' }, properties = { fullscreen=true, sticky=true, size_hints_honor=false } },
+    { rule = { instance='DropdownAppmarks_alightbit' }, properties = { fullscreen=true, sticky=true, size_hints_honor=false } },
+    { rule = { instance='DropdownAppmarks_private' }, properties = { fullscreen=true, sticky=true, size_hints_honor=false } },
     { rule = { instance='DropdownAppChromeMindmeister' }, properties = { fullscreen = true, sticky = true } },
     { rule = { instance='DropdownAppChromeStuff' }, properties = { fullscreen = true, sticky = true } }
 }

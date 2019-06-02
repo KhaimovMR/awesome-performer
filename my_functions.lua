@@ -117,7 +117,7 @@ function start_applications_section(applications_section)
 end
 
 -- dropdown applications 
-function dropdown_app_toggle (app_name, action)
+function dropdown_app_toggle(app_name, action)
     local set_action = "toggle"
 
     if action ~= nil then
@@ -129,13 +129,26 @@ function dropdown_app_toggle (app_name, action)
     elseif app_name == "ChromeStuff" then
         awful.util.spawn('dropdown-window ChromeStuff ' .. set_action .. ' "google-chrome --user-data-dir=' .. my_home_path .. '/.config/chrome-stuff" ')
     elseif app_name == "Terminal" then
-        awful.util.spawn('dropdown-window Terminal ' .. set_action .. ' "urxvt -pixmap \"/home/khaimovmr/Dropbox/Pictures/Wallpapers/vintage_ornament-wallpaper-1920x1920-dark.jpg;style=centered\" -e tmux new-session -A -s urxvt"')
+        awful.util.spawn('dropdown-window Terminal ' .. set_action .. ' dr-terminal.sh shell')
+    elseif app_name == "marks_work" then
+        awful.util.spawn(
+            'dropdown-window marks_work ' .. set_action .. ' "dr-vim-marks.sh work blue" shell'
+        )
+    elseif app_name == "marks_alightbit" then
+        awful.util.spawn(
+            'dropdown-window marks_alightbit ' .. set_action .. ' "dr-vim-marks.sh alightbit gold" shell'
+        )
+    elseif app_name == "marks_private" then
+        awful.util.spawn(
+            'dropdown-window marks_private ' .. set_action .. ' "dr-vim-marks.sh private green" shell'
+        )
     elseif app_name == "AndroidKeyboard" then
         awful.util.spawn('dropdown-window AndroidKeyboard ' .. set_action .. ' "terminator --title=android-keyboard --profile=android-keyboard"')
     else
         awful.util.spawn('dropdown-window ChromeMindmeister hide')
         awful.util.spawn('dropdown-window ChromeStuff hide')
         awful.util.spawn('dropdown-window Terminal hide')
+        awful.util.spawn('dropdown-window Marks hide')
         awful.util.spawn('dropdown-window AndroidKeyboard hide')
     end
 end
