@@ -146,7 +146,15 @@ my_monitors_menu = awful.menu({
                 {'&3. ROTATION', 'ws-screens-layout.sh rotate ' .. HDMI1},
             }
         },
-        { '[MON] &3. RESET', 'ws-screens-layout.sh' },
+        {
+            '[MON] &3. DP1',
+            {
+                {'&1. ENABLE/DISABLE', 'ws-screens-layout.sh toggle'},
+                {'&2. LOW RES MODE', 'ws-screens-layout.sh toggle-low-res-dp1'},
+                {'&3. ROTATION', 'ws-screens-layout.sh rotate ' .. DP1},
+            }
+        },
+        { '[MON] &4. RESET', 'ws-screens-layout.sh' },
     },
     theme = my_menus_theme,
 })
