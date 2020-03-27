@@ -414,14 +414,28 @@ mytasklist.buttons = awful.util.table.join(
     awful.button(
         { },
         3,
-        function ()
-            if instance then
-            instance:hide()
-            instance = nil
+        function (c)
+            local formatted_name
+
+            if #c.name > 15 then
+                formatted_name = c.name:sub(1, 12) .. "..."
             else
-            instance = awful.menu.clients(
-                { theme = { width = 250 } }
-            )
+                formatted_name = c.name
+            end
+
+            if c.ontop == true then
+                c.ontop = false
+
+                nt{
+                    text=string.format("On Top is DEACTIVATED for: %q", formatted_name),
+                    preset="interface",
+                }
+            else
+                c.ontop = true
+                nt{
+                    text=string.format("On Top is ACTIVATED for: %q", formatted_name),
+                    preset="interface",
+                }
             end
         end
     ),
@@ -1582,7 +1596,17 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
     { rule = { class = 'TeamViewer' }, properties = { tag = my_tags['teamviewer'], fullscreen = false, maximized = false, floating = true } },
     { rule = { class = 'Steam' }, properties = { tag = my_tags['games'] } },
-    { rule = { class = 'csgo_linux64' }, properties = { tag = my_tags['games'] } },
+    {
+        rule = { class = 'csgo_linux64' },
+        properties = {
+            tag = my_tags['games'],
+            callback = function(c)
+                c.screen = c.first_tag.screen
+                c.width = c.screen.workarea['width']
+                c.height = c.screen.workarea['height']
+            end,
+        }
+    },
     { rule = { instance = 'skype', class = 'Skype' }, properties = { tag = my_tags['skype'] } },
     { rule = { instance = 'skypeforlinux', class = 'skypeforlinux' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'TeamSpeak 3' }, properties = { tag = my_tags['skype'] } },
@@ -2277,10 +2301,20 @@ screen.connect_signal(
                     init_screen(screen[s].index)
                 end
 
+                local first_tag = nil
+
                 for _, tag in pairs(screen[s].tags) do
                     if screens_by_outputs[tag.archsome_preferred_output] then
                         tag.screen = screens_by_outputs[tag.archsome_preferred_output]
                     end
+
+                    if first_tag == nil then
+                        first_tag = tag
+                    end
+                end
+
+                if screen[s].selected_tag == nil then
+                    screen[s].selected_tag = first_tag
                 end
             end
 
