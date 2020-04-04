@@ -1608,6 +1608,7 @@ awful.rules.rules = {
         }
     },
     { rule = { instance = 'skype', class = 'Skype' }, properties = { tag = my_tags['skype'] } },
+    { rule = { class = 'Microsoft Teams - Preview' }, properties = { tag = my_tags['skype'] } },
     { rule = { instance = 'skypeforlinux', class = 'skypeforlinux' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'TeamSpeak 3' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'zoom' }, properties = { tag = my_tags['tag_6'] } },

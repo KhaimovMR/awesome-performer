@@ -37,6 +37,34 @@ return {
         category='device.added',
         timeout=2,
     },
+    system_keyboard_connected = {
+        shape = function(cs, width, height)
+            return gears.shape.rounded_bar(cs, width, height, 40)
+        end,
+        preset=naughty.config.presets.normal,
+        position='middle',
+        bg="#66776699",
+        border_color = '#666666',
+        border_width = 0,
+        opacity=1,
+        category='device.added',
+        timeout=2,
+        singleton_type = 'system_keyboard_connected', -- distinct/unique notification id
+    },
+    system_mouse_connected = {
+        shape = function(cs, width, height)
+            return gears.shape.rounded_bar(cs, width, height, 40)
+        end,
+        preset=naughty.config.presets.normal,
+        position='middle',
+        bg="#66776699",
+        border_color = '#666666',
+        border_width = 0,
+        opacity=1,
+        category='device.added',
+        timeout=2,
+        singleton_type = 'system_mouse_connected', -- distinct/unique notification id
+    },
     interface = {
         shape = function(cs, width, height)
             return gears.shape.rounded_bar(cs, width, height, 40)
@@ -63,7 +91,7 @@ return {
         opacity=1,
         category='device.added',
         timeout=2,
-        singleton_type = 'audio',
+        singleton_type = 'audio', -- distinct/unique notification id
     },
     urgent = {
         preset=naughty.config.presets.normal,
