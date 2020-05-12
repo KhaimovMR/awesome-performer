@@ -114,9 +114,9 @@ function browser_router(browser_profile, url)
     local script
 
     if url then
-        script = 'chrome-router.sh ' .. browser_profile .. ' "' .. url .. '" > /dev/null &2>1'
+        script = 'firefox-router.sh ' .. browser_profile .. ' "' .. url .. '" > /dev/null &2>1'
     else
-        script = 'chrome-router.sh ' .. browser_profile .. ' > /dev/null &2>1'
+        script = 'firefox-router.sh ' .. browser_profile .. ' > /dev/null &2>1'
     end
 
     callback_shell.spawn(

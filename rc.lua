@@ -9,8 +9,14 @@ local MD_NOTE_INSTANCE = 'MdNote'
 
 local PIP_OPACITY = 0.8
 local PIP_DEFAULT_WIDTH = 260
+local PIP_DEFAULT_HEIGHT = 148
 local PIP_OPACITY_TIMEOUT = 3
 local PIP_OPACITY_TIMER = nil
+local PIP_WINDOW_PROPERTIES = {
+    width=PIP_DEFAULT_WIDTH, height=PIP_DEFAULT_HEIGHT, x=1400, y=800, border_width=0, opacity=PIP_OPACITY, ontop=true, above=true,
+    requests_no_titlebar=true, floating=true, dockable=false, fullscreen=false, sticky=true,
+    focusable=false, skip_taskbar=true,
+}
 
 local ABTT_OPACITY = 0.7
 local ABTT_OPACITY_TIMEOUT = 1
@@ -73,7 +79,8 @@ archsome = require('archsome')
 archsome.icons = require('archsome.icons')
 gestures = require('archsome.gestures')
 multiclicks = require('archsome.multiclicks')
-local PIP_WINDOW_TITLE = 'Picture in picture'
+local PIP_WINDOW_TITLE_CHROME = 'Picture in picture'
+local PIP_WINDOW_TITLE_FIREFOX = 'Picture-in-Picture'
 local ABTT_MAIN_WINDOW_TITLE = 'ABTT - Main'
 local ABTT_LIST_WINDOW_TITLE = 'ABTT - List'
 
@@ -641,7 +648,7 @@ function init_screen(s)
                     id = 'first_margin',
                     margins = 1,
                     top = 5,
-                    forced_width = 18,
+                    forced_width = 16,
                     widget  = wibox.container.margin,
                 },
                 bg     = '#00000000',
@@ -1805,12 +1812,12 @@ awful.rules.rules = {
     },
     { rule = { instance='.*google[-]chrome[-]rg_youtrack.*' }, properties = { maximized = true, tag = my_tags['yt'] } },
     {
-        rule = { name=PIP_WINDOW_TITLE },
-        properties = {
-            width=PIP_DEFAULT_WIDTH, x=1400, y=800, border_width=0, opacity=PIP_OPACITY, ontop=true, above=true,
-            requests_no_titlebar=true, floating=true, dockable=false, fullscreen=false, sticky=true,
-            focusable=false, skip_taskbar=true,
-        },
+        rule = { name=PIP_WINDOW_TITLE_CHROME },
+        properties = PIP_WINDOW_PROPERTIES,
+    },
+    {
+        rule = { name=PIP_WINDOW_TITLE_FIREFOX },
+        properties = PIP_WINDOW_PROPERTIES,
     },
     {
         rule = { name=ABTT_MAIN_WINDOW_TITLE },
@@ -1928,7 +1935,7 @@ client.connect_signal(
         elseif c.name == MD_NOTE_TITLE then
             awful.spawn('xdotool set_window --classname MdNote ' .. c.window)
             center_client(c)
-        elseif c.name == PIP_WINDOW_TITLE then
+        elseif c.name == PIP_WINDOW_TITLE_CHROME or c.name == PIP_WINDOW_TITLE_FIREFOX then
             local scr_geometry = c.screen.workarea
             c.y = scr_geometry.y + 100
             c.opacity = PIP_OPACITY
@@ -2016,7 +2023,7 @@ client.connect_signal(
             --c:buttons(awful.util.table.join(
                 --awful.button({}, 1, function(e) multiclicks.trigger(e, 1) end)
             --))
-        elseif c.name == PIP_WINDOW_TITLE then
+        elseif c.name == PIP_WINDOW_TITLE_CHROME or c.name == PIP_WINDOW_TITLE_FIREFOX then
             c.above = true
             c.ontop = true
         elseif c.name == ABTT_LIST_WINDOW_TITLE then
@@ -2205,7 +2212,7 @@ client.connect_signal(
             hidden_clients = {}
         end
 
-        if c.name == PIP_WINDOW_TITLE then
+        if c.name == PIP_WINDOW_TITLE_CHROME or c.name == PIP_WINDOW_TITLE_FIREFOX then
             c.opacity = PIP_OPACITY
         elseif c.name == ABTT_MAIN_WINDOW_TITLE then
             c.opacity = ABTT_OPACITY
