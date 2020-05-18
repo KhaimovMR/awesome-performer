@@ -13,18 +13,18 @@ planning_screen_tag_number_offset = 12 -- altkey
 work_screen_tag_number_offset = 24 -- control
 
 preferred_screen_outputs = {
-    tag_1 = eDP1,
-    tag_2 = eDP1,
-    tag_3 = eDP1,
-    tag_4 = eDP1,
-    tag_5 = eDP1,
-    tag_6 = eDP1,
-    tag_7 = eDP1,
-    tag_8 = eDP1,
-    tag_9 = eDP1,
-    tag_10 = eDP1,
-    tag_11 = eDP1,
-    tag_12 = eDP1,
+    tag_1 = HDMI1,
+    tag_2 = HDMI1,
+    tag_3 = HDMI1,
+    tag_4 = HDMI1,
+    tag_5 = HDMI1,
+    tag_6 = HDMI1,
+    tag_7 = HDMI1,
+    tag_8 = HDMI1,
+    tag_9 = HDMI1,
+    tag_10 = HDMI1,
+    tag_11 = HDMI1,
+    tag_12 = HDMI1,
     tag_13 = eDP1,
     tag_14 = eDP1,
     tag_15 = eDP1,
@@ -65,13 +65,13 @@ function init_screen_tags_offsets()
         planning_screen_tag_number_offset = 12 -- altkey
         work_screen_tag_number_offset = 24 -- control
     elseif screen_count == 2 then
-        surfing_screen = 1
+        surfing_screen = 2
         work_screen = 2
         planning_screen = 1
 
         surfing_screen_offset = 0 -- modkey
-        planning_screen_offset = 12 -- altkey
-        work_screen_offset = 0  -- control
+        planning_screen_offset = 0 -- altkey
+        work_screen_offset = 12  -- control
 
         surfing_screen_tag_number_offset = 0 -- modkey
         planning_screen_tag_number_offset = 12 -- altkey

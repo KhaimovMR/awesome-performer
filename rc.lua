@@ -310,20 +310,21 @@ function initialize_tags()
     local result_tags = {}
     local tags_count = 36 / screen.count()
     local screen_count = screen.count()
-    local j = 1
 
     if screen_count == 2 then
         local tags_template_1 = {}
         local tags_template_2 = {}
 
-        for i = 1, 24 do
-            table.insert(tags_template_1, j)
-            j = j + 1
+        for i = 1, 12 do
+            table.insert(tags_template_2, i)
+        end
+
+        for i = 13, 24 do
+            table.insert(tags_template_1, i)
         end
 
         for i = 25, 36 do
-            table.insert(tags_template_2, j)
-            j = j + 1
+            table.insert(tags_template_2, i)
         end
 
         result_tags[1] = awful.tag(tags_template_1, 1, layouts[2])
@@ -332,8 +333,7 @@ function initialize_tags()
         local tags_template = {}
 
         for i = 1, tags_count do
-            table.insert(tags_template, j)
-            j = j + 1
+            table.insert(tags_template, i)
         end
 
         for s = 1, screen_count do
