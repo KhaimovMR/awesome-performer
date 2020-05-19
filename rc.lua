@@ -347,7 +347,7 @@ function initialize_tags()
     for s = 1, screen_count do
         -- Each screen has its own tag table.
         for _, tag in pairs(result_tags[s]) do
-            if i < 25 then
+            if i > 12 and i < 25 then
                 tag.archsome_preferred_output = eDP1
             else
                 tag.archsome_preferred_output = HDMI1
@@ -943,6 +943,14 @@ clientkeys = awful.util.table.join(
     awful.key(
         { modkey, 'Shift'   },
         '#54',
+        function (c)
+            c:kill()
+        end
+    ),
+    -- #70 - F4
+    awful.key(
+        { altkey },
+        '#70',
         function (c)
             c:kill()
         end
