@@ -1755,7 +1755,7 @@ awful.rules.rules = {
     {
         rule = {name=MD_NOTE_TITLE},
         properties = {
-            width=1400, height=800,
+            width=1200, height=600,
             fullscreen=false, maximized=false, sticky=true, size_hints_honor=true,
             requests_no_titlebar=true, border_width=10, floating=true, opacity=1,
             above=true, ontop=true,
@@ -1832,6 +1832,30 @@ awful.rules.rules = {
         properties = {
             height=30, border_width=0, opacity=ABTT_OPACITY, ontop=true, above=true, requests_no_titlebar=true,
             floating=true, dockable=false, fullscreen=false, sticky=true, focusable=false, skip_taskbar=true,
+        },
+    },
+    {
+        rule = { class='firefox_github_class' },
+        properties = {
+            tag = my_tags['github'],
+        },
+    },
+    {
+        rule = { class='firefox_youtube_class' },
+        properties = {
+            tag = my_tags['youtube'],
+        },
+    },
+    {
+        rule = { class='firefox_rg_youtrack_class' },
+        properties = {
+            tag = my_tags['rg_youtrack'],
+        },
+    },
+    {
+        rule = { class='firefox_work_class' },
+        properties = {
+            tag = my_tags['surfing_work'],
         },
     },
     {
@@ -2310,7 +2334,7 @@ screen.connect_signal(
         init_screen_tags_offsets()
 
         if screen.count() == 2 then
-            for s = 1, screen.count() do
+            for s = 1, 2 do
                 gears.wallpaper.maximized(my_home_path .. "/gdrive/awesome-performer/wallpapers/grass-and-tree.jpg", s)
 
                 if screen[s].archsome_is_inited == nil then

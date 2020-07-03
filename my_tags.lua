@@ -99,20 +99,22 @@ planning_screen_tags = tags[planning_screen]
 
 my_tags = {
     tag_1 = surfing_screen_tags[1 + surfing_screen_offset],
+    surfing_main = surfing_screen_tags[1 + surfing_screen_offset],
     surfing_localhost = surfing_screen_tags[1 + surfing_screen_offset],
     surfing_rlc = surfing_screen_tags[1 + surfing_screen_offset],
 
     tag_2 = surfing_screen_tags[2 + surfing_screen_offset],
-    surfing_dev = surfing_screen_tags[2 + surfing_screen_offset],
+    surfing_work = surfing_screen_tags[2 + surfing_screen_offset],
     pyrun = surfing_screen_tags[2 + surfing_screen_offset],
 
     tag_3 = surfing_screen_tags[3 + surfing_screen_offset],
-    surfing_test = surfing_screen_tags[3 + surfing_screen_offset],
+    surfing_dev = surfing_screen_tags[3 + surfing_screen_offset],
 
     tag_4 = surfing_screen_tags[4 + surfing_screen_offset],
-    surfing_prod = surfing_screen_tags[4 + surfing_screen_offset],
+    surfing_test = surfing_screen_tags[4 + surfing_screen_offset],
 
     tag_5 = surfing_screen_tags[5 + surfing_screen_offset],
+    surfing_prod = surfing_screen_tags[5 + surfing_screen_offset],
 
     tag_6 = surfing_screen_tags[6 + surfing_screen_offset],
 
