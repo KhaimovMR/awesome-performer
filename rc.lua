@@ -1757,13 +1757,16 @@ awful.rules.rules = {
         properties = {
             width=1200, height=600,
             fullscreen=false, maximized=false, sticky=true, size_hints_honor=true,
-            requests_no_titlebar=true, border_width=10, floating=true, opacity=1,
+            requests_no_titlebar=true, border_width=5, floating=true, opacity=1,
             above=true, ontop=true,
             callback = function(c)
-                c.border_normal_color = '#666644'
+                c.border_normal_color = '#444422'
                 c.border_focus_color = '#aa9955'
                 c.border_color = '#aa9955'
                 c.screen = mouse.screen
+                c.shape = function(cr, width, height)
+                    gears.shape.rounded_rect(cr, width, height, 20)
+                end
                 c:connect_signal(
                     'property::position',
                     center_client
@@ -1965,7 +1968,7 @@ client.connect_signal(
             )
             center_client(c)
         elseif c.name == MD_NOTE_TITLE then
-            awful.spawn('xdotool set_window --classname MdNote ' .. c.window)
+            awful.spawn('xdotool set_window --classname ' .. MD_NOTE_INSTANCE .. ' ' .. c.window)
             center_client(c)
         elseif c.name == PIP_WINDOW_TITLE_CHROME or c.name == PIP_WINDOW_TITLE_FIREFOX then
             local scr_geometry = c.screen.workarea
