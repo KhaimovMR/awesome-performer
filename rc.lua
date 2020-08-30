@@ -15,7 +15,7 @@ local PIP_OPACITY_TIMER = nil
 local PIP_WINDOW_PROPERTIES = {
     width=PIP_DEFAULT_WIDTH, height=PIP_DEFAULT_HEIGHT, x=1400, y=800, border_width=0, opacity=PIP_OPACITY, ontop=true, above=true,
     requests_no_titlebar=true, floating=true, dockable=false, fullscreen=false, sticky=true,
-    focusable=false, skip_taskbar=true,
+    focusable=false, skip_taskbar=true, size_hints_honor = true
 }
 
 local ABTT_OPACITY = 0.7
@@ -1974,12 +1974,24 @@ client.connect_signal(
             local scr_geometry = c.screen.workarea
             c.y = scr_geometry.y + 100
             c.opacity = PIP_OPACITY
+            c.original_width = c.width
+            c.original_height = c.height
             c.shape = function(cr, width, height)
                 gears.shape.rounded_rect(cr, width, height, 10)
             end
             c:connect_signal(
+                'request::geometry',
+                function(c, context, hints)
+                    if context == 'mouse.resize' then
+                        local aspect_ratio = c.original_width / c.original_height
+                        hints.width = math.min(hints.width, gears.math.round(aspect_ratio * hints.height))
+                        hints.height = math.min(hints.height, gears.math.round(hints.width / aspect_ratio))
+                    end
+                end
+            )
+            c:connect_signal(
                 'property::size',
-                function(c)
+                function(c, context, hints)
                     local scr_geometry = c.screen.workarea
                     c.x = scr_geometry.x + scr_geometry.width - (c.width + 100)
                 end
