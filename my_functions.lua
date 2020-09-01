@@ -477,3 +477,8 @@ function tables_diff(a, b)
         return {}
     end
 end
+
+
+function ternary(cond, if_true, if_false)
+    if cond then return if_true else return if_false end
+end

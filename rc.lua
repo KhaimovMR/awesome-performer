@@ -18,9 +18,12 @@ local PIP_WINDOW_PROPERTIES = {
     focusable=false, skip_taskbar=true, size_hints_honor = true
 }
 
-local ABTT_OPACITY = 0.7
-local ABTT_OPACITY_TIMEOUT = 1
+local ABTT_OPACITY = 0.5
+local ABTT_OPACITY_TIMEOUT = 0.2
 local ABTT_OPACITY_TIMER = nil
+local ABTT_MAIN_WINDOW_Y_POSITION = 0
+local ABTT_MAIN_WINDOW_X_POSITION = 600
+local abtt_main_window_client = nil
 
 -- hidden clients that's added to this table
 hidden_clients = {}
@@ -1835,6 +1838,7 @@ awful.rules.rules = {
         properties = {
             height=30, border_width=0, opacity=ABTT_OPACITY, ontop=true, above=true, requests_no_titlebar=true,
             floating=true, dockable=false, fullscreen=false, sticky=true, focusable=false, skip_taskbar=true,
+            size_hints_honor = true,
         },
     },
     {
@@ -1866,6 +1870,7 @@ awful.rules.rules = {
         properties = {
             border_width=0, opacity=1, ontop=true, above=true, requests_no_titlebar=true, floating=true,
             dockable=false, fullscreen=false, sticky=true, focusable=true, skip_taskbar=true,
+            size_hints_honor = true,
         },
     },
 }
@@ -1891,8 +1896,14 @@ end
 
 function position_abtt_window(c, x_offset, y_offset)
     local scr_geometry = c.screen.workarea
-    c.x = scr_geometry.x + scr_geometry.width - x_offset
-    c.y = scr_geometry.y + scr_geometry.height - y_offset
+
+    if x_offset ~= nil then
+        c.x = scr_geometry.x + scr_geometry.width - (x_offset + c.width)
+    end
+
+    if y_offset ~= nil then
+        c.y = scr_geometry.y + scr_geometry.height - (y_offset + c.height)
+    end
 end
 
 
@@ -2030,15 +2041,25 @@ client.connect_signal(
                 end
             )
         elseif c.name == ABTT_MAIN_WINDOW_TITLE then
+            abtt_main_window_client = c
             c.opacity = ABTT_OPACITY
             c.shape = gears.shape.rounded_rect
             c.above = true
             c.ontop = true
-            position_abtt_window(c, 600, 54)
+            local scr_geometry = screen[1].workarea
+            c:connect_signal(
+                'request::geometry',
+                function(c, context, hints)
+                    if context == 'mouse.move' then
+                        local scr_geometry = c.screen.workarea
+                        hints.y = scr_geometry.y + scr_geometry.height - ABTT_MAIN_WINDOW_Y_POSITION
+                    end
+                end
+            )
             c:connect_signal(
                 'property::position',
                 function(c)
-                    position_abtt_window(c, 600, 54)
+                    position_abtt_window(c, nil, ABTT_MAIN_WINDOW_Y_POSITION)
                 end
             )
             c:connect_signal(
@@ -2067,9 +2088,6 @@ client.connect_signal(
                     )
                 end
             )
-            --c:buttons(awful.util.table.join(
-                --awful.button({}, 1, function(e) multiclicks.trigger(e, 1) end)
-            --))
         elseif c.name == PIP_WINDOW_TITLE_CHROME or c.name == PIP_WINDOW_TITLE_FIREFOX then
             c.above = true
             c.ontop = true
@@ -2078,11 +2096,19 @@ client.connect_signal(
             c.shape = gears.shape.rounded_rect
             c.above = true
             c.ontop = true
-            position_abtt_window(c, 600, 654)
+            position_abtt_window(
+                c,
+                ternary(abtt_main_window_client ~= nil, abtt_main_window_client.x, ABTT_MAIN_WINDOW_X_POSITION),
+                654
+            )
             c:connect_signal(
                 'property::position',
                 function(c)
-                    position_abtt_window(c, 600, 654)
+                    position_abtt_window(
+                        c,
+                        ternary(abtt_main_window_client ~= nil, abtt_main_window_client.x, ABTT_MAIN_WINDOW_X_POSITION),
+                        654
+                    )
                 end
             )
         end
