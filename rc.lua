@@ -1671,7 +1671,10 @@ awful.rules.rules = {
             width=1200, height=800,
             maximized=false, sticky=true, ontop=true, above=true,
             floating=true, dockable=false, fullscreen=false,
-            requests_no_titlebar=true, border_width=2, skip_taskbar=true
+            requests_no_titlebar=true, border_width=2, skip_taskbar=true,
+            shape=function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 20)
+            end,
         }
     },
     {
