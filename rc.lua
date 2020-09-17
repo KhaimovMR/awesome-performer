@@ -22,7 +22,7 @@ local ABTT_OPACITY = 0.5
 local ABTT_OPACITY_TIMEOUT = 0.2
 local ABTT_OPACITY_TIMER = nil
 local ABTT_MAIN_WINDOW_Y_POSITION = 0
-local ABTT_MAIN_WINDOW_X_POSITION = 600
+local ABTT_MAIN_WINDOW_X_POSITION = 100
 local abtt_main_window_client = nil
 
 -- hidden clients that's added to this table
@@ -1614,6 +1614,7 @@ awful.rules.rules = {
                      buttons = clientbuttons } },
     { rule = { class = 'TeamViewer' }, properties = { tag = my_tags['teamviewer'], fullscreen = false, maximized = false, floating = true } },
     { rule = { class = 'Steam' }, properties = { tag = my_tags['games'] } },
+    { rule = { class = 'streaming_client' }, properties = { tag = my_tags['games'] } },
     {
         rule = { class = 'csgo_linux64' },
         properties = {
@@ -1837,14 +1838,6 @@ awful.rules.rules = {
         properties = PIP_WINDOW_PROPERTIES,
     },
     {
-        rule = { name=ABTT_MAIN_WINDOW_TITLE },
-        properties = {
-            height=30, border_width=0, opacity=ABTT_OPACITY, ontop=true, above=true, requests_no_titlebar=true,
-            floating=true, dockable=false, fullscreen=false, sticky=true, focusable=false, skip_taskbar=true,
-            size_hints_honor = true,
-        },
-    },
-    {
         rule = { class='firefox_github_class' },
         properties = {
             tag = my_tags['github'],
@@ -1866,6 +1859,14 @@ awful.rules.rules = {
         rule = { class='firefox_work_class' },
         properties = {
             tag = my_tags['surfing_work'],
+        },
+    },
+    {
+        rule = { name=ABTT_MAIN_WINDOW_TITLE },
+        properties = {
+            height=30, border_width=0, opacity=ABTT_OPACITY, ontop=true, above=true, requests_no_titlebar=true,
+            floating=true, dockable=false, fullscreen=false, sticky=true, focusable=false, skip_taskbar=true,
+            size_hints_honor = true,
         },
     },
     {
@@ -2049,7 +2050,7 @@ client.connect_signal(
             c.shape = gears.shape.rounded_rect
             c.above = true
             c.ontop = true
-            local scr_geometry = screen[1].workarea
+            --position_abtt_window(c, ABTT_MAIN_WINDOW_X_POSITION, ABTT_MAIN_WINDOW_Y_POSITION)
             c:connect_signal(
                 'request::geometry',
                 function(c, context, hints)
@@ -2431,9 +2432,10 @@ screen.connect_signal(
 screen.connect_signal(
     'added',
     function(scr)
-        local output_added = next(scr.outputs)
-        systray:set_screen(scr)
-        nt{text=output_added, title="SCREEN ADDED: ", icon=archsome.icons.monitor_connected, preset='devices'}
+        awesome.restart()
+        --local output_added = next(scr.outputs)
+        --systray:set_screen(scr)
+        --nt{text=output_added, title="SCREEN ADDED: ", icon=archsome.icons.monitor_connected, preset='devices'}
     end
 )
 
