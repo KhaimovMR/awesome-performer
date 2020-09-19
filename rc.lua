@@ -1669,7 +1669,7 @@ awful.rules.rules = {
     {
         rule = { class = 'Surf'},
         properties = {
-            width=1200, height=800,
+            width=1100, height=600,
             maximized=false, sticky=true, ontop=true, above=true,
             floating=true, dockable=false, fullscreen=false,
             requests_no_titlebar=true, border_width=2, skip_taskbar=true,
