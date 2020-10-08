@@ -482,3 +482,17 @@ end
 function ternary(cond, if_true, if_false)
     if cond then return if_true else return if_false end
 end
+
+function is_3d_client(c)
+    if c == nil then
+        return false
+    end
+
+    for _, my_3d_app_class in pairs(my_3d_app_classes) do
+        if string.match(c.class, my_3d_app_class) then
+            return true
+        end
+    end
+
+    return false
+end

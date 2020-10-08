@@ -858,7 +858,7 @@ function get_center_screen_menu_pos_y(scr, menu)
 end
 
 
-function get_next_visible(clients_sorted, current_client_idx, step, end_reached)
+function get_next_visible(clients_sorted, current_client_idx, step, end_reached, include_minimized)
     local next_client_idx = current_client_idx + step
 
     if current_client_idx > #clients_sorted then
@@ -875,22 +875,34 @@ function get_next_visible(clients_sorted, current_client_idx, step, end_reached)
         next_client_idx = #clients_sorted
     end
 
-    if clients_sorted[next_client_idx] ~= nil and clients_sorted[next_client_idx].minimized == false and clients_sorted[next_client_idx].skip_taskbar == false then
+    next_client = clients_sorted[next_client_idx]
+    next_client_is_3d = is_3d_client(next_client)
+    is_minimized_flag = (
+        next_client ~= nil
+        and (next_client.minimized == false or (next_client.minimized == true and next_client_is_3d == true))
+    )
+
+    if is_minimized_flag == true
+            and next_client.skip_taskbar == false then
         return next_client_idx
     else
-        return get_next_visible(clients_sorted, next_client_idx, step, end_reached)
+        return get_next_visible(clients_sorted, next_client_idx, step, end_reached, include_minimized)
     end
 end
 
 
-function next_tag_client(client, step)
+function next_tag_client(client, step, include_minimized)
+    if include_minimized ~= nil then
+        include_minimized = true
+    end
+
     local clients_sorted = client.first_tag:clients()
     local current_client_idx = 0
     local next_client, next_client_idx
 
     table.sort(
         clients_sorted,
-        function(c1, c2) 
+        function(c1, c2)
             if c1 and c2 then
                 return c1.name < c2.name
             else
@@ -906,15 +918,33 @@ function next_tag_client(client, step)
         end
     end
 
-    next_client_idx = get_next_visible(clients_sorted, current_client_idx, step, false)
+    next_client_idx = get_next_visible(clients_sorted, current_client_idx, step, false, include_minimized)
 
     if next_client_idx then
+        if clients_sorted[next_client_idx].minimized then
+            clients_sorted[next_client_idx].minimized = false
+        end
+
         awful.client.focus.byidx(0, clients_sorted[next_client_idx])
     end
 end
 
 
 clientkeys = awful.util.table.join(
+    awful.key(
+        { altkey },
+        'Tab',
+        function (client)
+            next_tag_client(client, 1)
+        end
+    ),
+    awful.key(
+        { altkey, 'Shift' },
+        'Tab',
+        function (client)
+            next_tag_client(client, -1)
+        end
+    ),
     awful.key(
         { modkey },
         'Tab',
@@ -1663,6 +1693,7 @@ awful.rules.rules = {
     { rule = { instance = 'sun-awt-X11-XFramePeer', class = 'freemind-main-FreeMindStarte' }, properties = { tag = my_tags['freemind'] } },
     { rule = { instance = 'mysql-workbench-bin' }, properties = { tag = my_tags['mysql'] } },
     { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
+    { rule = { class = 'Spotify' }, properties = { tag = my_tags['music'] } },
     { rule = { instance = 'tilda' }, properties = { fullscreen = true } },
     { rule = { class = 'Gimp'}, properties = { tag = my_tags['gimp'] } },
     { rule = { class = 'Inkscape'}, properties = { tag = my_tags['inkscape'] } },
@@ -2447,7 +2478,7 @@ screen.connect_signal(
         local primary_out = next(screen[1].outputs)
 
         if screen.count() == 1 then
-            local tag 
+            local tag
 
             for idx = 1, 36 do
                 tag = screen[1].tags[idx]
