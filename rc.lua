@@ -1676,9 +1676,72 @@ awful.rules.rules = {
             honor_workarea=false,
         }
     },
-    { rule = { class = 'ThunderbirdPersonal' }, properties = { tag = my_tags['personal_mail'], maximized = true } },
-    { rule = { class = 'ThunderbirdWork1' }, properties = { tag = my_tags['work_1_mail'], maximized = true } },
-    { rule = { class = 'ThunderbirdWork2' }, properties = { tag = my_tags['work_2_mail'], maximized = true } },
+    {
+        rule = { class = 'ThunderbirdPersonal', instance = 'Mail' },
+        properties = { tag = my_tags['personal_mail'], maximized = true },
+    },
+    {
+        rule = { class = 'ThunderbirdPersonal', instance='Calendar' },
+        properties = {
+            width=800, height=520,
+            maximized=false, sticky=true, ontop=true, above=true,
+            floating=true, dockable=false, fullscreen=false,
+            requests_no_titlebar=true, border_width=2, skip_taskbar=true,
+            border_width = 5,
+            shape=function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 20)
+            end,
+            callback = function(c)
+                c.border_normal_color = '#448844'
+                c.border_focus_color = '#88cc88'
+                c.border_color = '#88cc88'
+            end,
+        },
+    },
+    {
+        rule = { class = 'ThunderbirdWork1', instance = 'Mail' },
+        properties = { tag = my_tags['work_1_mail'], maximized = true },
+    },
+    {
+        rule = { class = 'ThunderbirdWork1', instance = 'Calendar' },
+        properties = {
+            width=800, height=520,
+            maximized=false, sticky=true, ontop=true, above=true,
+            floating=true, dockable=false, fullscreen=false,
+            requests_no_titlebar=true, border_width=2, skip_taskbar=true,
+            border_width = 5,
+            shape=function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 20)
+            end,
+            callback = function(c)
+                c.border_normal_color = '#444488'
+                c.border_focus_color = '#8888cc'
+                c.border_color = '#8888cc'
+            end,
+        },
+    },
+    {
+        rule = { class = 'ThunderbirdWork2', instance = 'Mail' },
+        properties = { tag = my_tags['work_2_mail'], maximized = true },
+    },
+    {
+        rule = { class = 'ThunderbirdWork2', instance = 'Calendar' },
+        properties = {
+            width=800, height=520,
+            maximized=false, sticky=true, ontop=true, above=true,
+            floating=true, dockable=false, fullscreen=false,
+            requests_no_titlebar=true, border_width=2, skip_taskbar=true,
+            border_width = 5,
+            shape=function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 20)
+            end,
+            callback = function(c)
+                c.border_normal_color = '#884488'
+                c.border_focus_color = '#cc88cc'
+                c.border_color = '#cc88cc'
+            end,
+        },
+    },
     { rule = { class = 'Slack' }, properties = { tag = my_tags['skype'], maximized = true } },
     { rule = { class = 'discord' }, properties = { tag = my_tags['skype'] } },
     { rule = { class = 'ViberPC' }, properties = { tag = my_tags['skype'] } },
