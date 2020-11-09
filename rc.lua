@@ -512,6 +512,7 @@ kbdcfg.switch = function (do_switch, specific_layout)
     local layout_pair
     local bg_color
     naughty.destroy_all_notifications(nil, -1)
+    os.execute("(xset q | grep 'Caps Lock:   on' && xdotool key Caps_Lock) > /dev/null &2>1")
 
     if do_switch == true then
         if specific_layout then
