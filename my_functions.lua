@@ -483,6 +483,7 @@ function ternary(cond, if_true, if_false)
     if cond then return if_true else return if_false end
 end
 
+
 function is_3d_client(c)
     if c == nil then
         return false
@@ -495,4 +496,39 @@ function is_3d_client(c)
     end
 
     return false
+end
+
+
+function clear_pip_opacity_timer()
+    if PIP_OPACITY_TIMER then
+        PIP_OPACITY_TIMER:stop()
+        PIP_OPACITY_TIMER = nil
+    end
+end
+
+
+function clear_abtt_opacity_timer()
+    if ABTT_OPACITY_TIMER then
+        ABTT_OPACITY_TIMER:stop()
+        ABTT_OPACITY_TIMER = nil
+    end
+end
+
+
+function position_abtt_window(c, x_offset, y_offset)
+    local scr_geometry = c.screen.workarea
+
+    if x_offset ~= nil then
+        c.x = scr_geometry.x + scr_geometry.width - (x_offset + c.width)
+    end
+
+    if y_offset ~= nil then
+        c.y = scr_geometry.y + scr_geometry.height - (y_offset + c.height)
+    end
+end
+
+
+function get_x_offset(c)
+    local scr_geometry = c.screen.workarea
+    return scr_geometry.x + scr_geometry.width - c.width - c.x
 end

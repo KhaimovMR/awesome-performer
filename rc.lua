@@ -24,6 +24,7 @@ local ABTT_OPACITY_TIMER = nil
 local ABTT_MAIN_WINDOW_Y_POSITION = 0
 local ABTT_MAIN_WINDOW_X_POSITION = 100
 local abtt_main_window_client = nil
+local abtt_list_window_client = nil
 
 -- hidden clients that's added to this table
 hidden_clients = {}
@@ -1978,35 +1979,6 @@ awful.rules.rules = {
 --
 
 
-function clear_pip_opacity_timer()
-    if PIP_OPACITY_TIMER then
-        PIP_OPACITY_TIMER:stop()
-        PIP_OPACITY_TIMER = nil
-    end
-end
-
-
-function clear_abtt_opacity_timer()
-    if ABTT_OPACITY_TIMER then
-        ABTT_OPACITY_TIMER:stop()
-        ABTT_OPACITY_TIMER = nil
-    end
-end
-
-
-function position_abtt_window(c, x_offset, y_offset)
-    local scr_geometry = c.screen.workarea
-
-    if x_offset ~= nil then
-        c.x = scr_geometry.x + scr_geometry.width - (x_offset + c.width)
-    end
-
-    if y_offset ~= nil then
-        c.y = scr_geometry.y + scr_geometry.height - (y_offset + c.height)
-    end
-end
-
-
 -- {{{ Signals
 
 client.connect_signal(
@@ -2141,12 +2113,18 @@ client.connect_signal(
                 end
             )
         elseif c.name == ABTT_MAIN_WINDOW_TITLE then
-            abtt_main_window_client = c
             c.opacity = ABTT_OPACITY
             c.shape = gears.shape.rounded_rect
             c.above = true
             c.ontop = true
-            --position_abtt_window(c, ABTT_MAIN_WINDOW_X_POSITION, ABTT_MAIN_WINDOW_Y_POSITION)
+
+            -- Fix for something to reset the client's x-location to 0 on awesome restart
+            gears.timer.start_new(
+                2,
+                function()
+                    position_abtt_window(c, 200, ABTT_MAIN_WINDOW_Y_POSITION)
+                end
+            )
             c:connect_signal(
                 'request::geometry',
                 function(c, context, hints)
@@ -2160,6 +2138,14 @@ client.connect_signal(
                 'property::position',
                 function(c)
                     position_abtt_window(c, nil, ABTT_MAIN_WINDOW_Y_POSITION)
+
+                    if abtt_list_window_client ~= nil then
+                        position_abtt_window(
+                            abtt_list_window_client,
+                            get_x_offset(c),
+                            32
+                        )
+                    end
                 end
             )
             c:connect_signal(
@@ -2188,26 +2174,28 @@ client.connect_signal(
                     )
                 end
             )
+            abtt_main_window_client = c
         elseif c.name == PIP_WINDOW_TITLE_CHROME or c.name == PIP_WINDOW_TITLE_FIREFOX then
             c.above = true
             c.ontop = true
         elseif c.name == ABTT_LIST_WINDOW_TITLE then
+            abtt_list_window_client = c
             c.opacity = 1
             c.shape = gears.shape.rounded_rect
             c.above = true
             c.ontop = true
             position_abtt_window(
                 c,
-                ternary(abtt_main_window_client ~= nil, abtt_main_window_client.x, ABTT_MAIN_WINDOW_X_POSITION),
-                654
+                ternary(abtt_main_window_client ~= nil, get_x_offset(abtt_main_window_client), ABTT_MAIN_WINDOW_X_POSITION),
+                32
             )
             c:connect_signal(
                 'property::position',
                 function(c)
                     position_abtt_window(
                         c,
-                        ternary(abtt_main_window_client ~= nil, abtt_main_window_client.x, ABTT_MAIN_WINDOW_X_POSITION),
-                        654
+                        ternary(abtt_main_window_client ~= nil, get_x_offset(abtt_main_window_client), ABTT_MAIN_WINDOW_X_POSITION),
+                        32
                     )
                 end
             )
