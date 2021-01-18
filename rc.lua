@@ -2055,6 +2055,7 @@ client.connect_signal(
             center_client(c)
         elseif c.name == PIP_WINDOW_TITLE_CHROME or c.name == PIP_WINDOW_TITLE_FIREFOX then
             local scr_geometry = c.screen.workarea
+            c.x = scr_geometry.x + scr_geometry.width - (c.width + 100)
             c.y = scr_geometry.y + 100
             c.opacity = PIP_OPACITY
             c.original_width = c.width
