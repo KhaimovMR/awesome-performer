@@ -136,20 +136,25 @@ my_tags = {
     twitch = surfing_screen_tags[12 + surfing_screen_offset],
     netflix = surfing_screen_tags[12 + surfing_screen_offset],
 
-    tag_13 = planning_screen_tags[1 + planning_screen_offset],
+    tag_13 =         planning_screen_tags[1 + planning_screen_offset],
+    messengers =     planning_screen_tags[1 + planning_screen_offset],
+    work_2_skype =   planning_screen_tags[1 + planning_screen_offset],
+    viber =          planning_screen_tags[1 + planning_screen_offset],
+    personal_skype = planning_screen_tags[1 + planning_screen_offset],
 
-    tag_14 = planning_screen_tags[2 + planning_screen_offset],
+    tag_14 =         planning_screen_tags[2 + planning_screen_offset],
+    screen_sharing = planning_screen_tags[2 + planning_screen_offset],
 
-    tag_15 = planning_screen_tags[3 + planning_screen_offset],
+    tag_15 =               planning_screen_tags[3 + planning_screen_offset],
+    personal_google_docs = planning_screen_tags[3 + planning_screen_offset],
+    draw_io =              planning_screen_tags[3 + planning_screen_offset],
+    work_1_google_docs =   planning_screen_tags[3 + planning_screen_offset],
 
     tag_16 = planning_screen_tags[4 + planning_screen_offset],
     stash = planning_screen_tags[4 + planning_screen_offset],
     github = planning_screen_tags[4 + planning_screen_offset],
     codecov = planning_screen_tags[4 + planning_screen_offset],
     bamboo = planning_screen_tags[4 + planning_screen_offset],
-    personal_google_docs = planning_screen_tags[4 + planning_screen_offset],
-    draw_io = planning_screen_tags[4 + planning_screen_offset],
-    work_1_google_docs = planning_screen_tags[4 + planning_screen_offset],
 
     tag_17 = planning_screen_tags[5 + planning_screen_offset],
     mindmeister = planning_screen_tags[5 + planning_screen_offset],
@@ -164,8 +169,6 @@ my_tags = {
     wiki = planning_screen_tags[5 + planning_screen_offset],
 
     tag_18 = planning_screen_tags[6 + planning_screen_offset],
-    work_2_skype = planning_screen_tags[6 + planning_screen_offset],
-    personal_skype = planning_screen_tags[6 + planning_screen_offset],
 
     tag_19 = planning_screen_tags[7 + planning_screen_offset],
     personal_mail = planning_screen_tags[7 + planning_screen_offset],
@@ -207,11 +210,6 @@ my_tags = {
     ssh_test = work_screen_tags[5 + work_screen_offset],
 
     tag_30 = work_screen_tags[6 + work_screen_offset],
-    viber = planning_screen_tags[6 + planning_screen_offset],
-    skype = planning_screen_tags[6 + planning_screen_offset],
-    slack = planning_screen_tags[6 + planning_screen_offset],
-    discord = work_screen_tags[6 + planning_screen_offset],
-    hangouts = work_screen_tags[6 + planning_screen_offset],
     chrome_dev_tools = work_screen_tags[6 + work_screen_offset],
 
     tag_31 = work_screen_tags[7 + work_screen_offset],

@@ -268,7 +268,7 @@ function on_custom_notification_destroyed(notification)
         activate_tag(my_tags['work_1_mail'])
     elseif notification.app_name == "Slack" then
         local client = notification.clients[1]
-        activate_tag(my_tags['slack'], client)
+        activate_tag(my_tags['messengers'], client)
     elseif notification.app_name == "Google Chrome" then
         local client = notification.clients[1]
 
@@ -1343,7 +1343,7 @@ function make_default_keys()
             {altkey},
             'End',
             function ()
-                my_tags['skype']:view_only()
+                my_tags['messengers']:view_only()
                 awful.spawn('skypedbusctl recent')
             end
         ),
@@ -1351,7 +1351,7 @@ function make_default_keys()
             {altkey},
             'Home',
             function ()
-                my_tags['skype']:view_only()
+                my_tags['messengers']:view_only()
                 awful.spawn('skypedbusctl missed')
             end
         ),
@@ -1373,7 +1373,7 @@ function make_default_keys()
             {altkey},
             'Insert',
             function ()
-                my_tags['skype']:view_only()
+                my_tags['messengers']:view_only()
                 awful.spawn('skypedbusctl contacts ' .. my_skype_login)
             end
         ),
@@ -1407,9 +1407,9 @@ function make_default_keys()
             { modkey, 'Control' },
             '#45',
             function ()
-                for _, client in pairs(my_tags['skype']:clients()) do
+                for _, client in pairs(my_tags['messengers']:clients()) do
                     if client.class == 'Slack' then
-                        my_tags['skype']:view_only()
+                        my_tags['messengers']:view_only()
                         awful.client.focus.byidx(0, client)
                         awful.spawn.with_shell('sleep 0.3 && xdotool key ctrl+k')
                     end
@@ -1658,16 +1658,16 @@ awful.rules.rules = {
             end,
         }
     },
-    { rule = { instance = 'skype', class = 'Skype' }, properties = { tag = my_tags['skype'] } },
-    { rule = { class = 'Microsoft Teams - Preview' }, properties = { tag = my_tags['skype'] } },
-    { rule = { instance = 'skypeforlinux', class = 'skypeforlinux' }, properties = { tag = my_tags['skype'] } },
-    { rule = { class = 'TeamSpeak 3' }, properties = { tag = my_tags['skype'] } },
-    { rule = { class = 'zoom' }, properties = { tag = my_tags['tag_6'] } },
-    { rule = { class = 'TelegramDesktop' }, properties = { tag = my_tags['skype'] } },
+    { rule = { instance = 'skype', class = 'Skype' }, properties = { tag = my_tags['messengers'] } },
+    { rule = { class = 'Microsoft Teams - Preview' }, properties = { tag = my_tags['messengers'] } },
+    { rule = { instance = 'skypeforlinux', class = 'skypeforlinux' }, properties = { tag = my_tags['messengers'] } },
+    { rule = { class = 'TeamSpeak 3' }, properties = { tag = my_tags['messengers'] } },
+    { rule = { class = 'zoom' }, properties = { tag = my_tags['screen_sharing'] } },
+    { rule = { class = 'TelegramDesktop' }, properties = { tag = my_tags['messengers'] } },
     {
         rule = { instance = 'viber' },
         properties = {
-            tag = my_tags['viber'],
+            tag = my_tags['messengers'],
             maximized=true,
             callback = function(c)
                 c.width = c.screen.workarea['width']
@@ -1744,9 +1744,9 @@ awful.rules.rules = {
             end,
         },
     },
-    { rule = { class = 'Slack' }, properties = { tag = my_tags['skype'], maximized = true } },
-    { rule = { class = 'discord' }, properties = { tag = my_tags['skype'] } },
-    { rule = { class = 'ViberPC' }, properties = { tag = my_tags['skype'] } },
+    { rule = { class = 'Slack' }, properties = { tag = my_tags['messengers'], maximized = true } },
+    { rule = { class = 'discord' }, properties = { tag = my_tags['messengers'] } },
+    { rule = { class = 'ViberPC' }, properties = { tag = my_tags['messengers'] } },
     { rule = { class = 'jetbrains-pychar' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { class = 'jetbrains-pycharm' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { instance = 'gnome-terminal' }, properties = { size_hints_honor = false } },
