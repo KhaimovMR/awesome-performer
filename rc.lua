@@ -1663,21 +1663,7 @@ awful.rules.rules = {
     { rule = { instance = 'skypeforlinux', class = 'skypeforlinux' }, properties = { tag = my_tags['messengers'] } },
     { rule = { class = 'TeamSpeak 3' }, properties = { tag = my_tags['messengers'] } },
     { rule = { class = 'zoom' }, properties = { tag = my_tags['screen_sharing'] } },
-    { rule = { class = 'TelegramDesktop' }, properties = { tag = my_tags['messengers'] } },
-    {
-        rule = { instance = 'viber' },
-        properties = {
-            tag = my_tags['messengers'],
-            maximized=true,
-            callback = function(c)
-                c.width = c.screen.workarea['width']
-                c.height = c.screen.workarea['height']
-            end,
-            floating=true,
-            placement=awful.placement.no_offscreen,
-            honor_workarea=false,
-        }
-    },
+    { rule = { class = 'TelegramDesktop' }, properties = { tag = my_tags['messengers_personal'] } },
     {
         rule = { class = 'ThunderbirdPersonal', instance = 'Mail' },
         properties = { tag = my_tags['personal_mail'], maximized = true },
@@ -1744,9 +1730,44 @@ awful.rules.rules = {
             end,
         },
     },
-    { rule = { class = 'Slack' }, properties = { tag = my_tags['messengers'], maximized = true } },
-    { rule = { class = 'discord' }, properties = { tag = my_tags['messengers'] } },
-    { rule = { class = 'ViberPC' }, properties = { tag = my_tags['messengers'] } },
+    {
+        rule = { class = 'Slack' },
+        properties = {
+            tag = my_tags['messengers'],
+            maximized = true,
+            callback = function(c)
+                c:connect_signal(
+                    'property::name',
+                    function(c)
+                        if string.match(c.name, 'Calling') or string.match(c.name, 'Slack call') then
+                            awful.client.movetotag(my_tags['calls'], c)
+                        elseif string.match(c.name, 'mini panel') then
+                            c.opacity = 0.75
+                            c.border_color = "#FF0000FF"
+                        end
+                    end
+                )
+            end
+        }
+    },
+    { rule = { class = 'Slack', name = 'Calling' }, properties = { tag = my_tags['calls'], maximized = true } },
+    { rule = { class = 'Slack', name = 'Slack call' }, properties = { tag = my_tags['calls'], maximized = true } },
+    {
+        rule = { class = 'Slack', name = 'mini panel' },
+        properties = {
+            skip_taskbar = true,
+            above = true,
+            ontop = true,
+            opacity = 0.75,
+            border_width = 2,
+            border_color = "#FF0000",
+            border_normal_color = '#FF0000',
+            border_focus_color = '#FF0000',
+            sticky = true,
+        },
+    },
+    { rule = { class = 'discord' }, properties = { tag = my_tags['messengers_personal'] } },
+    { rule = { class = 'ViberPC' }, properties = { tag = my_tags['messengers_personal'] } },
     { rule = { class = 'jetbrains-pychar' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { class = 'jetbrains-pycharm' }, properties = { tag = my_tags['pycharm'], fullscreen = false } },
     { rule = { instance = 'gnome-terminal' }, properties = { size_hints_honor = false } },
@@ -1861,7 +1882,7 @@ awful.rules.rules = {
         properties = {
             width=1200, height=600,
             fullscreen=false, maximized=false, sticky=true, size_hints_honor=true,
-            requests_no_titlebar=true, border_width=5, floating=true, opacity=1,
+            requests_no_titlebar=true, skip_taskbar=true, border_width=5, floating=true, opacity=1,
             above=true, ontop=true,
             callback = function(c)
                 c.border_normal_color = '#444422'
@@ -2033,6 +2054,8 @@ client.connect_signal(
                     center_client(c)
                 end
             )
+            center_client(c)
+        elseif c.class == 'Gcr-prompter' then
             center_client(c)
         end
 
