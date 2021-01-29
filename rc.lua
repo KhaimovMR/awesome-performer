@@ -1814,6 +1814,35 @@ awful.rules.rules = {
     },
     { rule = { class='steam_app_' }, properties = { fullscreen = true, tag = my_tags['games'], ontop = true } },
     {
+        rule = {class='Keepassx'},
+        properties = {
+            fullscreen=false, maximized=false, sticky=true, size_hints_honor=true, width=1000, height=600,
+            requests_no_titlebar=true, border_width=5, floating=true, opacity=1, above=true, ontop=true,
+            skip_taskbar=true, 
+            callback = function(c)
+                c.shape = function(cr, width, height)
+                    gears.shape.rounded_rect(cr, width, height, 20)
+                end
+                c.border_normal_color = '#ff8888'
+                c.border_focus_color = '#ff4444'
+                c.border_color = '#ff4444'
+                center_client(c)
+                c:connect_signal(
+                    'property::position',
+                    function(c)
+                        center_client(c)
+                    end
+                )
+                c:connect_signal(
+                    'property::size',
+                    function(c)
+                        center_client(c)
+                    end
+                )
+            end,
+        },
+    },
+    {
         rule = {class='Rofi'},
         properties = {
             fullscreen=false, maximized=false, sticky=true, size_hints_honor=true,
