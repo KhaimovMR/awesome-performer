@@ -367,7 +367,7 @@ function dropdown_app_toggle(app_name, action)
     if app_name == "ChromeMindmeister" then
         awful.spawn('dropdown-window ChromeMindmeister ' .. set_action .. ' "google-chrome --app=https://mindmeister.com --user-data-dir=' .. my_home_path .. '/.config/chrome-mindmeister" ')
     elseif app_name == "ChromeStuff" then
-        awful.spawn('dropdown-window ChromeStuff ' .. set_action .. ' "google-chrome --user-data-dir=' .. my_home_path .. '/.config/chrome-stuff" ')
+        awful.spawn('dropdown-window ChromeStuff ' .. set_action .. ' "qutebrowser --basedir ~/.config/qutebrowser-stuff --target window"')
     elseif app_name == "Terminal" then
         awful.spawn('dropdown-window Terminal ' .. set_action .. ' dr-terminal.sh shell')
     elseif app_name == "marks_work" then

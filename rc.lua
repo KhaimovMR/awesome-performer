@@ -1797,6 +1797,18 @@ awful.rules.rules = {
         }
     },
     {
+        rule = { instance = 'QuteDictionary', class = 'qutebrowser'},
+        properties = {
+            width=1100, height=600,
+            maximized=false, sticky=true, ontop=true, above=true,
+            floating=true, dockable=false, fullscreen=false,
+            requests_no_titlebar=true, border_width=2, skip_taskbar=true,
+            shape=function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 20)
+            end,
+        }
+    },
+    {
         rule = {class = 'Gnome-calculator'},
         properties = {
             maximized=false, sticky=true, ontop=true, above=true,
@@ -2069,7 +2081,7 @@ client.connect_signal(
             )
 
             send_browser_instance_to_its_tag(c, was_focused_before, false)
-        elseif c.class == 'Surf' then
+        elseif c.class == 'Surf' or c.instance == 'QuteDictionary' then
             c.screen = mouse.screen
             c:connect_signal(
                 'property::size',
