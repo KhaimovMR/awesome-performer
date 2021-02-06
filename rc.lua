@@ -1799,7 +1799,7 @@ awful.rules.rules = {
     {
         rule = { instance = 'QuteDictionary', class = 'qutebrowser'},
         properties = {
-            width=1100, height=600,
+            width=1100, height=600, opacity=0.75,
             maximized=false, sticky=true, ontop=true, above=true,
             floating=true, dockable=false, fullscreen=false,
             requests_no_titlebar=true, border_width=2, skip_taskbar=true,
@@ -2082,7 +2082,8 @@ client.connect_signal(
 
             send_browser_instance_to_its_tag(c, was_focused_before, false)
         elseif c.class == 'Surf' or c.instance == 'QuteDictionary' then
-            c.screen = mouse.screen
+            c:move_to_screen(mouse.screen)
+            c:move_to_tag(mouse.screen.selected_tag)
             c:connect_signal(
                 'property::size',
                 function(c)

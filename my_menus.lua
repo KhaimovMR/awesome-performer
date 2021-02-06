@@ -178,10 +178,10 @@ my_browsers_menu = awful.menu({
 
 my_translators_menu = awful.menu({
     items = {
-        {'[TR] &1. English', function() kbdcfg.switch(true, 'us'); web_query_execute('t') end},
-        {'[TR] &2. Russian', function() kbdcfg.switch(true, 'ru'); web_query_execute('tr') end},
-        {'[TR] &3. Ukrainian', function() kbdcfg.switch(true, 'ru'); web_query_execute('tu') end},
-        {'[TR] &4. Hebrew', function() kbdcfg.switch(true, 'us'); web_query_execute('th') end},
+        {'[TR] &1. English', function() kbdcfg.switch(true, 'us'); web_query_execute('t', false) end},
+        {'[TR] &2. Russian', function() kbdcfg.switch(true, 'ru'); web_query_execute('tr', false) end},
+        {'[TR] &3. Ukrainian', function() kbdcfg.switch(true, 'ru'); web_query_execute('tu', false) end},
+        {'[TR] &4. Hebrew', function() kbdcfg.switch(true, 'us'); web_query_execute('th', false) end},
     },
     theme = my_menus_theme,
 })
