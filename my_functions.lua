@@ -541,3 +541,22 @@ function get_x_offset(c)
     local scr_geometry = c.screen.workarea
     return scr_geometry.x + scr_geometry.width - c.width - c.x
 end
+
+
+function init_center_client(c)
+    c:move_to_screen(mouse.screen)
+    c:move_to_tag(mouse.screen.selected_tag)
+    c:connect_signal(
+        'property::size',
+        function(c)
+            center_client(c)
+        end
+    )
+    c:connect_signal(
+        'property::position',
+        function(c)
+            center_client(c)
+        end
+    )
+    center_client(c)
+end

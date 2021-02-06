@@ -1778,7 +1778,19 @@ awful.rules.rules = {
     { rule = { instance = 'sun-awt-X11-XFramePeer', class = 'NetBeans IDE' }, properties = { tag = my_tags['netbeans'], fullscreen = false } },
     { rule = { instance = 'sun-awt-X11-XFramePeer', class = 'freemind-main-FreeMindStarte' }, properties = { tag = my_tags['freemind'] } },
     { rule = { instance = 'mysql-workbench-bin' }, properties = { tag = my_tags['mysql'] } },
-    { rule = { instance = 'clementine' }, properties = { tag = my_tags['music'] } },
+    {
+        rule = { instance = 'clementine' },
+        properties = {
+            width=1100, height=600,
+            maximized=false, sticky=true, ontop=true, above=true,
+            floating=true, dockable=false, fullscreen=false,
+            requests_no_titlebar=true, border_width=2, skip_taskbar=true,
+            border_width=5, border_color = '#ff6666', border_focus_color = '#ff6666', border_normal_color = '#883333',
+            shape=function(cr, width, height)
+                gears.shape.rounded_rect(cr, width, height, 20)
+            end,
+        }
+    },
     { rule = { class = 'Spotify' }, properties = { tag = my_tags['music'] } },
     { rule = { instance = 'tilda' }, properties = { fullscreen = true } },
     { rule = { class = 'Gimp'}, properties = { tag = my_tags['gimp'] } },
@@ -2081,22 +2093,10 @@ client.connect_signal(
             )
 
             send_browser_instance_to_its_tag(c, was_focused_before, false)
+        elseif c.instance == 'clementine' then
+            init_center_client(c)
         elseif c.class == 'Surf' or c.instance == 'QuteDictionary' then
-            c:move_to_screen(mouse.screen)
-            c:move_to_tag(mouse.screen.selected_tag)
-            c:connect_signal(
-                'property::size',
-                function(c)
-                    center_client(c)
-                end
-            )
-            c:connect_signal(
-                'property::position',
-                function(c)
-                    center_client(c)
-                end
-            )
-            center_client(c)
+            init_center_client(c)
         elseif c.class == 'Gcr-prompter' then
             center_client(c)
         end
