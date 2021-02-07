@@ -161,17 +161,27 @@ my_monitors_menu = awful.menu({
 
 my_browsers_menu = awful.menu({
     items = {
-        {'[BROWSER] &1. Default', function() browser_router('default') end},
-        {'[BROWSER] &2. Work 1',  function() browser_router('work') end},
-        {'[BROWSER] &3. Work 2', function() browser_router('work_2') end},
-        {'[BROWSER] &4. YouTube', function() browser_router('youtube', 'https://youtube.com') end},
         {
-            '[BROWSER] &5. Google Music',
+            '[BROWSER] &1. Qutestuff',
+            function()
+                awful.spawn('qutebrowser-dropdown.sh https://www.google.com')
+            end
+        },
+        {'[BROWSER] &2. Default', function() browser_router('default') end},
+        {'[BROWSER] &3. Work 1',  function() browser_router('work') end},
+        {'[BROWSER] &4. Work 2', function() browser_router('work_2') end},
+        {'[BROWSER] &5. YouTube', function() browser_router('youtube', 'https://youtube.com') end},
+        {
+            '[BROWSER] &6. Google Music',
             function()
                 browser_router('youtube', 'https://play.google.com/music/listen#/wmp')
             end
         },
-        {'[BROWSER] &6. Repositories', function() browser_router('github', 'https://github.com') end},
+        {
+            '[BROWSER] &7. Repositories',
+            function()
+                awful.spawn('qutebrowser-router.sh github https://github.com')
+            end},
     },
     theme = my_menus_theme,
 })
