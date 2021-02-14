@@ -374,7 +374,7 @@ function dropdown_app_toggle(app_name, action)
     elseif app_name == "ChromeStuff" then
         awful.spawn(
             'dropdown-window ChromeStuff ' .. set_action ..
-                ' "qutebrowser --basedir ' .. my_home_path ..
+                ' "/opt/qutebrowser/.venv/bin/python /opt/qutebrowser/.venv/bin/qutebrowser --basedir ' .. my_home_path ..
                 '/.config/qutebrowser-stuff --target window"'
         )
     elseif app_name == "Terminal" then

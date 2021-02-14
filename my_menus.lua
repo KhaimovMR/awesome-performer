@@ -161,24 +161,18 @@ my_monitors_menu = awful.menu({
 
 my_browsers_menu = awful.menu({
     items = {
+        {'[BROWSER] &1. Default', function() browser_router('default') end},
+        {'[BROWSER] &2. Work 1',  function() browser_router('work') end},
+        {'[BROWSER] &3. Work 2', function() browser_router('work_2') end},
+        {'[BROWSER] &4. YouTube', function() browser_router('youtube', 'https://youtube.com') end},
         {
-            '[BROWSER] &1. Qutestuff',
-            function()
-                awful.spawn('qutebrowser-dropdown.sh https://www.google.com')
-            end
-        },
-        {'[BROWSER] &2. Default', function() browser_router('default') end},
-        {'[BROWSER] &3. Work 1',  function() browser_router('work') end},
-        {'[BROWSER] &4. Work 2', function() browser_router('work_2') end},
-        {'[BROWSER] &5. YouTube', function() browser_router('youtube', 'https://youtube.com') end},
-        {
-            '[BROWSER] &6. Google Music',
+            '[BROWSER] &5. Google Music',
             function()
                 browser_router('youtube', 'https://play.google.com/music/listen#/wmp')
             end
         },
         {
-            '[BROWSER] &7. Repositories',
+            '[BROWSER] &6. Repositories',
             function()
                 awful.spawn('qutebrowser-router.sh github https://github.com')
             end},
@@ -188,10 +182,10 @@ my_browsers_menu = awful.menu({
 
 my_translators_menu = awful.menu({
     items = {
-        {'[TR] &1. English', function() kbdcfg.switch(true, 'us'); web_query_execute('t', false) end},
-        {'[TR] &2. Russian', function() kbdcfg.switch(true, 'ru'); web_query_execute('tr', false) end},
-        {'[TR] &3. Ukrainian', function() kbdcfg.switch(true, 'ru'); web_query_execute('tu', false) end},
-        {'[TR] &4. Hebrew', function() kbdcfg.switch(true, 'us'); web_query_execute('th', false) end},
+        {'[TR] &e. English', function() kbdcfg.switch(true, 'us'); web_query_execute('t', false) end},
+        {'[TR] &r. Russian', function() kbdcfg.switch(true, 'ru'); web_query_execute('tr', false) end},
+        {'[TR] &u. Ukrainian', function() kbdcfg.switch(true, 'ru'); web_query_execute('tu', false) end},
+        {'[TR] &h. Hebrew', function() kbdcfg.switch(true, 'us'); web_query_execute('th', false) end},
     },
     theme = my_menus_theme,
 })
