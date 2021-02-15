@@ -1313,30 +1313,10 @@ function make_default_keys()
             { modkey },
             '#28',
             function ()
+                kbdcfg.switch(true, 'us')
                 toggle_center_screen_menu(my_translators_menu)
             end
         ),
-        -- Put PC into the sleep mode
-        -- #29 - y
-        --awful.key(
-            --{ modkey },
-            --'#29',
-            --function ()
-                --nt('SYSTEM IS GOING TO SLEEP')
-                --awful.spawn.with_shell('sudo rm /var/run/pm-utils/locks/pm-suspend.lock')
-                --awful.spawn.with_shell('sleep 1; slock.sh suspend')
-                ----awful.spawn.with_shell('sudo ' .. my_home_path .. '/bin/acpi_event_button_sleep.sh')
-            --end
-        --),
-        -- #30 - u
-        --awful.key(
-            --{ modkey },
-            --'#30',
-            --function ()
-                --nt('SYSTEM IS GOING TO HIBERNATE')
-                --awful.spawn.with_shell('sudo pm-suspend-hybrid')
-            --end
-        --),
 
         -- Skype shortcuts
         awful.key(
