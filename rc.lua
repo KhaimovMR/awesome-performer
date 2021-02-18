@@ -493,6 +493,7 @@ kbdcfg = {}
 kbdcfg.cmd = 'setxkbmap -option "ctrl:nocaps"'
 kbdcfg.layout = { { 'us', 'ru' }, { 'ru', 'us' } }
 kbdcfg.current = 1 -- us is our default layout
+kbdcfg.current_specific = ''
 
 kbdcfg.set_text = function(lang)
     local fg_color
@@ -519,25 +520,43 @@ kbdcfg.switch = function (do_switch, specific_layout)
         if specific_layout then
             if kbdcfg.layout[1][1] == specific_layout then -- if english
                 kbdcfg.current = 1
-            else -- if russian
+            elseif kbdcfg.layout[2][1] == specific_layout then -- if russian
                 kbdcfg.current = 2
+            else -- all the others
+                kbdcfg.current = 3
             end
         else
-            kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
+            if kbdcfg.current == 3 then
+                kbdcfg.current = 1
+            else
+                kbdcfg.current = kbdcfg.current % #(kbdcfg.layout) + 1
+            end
         end
 
+        if kbdcfg.current == 3 then
+            layout_pair = { specific_layout, 'us' }
+            kbdcfg.current_specific = specific_layout
+        else
+            layout_pair = kbdcfg.layout[kbdcfg.current]
+            kbdcfg.current_specific = ''
+        end
 
-        layout_pair = kbdcfg.layout[kbdcfg.current]
         kbdcfg.set_text(layout_pair[1])
         os.execute(kbdcfg.cmd .. ' ' .. layout_pair[1] .. ',' .. layout_pair[2])
     else
-        layout_pair = kbdcfg.layout[kbdcfg.current]
+        if kbdcfg.current == 3 then
+            layout_pair = {kbdcfg.current_specific, 'us'}
+        else
+            layout_pair = kbdcfg.layout[kbdcfg.current]
+        end
     end
 
     if kbdcfg.current == 1 then -- if english
         bg_color = "#3355cc"
-    else -- if russian
+    elseif kbdcfg.current == 2 then -- if russian
         bg_color = "#cc4444"
+    else -- all the others
+        bg_color = "#cccc44"
     end
 
     kbdcfg.notify(layout_pair[1], bg_color)
