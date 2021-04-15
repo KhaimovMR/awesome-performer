@@ -26,6 +26,9 @@ local ABTT_MAIN_WINDOW_X_POSITION = 100
 local abtt_main_window_client = nil
 local abtt_list_window_client = nil
 
+-- move clients on tag activation
+clients_to_move = {}
+
 -- hidden clients that's added to this table
 hidden_clients = {}
 
@@ -37,10 +40,11 @@ require('my_vars')
 require('my_functions')
 require('my_hotkey_functions')
 
-eDP1 = os.capture("cat ~/git/linux-settings/generic/.display-output-edp-1")
-HDMI1 = os.capture("cat ~/git/linux-settings/generic/.display-output-hdmi-1")
-DP1 = os.capture("cat ~/git/linux-settings/generic/.display-output-dp-1")
-DP2 = os.capture("cat ~/git/linux-settings/generic/.display-output-dp-2")
+eDP1 = os.capture("cat ~/.baked-linux-settings/.display-output-edp-1")
+HDMI1 = os.capture("cat ~/.baked-linux-settings/.display-output-hdmi-1")
+DP1 = os.capture("cat ~/.baked-linux-settings/.display-output-dp-1")
+DP2 = os.capture("cat ~/.baked-linux-settings/.display-output-dp-2")
+DP12 = os.capture("cat ~/.baked-linux-settings/.display-output-dp-1-2")
 
 require('performer.utils')
 require('my_menus')
@@ -1014,74 +1018,7 @@ clientkeys = awful.util.table.join(
         { modkey },
         '#61',
         function (c)
-            if c.pinned_to_tag == nil then
-                c.pinned_to_tag = {
-                    x = c.x,
-                    y = c.y,
-                    width = c.width,
-                    height = c.height,
-                    maximized = c.maximized,
-                    floating = c.floating,
-                    tag = c.first_tag,
-                    original_sticky = c.sticky,
-                    original_border_color = c.border_color,
-                    original_border_width = c.border_width,
-                }
-                c.maximized = false
-                c.floating = true
-                c.sticky = true
-                c.border_color = '#aa33aa'
-                c.border_focus_color = '#aa33aa'
-                c.border_normal_color = '#661166'
-                c.border_width = 2
-
-                client_pseudo_maximize(c)
-                c:connect_signal(
-                    'property::position',
-                    moved_pinned_to_tag_client
-                )
-                c:connect_signal(
-                    'property::size',
-                    moved_pinned_to_tag_client
-                )
-            else
-                c.sticky = c.pinned_to_tag.original_sticky
-                c.border_color = c.pinned_to_tag.original_border_color
-                c.border_width = c.pinned_to_tag.original_border_width
-                c.floating = c.pinned_to_tag.floating
-                c.width = c.pinned_to_tag.width
-                c.height = c.pinned_to_tag.height
-                c.maximized = c.pinned_to_tag.maximized
-                c.border_focus_color = nil
-                c.border_normal_color = nil
-                c:disconnect_signal(
-                    'property::position',
-                    moved_pinned_to_tag_client
-                )
-                c:disconnect_signal(
-                    'property::size',
-                    moved_pinned_to_tag_client
-                )
-                c.pinned_to_tag = nil
-
-                if c._destination_tag then
-                    c.tags = {c._destination_tag}
-                    c.first_tag = c._destination_tag
-                    awful.client.movetotag(c._destination_tag)
-                else
-                    local client_rules = awful.rules.matching_rules(c, awful.rules.rules)
-
-                    if client_rules ~= nil then
-                        for _, rule in pairs(client_rules) do
-                            if rule['properties']['tag'] and rule['properties']['tag'] ~= c.first_tag then
-                                c.tags = {rule['properties']['tag']}
-                                c.first_tag = rule['properties']['tag']
-                                awful.client.movetotag(rule['properties']['tag'])
-                            end
-                        end
-                    end
-                end
-            end
+            toggle_pin_to_tag(c, c.first_tag, true)
         end
     ),
     awful.key(
@@ -1196,8 +1133,9 @@ function restore_clients_size_callback()
 
         for id, c in pairs(screen[s].all_clients) do
             c.x = start_x
-            c:move_to_screen(c.screen.index + 1)
-            c:move_to_screen(c.screen.index - 1)
+            c.maximized = true
+            --c:move_to_screen(c.screen.index + 1)
+            --c:move_to_screen(c.screen.index - 1)
 
             if c.width > screen_width then
                 c.width = screen_width
@@ -1643,6 +1581,7 @@ awful.rules.rules = {
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
+    { rule = { class = 'Devtools', instance = 'Firefox' }, properties = { tag = my_tags['devtools'], maximized = true } },
     { rule = { class = 'TeamViewer' }, properties = { tag = my_tags['teamviewer'], fullscreen = false, maximized = false, floating = true } },
     { rule = { class = 'Steam' }, properties = { tag = my_tags['games'] } },
     { rule = { class = 'streaming_client' }, properties = { tag = my_tags['games'] } },
@@ -2036,6 +1975,12 @@ awful.rules.rules = {
         rule = { class='firefox_youtube_class' },
         properties = {
             tag = my_tags['youtube'],
+        },
+    },
+    {
+        rule = { instance='qute-rg_youtrack' },
+        properties = {
+            tag = my_tags['rg_youtrack'],
         },
     },
     {
@@ -2479,6 +2424,12 @@ function client_to_tag_by_name_signal(c)
         c._destination_tag = my_tags['jira']
     elseif c.class == my_browser_window_class_1 or c.class == my_browser_window_class_2
         and c.name ~= nil then
+        if c.instance == "Devtools" then
+            awful.client.movetotag(my_tags['devtools'], c)
+            c._destination_tag = my_tags['devtools']
+            return
+        end
+
         local focused_screen = awful.screen.focused()
         local focused_tag = focused_screen.selected_tag
         local was_focused_before = value_exists_in_table(c.tags(c), focused_tag)

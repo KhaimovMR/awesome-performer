@@ -11,27 +11,27 @@ archsome.notification_presets = require('archsome.notification_presets')
 local singleton_notifications = {}
 
 
-function set_client_proper_size_for_screen(client, only_if_bigger)
-    local scr_geometry = client.screen.workarea
-    local border_space = client.border_width * 2
+function set_client_proper_size_for_screen(c, only_if_bigger)
+    local scr_geometry = c.screen.workarea
+    local border_space = c.border_width * 2
 
     if  only_if_bigger then
-        if client.width <= scr_geometry.width - border_space
-            and client.height <= scr_geometry.height - border_space then
+        if c.width <= scr_geometry.width - border_space
+            and c.height <= scr_geometry.height - border_space then
             return
         end
     end
 
-    client.width = scr_geometry.width - border_space
-    client.height = scr_geometry.height - border_space
+    c.width = scr_geometry.width - border_space
+    c.height = scr_geometry.height - border_space
 end
 
 
-function client_pseudo_maximize(client)
-    local scr_geometry = client.screen.workarea
-    client.x = scr_geometry.x
-    client.y = scr_geometry.y
-    set_client_proper_size_for_screen(client, false)
+function client_pseudo_maximize(c)
+    local scr_geometry = c.screen.workarea
+    c.x = scr_geometry.x
+    c.y = scr_geometry.y
+    set_client_proper_size_for_screen(c, false)
 end
 
 
@@ -59,8 +59,8 @@ end
 
 function center_client(c)
     local scr_geometry = c.screen.workarea
-    c.x = scr_geometry.x + math.floor((scr_geometry.width - c.width)/2)
-    c.y = scr_geometry.y + math.floor((scr_geometry.height - c.height)/2)
+    c.x = scr_geometry.x + math.floor((scr_geometry.width - c.width - c.border_width * 2)/2)
+    c.y = scr_geometry.y + math.floor((scr_geometry.height - c.height - c.border_width * 2)/2)
 end
 
 
@@ -115,13 +115,17 @@ function web_query_execute(query_type, activate_correspondent_tag)
 end
 
 
-function browser_router(browser_profile, url)
+function browser_router(browser_profile, url, browser)
     local script
 
+    if browser == nil then
+        browser = 'firefox'
+    end
+
     if url then
-        script = 'firefox-router.sh ' .. browser_profile .. ' "' .. url .. '" > /dev/null &2>1'
+        script = browser .. '-router.sh ' .. browser_profile .. ' "' .. url .. '" > /dev/null &2>1'
     else
-        script = 'firefox-router.sh ' .. browser_profile .. ' > /dev/null &2>1'
+        script = browser .. '-router.sh ' .. browser_profile .. ' > /dev/null &2>1'
     end
 
     callback_shell.spawn(
@@ -361,7 +365,7 @@ function start_applications_section(application_section_name, app_section)
 end
 
 
--- dropdown applications 
+-- dropdown applications
 function dropdown_app_toggle(app_name, action)
     local set_action = "toggle"
 
@@ -454,6 +458,8 @@ function activate_tag(tag, client, tag_number)
         focus_last_focused_client_of_tag(tag.screen)
     end
 
+    move_marked_clients(tag)
+
     if tag_number and #tag:clients() == 0 and my_tags_default_applications['tag_' .. tostring(tag_number)] then
         start_applications_section('tag_' .. tostring(tag_number), my_tags_default_applications)
     end
@@ -470,13 +476,13 @@ function tables_diff(a, b)
         a_inverted[av] = ak
     end
 
-    for bk,bv in pairs(b) do 
+    for bk,bv in pairs(b) do
         if a_inverted[bv] ~= nil then
             a_cloned[a_inverted[bv]] = nil
         end
     end
 
-    for _,v in pairs(a_cloned) do 
+    for _,v in pairs(a_cloned) do
         table.insert(result, v)
     end
 
@@ -559,4 +565,132 @@ function init_center_client(c)
         end
     )
     center_client(c)
+end
+
+
+function toggle_current_client_to_move()
+    local c = client.focus
+
+    for index, c_to_move in ipairs(clients_to_move) do
+        if c == c_to_move then
+            clients_to_move[index] = nil
+            nt({title='Client is unmarked from moving ▼', text=shorten_string(c.name, 15), timeout=3})
+            return
+        end
+    end
+
+    if c.pinned_to_tag then
+        toggle_pin_to_tag(c, c.pinned_to_tag.tag, false)
+    end
+
+    if c then
+        table.insert(clients_to_move, c)
+        nt({text='Client is ready to move ▲', text=shorten_string(c.name, 15), timeout=3})
+    end
+end
+
+
+function move_marked_clients(tag_to_move_to)
+    for _, c in ipairs(clients_to_move) do
+        if c then
+            c:move_to_tag(tag_to_move_to)
+            toggle_pin_to_tag(c, tag_to_move_to, false)
+        end
+    end
+
+    clients_to_move = {}
+end
+
+
+function toggle_pin_to_tag(c, tag, sticky)
+    if c.pinned_to_tag == nil then
+        c.pinned_to_tag = {
+            x = c.x,
+            y = c.y,
+            width = c.width,
+            height = c.height,
+            maximized = c.maximized,
+            floating = c.floating,
+            tag = tag,
+            original_sticky = c.sticky,
+            original_border_color = c.border_color,
+            original_border_width = c.border_width,
+        }
+        c.border_width = 4
+
+        if sticky then
+            c.maximized = false
+            c.floating = true
+            c.sticky = true
+            c.border_color = '#aa33aa'
+            c.border_focus_color = '#aa33aa'
+            c.border_normal_color = '#661166'
+            client_pseudo_maximize(c)
+        else
+            c.maximized = true
+            c.floating = false
+            c.sticky = false
+            c.border_color = '#6633cc'
+            c.border_focus_color = '#6633cc'
+            c.border_normal_color = '#221177'
+        end
+
+        c:connect_signal(
+            'property::position',
+            moved_pinned_to_tag_client
+        )
+        c:connect_signal(
+            'property::size',
+            moved_pinned_to_tag_client
+        )
+    else
+        c.sticky = c.pinned_to_tag.original_sticky
+        c.border_color = c.pinned_to_tag.original_border_color
+        c.border_width = c.pinned_to_tag.original_border_width
+        c.floating = c.pinned_to_tag.floating
+        c.width = c.pinned_to_tag.width
+        c.height = c.pinned_to_tag.height
+        c.maximized = c.pinned_to_tag.maximized
+        c.border_focus_color = nil
+        c.border_normal_color = nil
+        c:disconnect_signal(
+            'property::position',
+            moved_pinned_to_tag_client
+        )
+        c:disconnect_signal(
+            'property::size',
+            moved_pinned_to_tag_client
+        )
+        c.pinned_to_tag = nil
+
+        if c._destination_tag then
+            c.tags = {c._destination_tag}
+            c.first_tag = c._destination_tag
+            awful.client.movetotag(c._destination_tag)
+        else
+            local client_rules = awful.rules.matching_rules(c, awful.rules.rules)
+
+            if client_rules ~= nil then
+                for _, rule in pairs(client_rules) do
+                    if rule['properties']['tag'] and rule['properties']['tag'] ~= c.first_tag then
+                        c.tags = {rule['properties']['tag']}
+                        c.first_tag = rule['properties']['tag']
+                        awful.client.movetotag(rule['properties']['tag'])
+                    end
+                end
+            end
+        end
+    end
+
+end
+
+
+function shorten_string(str, max_chars)
+    local final_str = str
+
+    if string.len(str) > max_chars then
+        final_str = string.sub(str, 1, max_length) .. '...'
+    end
+
+    return final_str
 end

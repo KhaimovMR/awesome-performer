@@ -43,7 +43,7 @@ end
 
 
 function hotkey_client_align_left(c)
-    if c.pinned_to_tag then
+    if c.pinned_to_tag and c.pinned_to_tag.sticky then
         return
     end
 

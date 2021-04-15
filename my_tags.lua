@@ -171,6 +171,7 @@ my_tags = {
     wiki = planning_screen_tags[5 + planning_screen_offset],
 
     tag_18 = planning_screen_tags[6 + planning_screen_offset],
+    devtools = planning_screen_tags[6 + planning_screen_offset],
 
     tag_19 = planning_screen_tags[7 + planning_screen_offset],
     personal_mail = planning_screen_tags[7 + planning_screen_offset],
