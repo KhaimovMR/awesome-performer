@@ -211,6 +211,7 @@ my_tags = {
 
     tag_29 = work_screen_tags[5 + work_screen_offset],
     ssh_test = work_screen_tags[5 + work_screen_offset],
+    daw = work_screen_tags[5 + work_screen_offset],
 
     tag_30 = work_screen_tags[6 + work_screen_offset],
     chrome_dev_tools = work_screen_tags[6 + work_screen_offset],

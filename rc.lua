@@ -1599,6 +1599,7 @@ awful.rules.rules = {
     { rule = { instance = 'skype', class = 'Skype' }, properties = { tag = my_tags['messengers'] } },
     { rule = { class = 'Microsoft Teams - Preview' }, properties = { tag = my_tags['messengers'] } },
     { rule = { instance = 'skypeforlinux', class = 'skypeforlinux' }, properties = { tag = my_tags['messengers'] } },
+    { rule = { class = 'REAPER' }, properties = { tag = my_tags['daw'] } },
     { rule = { class = 'TeamSpeak 3' }, properties = { tag = my_tags['messengers'] } },
     { rule = { class = 'zoom' }, properties = { tag = my_tags['screen_sharing'] } },
     { rule = { class = 'TelegramDesktop' }, properties = { tag = my_tags['messengers_personal'] } },
