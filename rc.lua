@@ -1386,6 +1386,30 @@ function make_default_keys()
                 toggle_center_screen_menu(my_cheat_sheets_menu)
             end
         ),
+        -- #38 - a
+        awful.key(
+            { modkey },
+            '#38',
+            function (c)
+                local lookup_result = os.capture('rofi-md-notes.sh')
+
+                if lookup_result == 'not-found' then
+                    toggle_center_screen_menu(my_md_notes_menu)
+                end
+            end
+        ),
+        -- #38 - a
+        awful.key(
+            { 'Control', altkey },
+            '#38',
+            function (c)
+                local lookup_result = os.capture('rofi-md-notes.sh')
+
+                if lookup_result == 'not-found' then
+                    toggle_center_screen_menu(my_md_notes_menu)
+                end
+            end
+        ),
         -- #31 - i
         awful.key(
             { 'Control', modkey },

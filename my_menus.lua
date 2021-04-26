@@ -130,6 +130,16 @@ my_cheat_sheets_menu = awful.menu({
     theme = my_menus_theme,
 })
 
+my_md_notes_menu = awful.menu({
+    items = {
+        {'&a. work', 'rofi-md-notes.sh work'},
+        {'&s. alightbit', 'rofi-md-notes.sh alightbit'},
+        {'&d. archaim', 'rofi-md-notes.sh archaim'},
+        {'&f. private', 'rofi-md-notes.sh private'},
+    },
+    theme = my_menus_theme,
+})
+
 my_monitors_menu = awful.menu({
     items = {
         {

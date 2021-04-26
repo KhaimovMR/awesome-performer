@@ -369,6 +369,9 @@ end
 function dropdown_app_toggle(app_name, action)
     local set_action = "toggle"
 
+    -- TODO: Implement hiding rofi-md-notes terminal if dropdown window is activated on it's screen/tag
+    -- awful.spawn('rofi-md-notes.sh --hide')
+
     if action ~= nil then
         set_action = action
     end
@@ -398,6 +401,7 @@ function dropdown_app_toggle(app_name, action)
     elseif app_name == "AndroidKeyboard" then
         awful.spawn('dropdown-window AndroidKeyboard ' .. set_action .. ' "terminator --title=android-keyboard --profile=android-keyboard"')
     else
+        awful.spawn('rofi-md-notes.sh --hide')
         awful.spawn('dropdown-window ChromeMindmeister hide')
         awful.spawn('dropdown-window ChromeStuff hide')
         awful.spawn('dropdown-window Terminal hide')
