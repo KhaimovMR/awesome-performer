@@ -1394,6 +1394,7 @@ function make_default_keys()
                 local lookup_result = os.capture('rofi-md-notes.sh')
 
                 if lookup_result == 'not-found' then
+                    kbdcfg.switch(true, 'us')
                     toggle_center_screen_menu(my_md_notes_menu)
                 end
             end
