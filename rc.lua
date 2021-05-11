@@ -1788,7 +1788,7 @@ awful.rules.rules = {
     {
         rule = { instance = 'qute-dictionary', class = 'qutebrowser'},
         properties = {
-            width=1100, height=700, opacity=0.75,
+            width=1100, height=700, opacity=0.95,
             maximized=false, sticky=true, ontop=true, above=true,
             floating=true, dockable=false, fullscreen=false,
             requests_no_titlebar=true, border_width=2, skip_taskbar=true,
