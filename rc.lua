@@ -2010,6 +2010,12 @@ awful.rules.rules = {
         },
     },
     {
+        rule = { instance='qute-youtube' },
+        properties = {
+            tag = my_tags['youtube'],
+        },
+    },
+    {
         rule = { class='firefox_rg_youtrack_class' },
         properties = {
             tag = my_tags['rg_youtrack'],
