@@ -1976,7 +1976,7 @@ awful.rules.rules = {
             maximized = true, sticky = true, requests_no_titlebar=true, border_width=0, skip_taskbar=true,
         },
     },
-    { rule = { instance='.*google[-]chrome[-]rg_youtrack.*' }, properties = { maximized = true, tag = my_tags['yt'] } },
+    { rule = { instance='.*google[-]chrome[-]planning.*' }, properties = { maximized = true, tag = my_tags['youtrack'] } },
     {
         rule = { name=PIP_WINDOW_TITLE_CHROME },
         properties = PIP_WINDOW_PROPERTIES,
@@ -2004,9 +2004,9 @@ awful.rules.rules = {
         },
     },
     {
-        rule = { instance='qute-rg_youtrack' },
+        rule = { instance='qute-planning' },
         properties = {
-            tag = my_tags['rg_youtrack'],
+            tag = my_tags['youtrack'],
         },
     },
     {
@@ -2016,9 +2016,9 @@ awful.rules.rules = {
         },
     },
     {
-        rule = { class='firefox_rg_youtrack_class' },
+        rule = { class='firefox_planning_class' },
         properties = {
-            tag = my_tags['rg_youtrack'],
+            tag = my_tags['youtrack'],
         },
     },
     {

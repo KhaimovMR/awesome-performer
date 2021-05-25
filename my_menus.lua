@@ -10,8 +10,8 @@ terminals_tmuxinator_menu_items = {}
 -- PATCHED VERSION OF THE MENU KEYS HANDLER RECEIVES THE LOWERCASED
 -- STRING OF THE KEYS COMBINATION WITH MODIFIERS SET IN THE PRIORITY
 -- (ONE BY ONE) shift-control-mod1-mod4-<symbol>
-awful.menu.menu_keys.up = {'k', 'p', 'л', 'з'}
-awful.menu.menu_keys.down = {'j', 'n', 'о', 'т'}
+awful.menu.menu_keys.up = {'control-k', 'control-p', 'control-л', 'control-з'}
+awful.menu.menu_keys.down = {'control-j', 'control-n', 'control-о', 'control-т'}
 awful.menu.menu_keys.close = {
     '9', 'control-c', 'control-с', 'escape', 'q', 'mod4-o', 'mod4-f', 'mod4-k', 'mod4-j', 'mod4-t',
     'control-mod4-n', 'й', 'mod4-щ', 'mod4-а', 'mod4-л', 'mod4-о', 'control-mod4-т', 'mod4-е'
@@ -132,10 +132,10 @@ my_cheat_sheets_menu = awful.menu({
 
 my_md_notes_menu = awful.menu({
     items = {
-        {'&a. work', 'rofi-md-notes.sh work'},
-        {'&s. alightbit', 'rofi-md-notes.sh alightbit'},
-        {'&d. archaim', 'rofi-md-notes.sh archaim'},
-        {'&f. private', 'rofi-md-notes.sh private'},
+        {'&w. work', 'rofi-md-notes.sh work'},
+        {'&a. alightbit', 'rofi-md-notes.sh alightbit'},
+        {'&r. archaim', 'rofi-md-notes.sh archaim'},
+        {'&p. private', 'rofi-md-notes.sh private'},
     },
     theme = my_menus_theme,
 })
