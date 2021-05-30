@@ -1714,6 +1714,26 @@ awful.rules.rules = {
             end
         }
     },
+    {
+        rule = { class = 'Mattermost' },
+        properties = {
+            tag = my_tags['messengers'],
+            maximized = true,
+            callback = function(c)
+                c:connect_signal(
+                    'property::name',
+                    function(c)
+                        if string.match(c.name, 'Calling') or string.match(c.name, 'Slack call') then
+                            awful.client.movetotag(my_tags['calls'], c)
+                        elseif string.match(c.name, 'mini panel') then
+                            c.opacity = 0.75
+                            c.border_color = "#FF0000FF"
+                        end
+                    end
+                )
+            end
+        }
+    },
     { rule = { class = 'Slack', name = 'Calling' }, properties = { tag = my_tags['calls'], maximized = true } },
     { rule = { class = 'Slack', name = 'Slack call' }, properties = { tag = my_tags['calls'], maximized = true } },
     {
