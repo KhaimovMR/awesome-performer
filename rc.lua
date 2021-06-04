@@ -1606,7 +1606,16 @@ awful.rules.rules = {
                      raise = true,
                      keys = clientkeys,
                      buttons = clientbuttons } },
-    { rule = { class = 'Devtools', instance = 'Firefox' }, properties = { tag = my_tags['devtools'], maximized = true } },
+    {
+        rule = {
+            class = 'Devtools',
+            instance = 'Firefox',
+        },
+        properties = {
+            tag = my_tags['devtools'],
+            maximized = true,
+        },
+    },
     { rule = { class = 'TeamViewer' }, properties = { tag = my_tags['teamviewer'], fullscreen = false, maximized = false, floating = true } },
     { rule = { class = 'Steam' }, properties = { tag = my_tags['games'] } },
     { rule = { class = 'streaming_client' }, properties = { tag = my_tags['games'] } },
@@ -2479,6 +2488,7 @@ function client_to_tag_by_name_signal(c)
         if c.instance == "Devtools" then
             awful.client.movetotag(my_tags['devtools'], c)
             c._destination_tag = my_tags['devtools']
+            activate_tag(my_tags['devtools'])
             return
         end
 
