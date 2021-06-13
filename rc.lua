@@ -2380,6 +2380,9 @@ client.connect_signal(
                 return
             end
         end
+
+        if is_global_compton_suppressor(c) then
+        end
     end
 )
 

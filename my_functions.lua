@@ -518,6 +518,28 @@ function is_3d_client(c)
 end
 
 
+function is_global_compton_suppressor(c)
+    if c == nil then
+        return false
+    end
+
+    for _, compton_suppressor in pairs(my_global_compton_suppressors) do
+        if compton_suppressor['search_type'] == 'class' and string.match(c.class, compton_suppressor['pattern']) then
+            return true
+        elseif compton_suppressor['search_type'] == 'name' and string.match(c.name, compton_suppressor['pattern']) then
+            return true
+        end
+    end
+
+    return false
+end
+
+
+function check_if_other_global_suppressor_exists()
+    
+end
+
+
 function clear_pip_opacity_timer()
     if PIP_OPACITY_TIMER then
         PIP_OPACITY_TIMER:stop()
