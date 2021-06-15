@@ -178,88 +178,88 @@ naughty.config.presets.critical = {
     opacity = 0.9,
     timeout = 0,
 }
-naughty.connect_signal(
-    'added',
-    function(notification)
-        if notification.app_name == "GmailNeomuttPersonal" then
-            notification:connect_signal("destroyed", on_custom_notification_destroyed)
-            notification.fg = "#ffffff"
-            notification.bg = "#335544"
-            notification.opacity = 0.95
-            notification.timeout = 10
-        elseif notification.app_name == "GmailNeomuttWork1" then
-            notification:connect_signal("destroyed", on_custom_notification_destroyed)
-            notification.fg = "#ffffff"
-            notification.bg = "#224455"
-            notification.opacity = 0.95
-            notification.timeout = 20
-        elseif notification.app_name == "Slack" then
-            notification.shape = function(cs, width, height)
-                return gears.shape.rounded_rect(cs, width, height, 20)
-            end
+--naughty.connect_signal(
+    --'added',
+    --function(notification)
+        --if notification.app_name == "GmailNeomuttPersonal" then
+            --notification:connect_signal("destroyed", on_custom_notification_destroyed)
+            --notification.fg = "#ffffff"
+            --notification.bg = "#335544"
+            --notification.opacity = 0.95
+            --notification.timeout = 10
+        --elseif notification.app_name == "GmailNeomuttWork1" then
+            --notification:connect_signal("destroyed", on_custom_notification_destroyed)
+            --notification.fg = "#ffffff"
+            --notification.bg = "#224455"
+            --notification.opacity = 0.95
+            --notification.timeout = 20
+        --elseif notification.app_name == "Slack" then
+            --notification.shape = function(cs, width, height)
+                --return gears.shape.rounded_rect(cs, width, height, 20)
+            --end
 
-            notification.fg = "#ffffff"
-            notification.bg = "#cc5800"
-            notification.opacity = 0.8
-            notification.timeout = 10
-            notification.is_expired = true
+            --notification.fg = "#ffffff"
+            --notification.bg = "#cc5800"
+            --notification.opacity = 0.8
+            --notification.timeout = 10
+            --notification.is_expired = true
 
-            for i, pattern in ipairs(my_review_mr_work_1_gitlab_patterns) do
-                if notification.title:match(pattern)
-                    and notification.text:match('opened.*in.*<[^>]+>')
-                    and my_notification_actions['review_mr_work_1_gitlab'] ~= nil then
-                    notification.position = 'middle'
-                    notification.timeout = 30
-                    notification.icon = my_home_path .. '/gdrive/awesome-performer/icons/gitlab-orange-on-dark.png'
-                    notification:append_actions({my_notification_actions['review_mr_work_1_gitlab']})
-                    play_notification('mr')
-                    return
-                end
-            end
+            --for i, pattern in ipairs(my_review_mr_work_1_gitlab_patterns) do
+                --if notification.title:match(pattern)
+                    --and notification.text:match('opened.*in.*<[^>]+>')
+                    --and my_notification_actions['review_mr_work_1_gitlab'] ~= nil then
+                    --notification.position = 'middle'
+                    --notification.timeout = 30
+                    --notification.icon = my_home_path .. '/gdrive/awesome-performer/icons/gitlab-orange-on-dark.png'
+                    --notification:append_actions({my_notification_actions['review_mr_work_1_gitlab']})
+                    --play_notification('mr')
+                    --return
+                --end
+            --end
 
-            for i, person in pairs(my_slack_people_avatars) do
-                if notification.title:match(' from ' .. person[1] .. '.*')
-                    or (notification.title:match(' in #') and notification.text:match('^' .. person[1] .. '.*: ')) then
-                    notification.text = notification.text:gsub('^' .. person[1] .. '.*: ', '')
-                    notification.text = "\n" .. notification.text
-                    notification.icon = person[2]
-                    notification.icon_size = 96
+            --for i, person in pairs(my_slack_people_avatars) do
+                --if notification.title:match(' from ' .. person[1] .. '.*')
+                    --or (notification.title:match(' in #') and notification.text:match('^' .. person[1] .. '.*: ')) then
+                    --notification.text = notification.text:gsub('^' .. person[1] .. '.*: ', '')
+                    --notification.text = "\n" .. notification.text
+                    --notification.icon = person[2]
+                    --notification.icon_size = 96
 
-                    if value_exists_in_table(my_slack_urgent_people, person[1]) then
-                        notification.font = 'Ubuntu mono 20'
-                        notification.position = 'middle'
-                    end
+                    --if value_exists_in_table(my_slack_urgent_people, person[1]) then
+                        --notification.font = 'Ubuntu mono 20'
+                        --notification.position = 'middle'
+                    --end
 
-                    return
-                end
-            end
-        elseif notification.app_name == "Google Chrome" then
-            notification.fg = "#ffffff"
-            notification.bg = "#225544"
-            notification.opacity = 0.5
-            notification.timeout = 5
-            notification:connect_signal("destroyed", on_custom_notification_destroyed)
-        elseif notification.app_name == "Thunderbird" then
-            notification.fg = "#ffffff"
-            notification.position = 'middle'
-            notification.opacity = 0.6
+                    --return
+                --end
+            --end
+        --elseif notification.app_name == "Google Chrome" then
+            --notification.fg = "#ffffff"
+            --notification.bg = "#225544"
+            --notification.opacity = 0.5
+            --notification.timeout = 5
+            --notification:connect_signal("destroyed", on_custom_notification_destroyed)
+        --elseif notification.app_name == "Thunderbird" then
+            --notification.fg = "#ffffff"
+            --notification.position = 'middle'
+            --notification.opacity = 0.6
 
-            if notification.title:match(personal_email_app_pattern) then
-                notification.timeout = 5
-                notification.icon = archsome.icons['mail_personal']
-                notification.bg = "#223322cc"
-            elseif notification.title:match(work_1_email_app_pattern) then
-                notification.timeout = 15
-                notification.icon = archsome.icons['mail_work_1']
-                notification.bg = "#222233cc"
-            elseif notification.title:match(work_2_email_app_pattern) then
-                notification.timeout = 15
-                notification.icon = archsome.icons['mail_work_2']
-                notification.bg = "#332233cc"
-            end
-        end
-    end
-)
+            --if notification.title:match(personal_email_app_pattern) then
+                --notification.timeout = 5
+                --notification.icon = archsome.icons['mail_personal']
+                --notification.bg = "#223322cc"
+            --elseif notification.title:match(work_1_email_app_pattern) then
+                --notification.timeout = 15
+                --notification.icon = archsome.icons['mail_work_1']
+                --notification.bg = "#222233cc"
+            --elseif notification.title:match(work_2_email_app_pattern) then
+                --notification.timeout = 15
+                --notification.icon = archsome.icons['mail_work_2']
+                --notification.bg = "#332233cc"
+            --end
+        --end
+    --end
+--)
 
 function on_custom_notification_destroyed(notification)
     if notification.is_expired then
@@ -2668,3 +2668,5 @@ function initial_tags_assignation()
         client_to_tag_by_name_signal(c)
     end
 end
+
+nt('HERE WE GO')
