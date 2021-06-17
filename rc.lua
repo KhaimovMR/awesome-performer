@@ -1637,6 +1637,8 @@ awful.rules.rules = {
     { rule = { class = 'TeamSpeak 3' }, properties = { tag = my_tags['messengers'] } },
     { rule = { class = 'zoom' }, properties = { tag = my_tags['screen_sharing'] } },
     { rule = { class = 'TelegramDesktop' }, properties = { tag = my_tags['messengers_personal'] } },
+    { rule = { class = 'TelegramDesktop', name = ' ' }, properties = { tag = my_tags['calls'] } },
+    { rule = { class = 'TelegramDesktop', name = 'Media viewer' }, properties = { tag = my_tags['messengers_personal'] } },
     {
         rule = { class = 'ThunderbirdPersonal', instance = 'Mail' },
         properties = { tag = my_tags['personal_mail'], maximized = true },

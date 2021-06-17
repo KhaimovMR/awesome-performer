@@ -297,7 +297,7 @@ function get_pids_by_cmd(cmd, xdotool_search)
         )
     else
         pids = os.capture(
-            'ps ax | grep -E "' .. cmd .. '" | sed "s/^[ \t]//g" | grep -v grep | grep -E "^[0-9]+" -o'
+            'ps ax | grep -E "' .. cmd .. '" | sed "s/^[ \t]*//g" | grep -v grep | grep -E "^[0-9]+" -o'
         )
     end
 
@@ -333,8 +333,6 @@ function start_application_with_check(app)
     if app_check_cmd ~= false then
         check_result = get_pids_by_cmd(app_check_cmd, do_xdo_check)
     end
-
-    awful.spawn.with_shell('echo "'..app_start_cmd..'" >> ' .. my_home_path .. '/ts-log.log 2>&1')
 
     if check_result == "" then
         --naughty.notify({
