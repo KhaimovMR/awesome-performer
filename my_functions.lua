@@ -516,15 +516,47 @@ function is_3d_client(c)
 end
 
 
+function client_spawn_compton_check(c)
+    if is_global_compton_suppressor(c) then
+        kill_compton()
+    end
+end
+
+
+function client_destroyed_compton_check(c)
+    if is_global_compton_suppressor(c) and not check_if_other_global_suppressor_exists() then
+        start_applications_section('compton')
+        awful.spawn.with_shell('xinput-switch-disabling-touchpad-when-typing.sh 1')
+    end
+end
+
+
+function kill_compton()
+    awful.spawn.with_shell('killall compton')
+    awful.spawn.with_shell('xinput-switch-disabling-touchpad-when-typing.sh 0')
+end
+
+
+function run_compton()
+    start_applications_section('compton')
+    awful.spawn.with_shell('xinput-switch-disabling-touchpad-when-typing.sh 1')
+end
+
+
 function is_global_compton_suppressor(c)
     if c == nil then
         return false
     end
 
     for _, compton_suppressor in pairs(my_global_compton_suppressors) do
-        if compton_suppressor['search_type'] == 'class' and string.match(c.class, compton_suppressor['pattern']) then
+        if compton_suppressor['search_type'] == 'window-class' and string.match(c.class, compton_suppressor['pattern']) then
+            -- if class is matching
             return true
-        elseif compton_suppressor['search_type'] == 'name' and string.match(c.name, compton_suppressor['pattern']) then
+        elseif compton_suppressor['search_type'] == 'window-name' and string.match(c.name, compton_suppressor['pattern']) then
+            -- if window name is matching
+            return true
+        elseif compton_suppressor['search_type'] == 'instance-name' and string.match(c.instance, compton_suppressor['pattern']) then
+            -- if instance name is matching
             return true
         end
     end
@@ -534,7 +566,25 @@ end
 
 
 function check_if_other_global_suppressor_exists()
+    local pids = ''
+
+    for _, compton_suppressor in pairs(my_global_compton_suppressors) do
+        if compton_suppressor['search_type'] == 'window-class' then
+            pids = os.capture('xdotool search --class "' .. compton_suppressor['pattern'] .. '"')
+            -- if class is matching
+            return ternary(pids ~= '', true, false)
+        elseif compton_suppressor['search_type'] == 'window-name' then
+            pids = os.capture('xdotool search --classname "' .. compton_suppressor['pattern'] .. '"')
+            -- if window name is matching
+            return ternary(pids ~= '', true, false)
+        elseif compton_suppressor['search_type'] == 'instance-name' then
+            pids = os.capture('xdotool search --name "' .. compton_suppressor['pattern'] .. '"')
+            -- if instance name is matching
+            return ternary(pids ~= '', true, false)
+        end
+    end
     
+    return false
 end
 
 

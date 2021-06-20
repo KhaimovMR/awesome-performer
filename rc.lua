@@ -2090,11 +2090,12 @@ client.connect_signal(
 client.connect_signal(
     'manage',
     function (c, startup)
+        client_spawn_compton_check(c)
+
         if c.class then
             for _, my_3d_app_class in pairs(my_3d_app_classes) do
                 if string.match(c.class, my_3d_app_class) then
-                    awful.spawn.with_shell('killall compton')
-                    awful.spawn.with_shell('xinput-switch-disabling-touchpad-when-typing.sh 0')
+                    kill_compton()
                     return
                 end
             end
@@ -2377,14 +2378,12 @@ client.connect_signal(
     function (c)
         for _, my_3d_app_class in pairs(my_3d_app_classes) do
             if c.class and string.match(c.class, my_3d_app_class) then
-                start_applications_section('compton')
-                awful.spawn.with_shell('xinput-switch-disabling-touchpad-when-typing.sh 1')
+                run_compton()
                 return
             end
         end
 
-        if is_global_compton_suppressor(c) then
-        end
+        client_destroyed_compton_check(c)
     end
 )
 
