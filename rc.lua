@@ -1802,6 +1802,7 @@ awful.rules.rules = {
     { rule = { class = 'Spotify' }, properties = { tag = my_tags['music'] } },
     { rule = { instance = 'tilda' }, properties = { fullscreen = true } },
     { rule = { class = 'Gimp'}, properties = { tag = my_tags['gimp'] } },
+    { rule = { class = 'WireframeSketcher'}, properties = { tag = my_tags['wireframe_sketcher'] } },
     { rule = { class = 'Blender'}, properties = { tag = my_tags['blender'] } },
     { rule = { class = 'Inkscape'}, properties = { tag = my_tags['inkscape'] } },
     {

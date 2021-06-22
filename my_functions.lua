@@ -549,13 +549,19 @@ function is_global_compton_suppressor(c)
     end
 
     for _, compton_suppressor in pairs(my_global_compton_suppressors) do
-        if compton_suppressor['search_type'] == 'window-class' and string.match(c.class, compton_suppressor['pattern']) then
+        if compton_suppressor['search_type'] == 'window-class' and
+            c.class and
+            string.match(c.class, compton_suppressor['pattern']) then
             -- if class is matching
             return true
-        elseif compton_suppressor['search_type'] == 'window-name' and string.match(c.name, compton_suppressor['pattern']) then
+        elseif compton_suppressor['search_type'] == 'window-name' and
+            c.name and
+            string.match(c.name, compton_suppressor['pattern']) then
             -- if window name is matching
             return true
-        elseif compton_suppressor['search_type'] == 'instance-name' and string.match(c.instance, compton_suppressor['pattern']) then
+        elseif compton_suppressor['search_type'] == 'instance-name' and
+            c.instance and
+            string.match(c.instance, compton_suppressor['pattern']) then
             -- if instance name is matching
             return true
         end
