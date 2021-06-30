@@ -203,6 +203,7 @@ my_tags = {
 
     tag_28 = work_screen_tags[4 + work_screen_offset],
     gimp = work_screen_tags[4 + work_screen_offset],
+    wireframe_sketcher = work_screen_tags[4 + work_screen_offset],
     blender = work_screen_tags[4 + work_screen_offset],
     inkscape = work_screen_tags[4 + work_screen_offset],
 
